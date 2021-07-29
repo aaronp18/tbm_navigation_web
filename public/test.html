@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<body class="vh-100">
+    <div class="container-fluid">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg bg-info navbar-light ">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+
+                <!-- Navbar brand -->
+                <a class="navbar-brand" href="#">Brand</a>
+
+                <!-- Toggle button -->
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Collapsible wrapper -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <!-- Link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+            <!-- Container wrapper -->
+        </nav>
+
+        <!-- Navbar -->
+
+        <section class="main vh-100">
+            <div class="container-fluid d-flex flex-column h-100 ">
+                <!-- Sliders -->
+                <div class="row h-75 text-center">
+                    <div class="col-md bg-info d-flex flex-column justify-content-center my-3 p-5">
+                        <label for="pitchSlider" class="form-label">Pitch Slider</label>
+                        <input type="range" class="form-range" min="0" max="5" step="0.05" id="pitchSlider">
+
+                        <!-- Info -->
+                        <div class="row">
+                            <div class="col">
+                                Target Pitch: <span id="pitch-target">6.3</span>°
+                            </div>
+                            <div class="col">
+                                Current Pitch: <span id="pitch-current">5.4</span>°
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md bg-info d-flex flex-column justify-content-center m-3 p-5">
+                        <label for="yawSlider" class="form-label">Yaw Slider</label>
+                        <input type="range" class="form-range" min="0" max="5" step="0.05" id="yawSlider">
+
+                        <!-- Info -->
+                        <div class="row">
+                            <div class="col">
+                                Target Yaw: <span id="yaw-target">6.3</span>°
+                            </div>
+                            <div class="col">
+                                Current Yaw: <span id="yaw-current">5.4</span>°
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- Bottom Controls -->
+
+                <div class="lowerButtons d-flex justify-content-around  m-4">
+                    <div class="d-block w-100  gap-2">
+                        <button type="button" name="" id="" class="btn btn-success">Start</button>
+                        <button type="button" name="" id="" class="btn btn-danger">Stop</button>
+                        <button type="button" name="" id="" class="btn btn-primary">Info</button>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+        <section class="footer">
+
+        </section>
+    </div>
+
+    <!--* Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.js"></script>
+    <script src="js/roslib.js"></script>
+
+    <script src="js/nav-control.js"></script>
+
+
+</body>
+
+</html>

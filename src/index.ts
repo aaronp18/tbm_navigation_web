@@ -38,9 +38,16 @@ const rosLogger = winston.createLogger({
     ]
 });
 
+// * Express Init
+
+//Sets view engine to ejs
+app.set("view engine", "ejs");
+//Sets public folder
+app.use(express.static("public"));
+
 // define a route handler for the default home page
 app.get("/", (req, res) => {
-    res.send("Hello world!");
+    res.render("main")
 });
 
 // start the Express server
