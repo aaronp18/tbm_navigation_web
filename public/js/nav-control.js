@@ -4,7 +4,7 @@
 console.log("Connecting to ROS server...")
 
 var ros = new ROSLIB.Ros({
-    url: 'ws://192.168.186.91:9090' // Change to localhost on prod
+    url: 'ws://172.19.210.225:9090' // Change to localhost on prod
 });
 
 ros.on('connection', function () {
@@ -36,11 +36,15 @@ var yawClient = new ROSLIB.ActionClient({
 var axes = {
     'pitch': {
         "client": pitchClient,
-        "currentName": "#pitch-current"
+        "currentLabel": "#pitch-current",
+        "targetLabel": "#pitch-target",
+        "slider": "#pitch-slider",
     },
     'yaw': {
         "client": yawClient,
-        "currentName": "#yaw-current"
+        "currentLabel": "#yaw-current",
+        "targetLabel": "#yaw-target",
+        "slider": "#yaw-slider",
     },
 
 };
@@ -57,11 +61,11 @@ function setAngle(axisName, targetAngle) {
         }
     })
     goal.on('feedback', function (feedback) {
-        updateCurrentAngle(axis.currentName, feedback.current_angle);
+        updateCurrentAngle(axis.currentLabel, feedback.current_angle);
     });
     goal.on('result', function (result) {
         console.log('Reached final result!');
-        updateCurrentAngle(axis.currentName, result.final_angle);
+        updateCurrentAngle(axis.currentLabel, result.final_angle);
     });
 
     // Send goal
@@ -71,9 +75,25 @@ function setAngle(axisName, targetAngle) {
 function updateCurrentAngle(id, angle) {
 
     // Update the Current angle text
-    $(id).text(angle);
+    $(id).text(round2dp(angle));
 
     // Update and animate simulation
     //TODO
+}
+
+
+
+
+
+// TODO - foreach through
+
+for (const key in axes) {
+
+    $(axes[key].slider).on("change", (elem) => {
+        let angle = parseFloat($(elem.currentTarget).val());
+        // console.log("Target changed to  " + angle);
+        updateCurrentAngle(axes[key].targetLabel, angle);
+        setAngle(key, angle);
+    })
 }
 

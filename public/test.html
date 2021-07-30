@@ -51,31 +51,31 @@
                 <!-- Sliders -->
                 <div class="row h-75 text-center">
                     <div class="col-md bg-info d-flex flex-column justify-content-center my-3 p-5">
-                        <label for="pitchSlider" class="form-label">Pitch Slider</label>
-                        <input type="range" class="form-range" min="0" max="5" step="0.05" id="pitchSlider">
+                        <label for="pitch-slider" class="form-label">Pitch Slider</label>
+                        <input type="range" class="form-range" min="0" max="35" step="0.05" id="pitch-slider">
 
                         <!-- Info -->
                         <div class="row">
                             <div class="col">
-                                Target Pitch: <span id="pitch-target">6.3</span>°
+                                Target Pitch: <span id="pitch-target">0</span>°
                             </div>
                             <div class="col">
-                                Current Pitch: <span id="pitch-current">5.4</span>°
+                                Current Pitch: <span id="pitch-current">0</span>°
                             </div>
                         </div>
 
                     </div>
                     <div class="col-md bg-info d-flex flex-column justify-content-center m-3 p-5">
-                        <label for="yawSlider" class="form-label">Yaw Slider</label>
-                        <input type="range" class="form-range" min="0" max="5" step="0.05" id="yawSlider">
+                        <label for="yaw-slider" class="form-label">Yaw Slider</label>
+                        <input type="range" class="form-range" min="0" max="35" step="0.05" id="yaw-slider">
 
                         <!-- Info -->
                         <div class="row">
                             <div class="col">
-                                Target Yaw: <span id="yaw-target">6.3</span>°
+                                Target Yaw: <span id="yaw-target">0</span>°
                             </div>
                             <div class="col">
-                                Current Yaw: <span id="yaw-current">5.4</span>°
+                                Current Yaw: <span id="yaw-current">0</span>°
                             </div>
                         </div>
 
@@ -114,6 +114,7 @@
     <script src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.js"></script>
     <script src="js/roslib.js"></script>
 
+    <script src="js/utility.js"></script>
     <script src="js/nav-control.js"></script>
 
 

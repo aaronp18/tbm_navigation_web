@@ -12,9 +12,11 @@ Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it h
 - [ ] Make target angle writable?
 - [ ] Add animated readout
 - [ ] Make everything offline
+- [ ] Add toast for info
 
 ### ROS Integration
-- [ ] Connect sliders to publish to topic
+- [X] Have target pitch adjust current pitch
+- [ ] Connect sliders to publish to topic (not using goals to update)
 - [ ] Perhaps make all sliders synced up? (If refresh page, will want to keep current?)
 - [ ] Connect up angle readouts to ROS
-- [ ] 
+- [ ] Allow only one target
