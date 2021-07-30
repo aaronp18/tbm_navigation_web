@@ -61,20 +61,21 @@ function setAngle(axisName, targetAngle) {
         }
     })
     goal.on('feedback', function (feedback) {
-        updateCurrentAngle(axis.currentLabel, feedback.current_angle);
+        updateAngle(axis.currentLabel, feedback.current_angle);
     });
     goal.on('result', function (result) {
         console.log('Reached final result!');
-        updateCurrentAngle(axis.currentLabel, result.final_angle);
+        updateAngle(axis.currentLabel, result.final_angle);
     });
 
     // Send goal
     goal.send();
 
 }
-function updateCurrentAngle(id, angle) {
+function updateAngle(id, angle) {
 
     // Update the Current angle text
+    $(id).val(round2dp(angle));
     $(id).text(round2dp(angle));
 
     // Update and animate simulation
@@ -91,9 +92,19 @@ for (const key in axes) {
 
     $(axes[key].slider).on("change", (elem) => {
         let angle = parseFloat($(elem.currentTarget).val());
-        // console.log("Target changed to  " + angle);
-        updateCurrentAngle(axes[key].targetLabel, angle);
+
+        updateAngle(axes[key].targetLabel, angle);
         setAngle(key, angle);
     })
+    $(axes[key].targetLabel).on("change", (elem) => {
+        let angle = parseFloat($(elem.currentTarget).val());
+
+        $(axes[key].slider).val(angle);
+        $(axes[key].slider).trigger("change");
+
+    })
+
+    // Set Slider position
+
 }
 

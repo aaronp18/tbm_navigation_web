@@ -9,7 +9,7 @@ Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it h
 - [X] Add optional buttons
 - [ ] Style optional buttons
 - [X] Add angle readouts
-- [ ] Make target angle writable?
+- [X] Make target angle writable?
 - [ ] Add animated readout
 - [ ] Make everything offline
 - [ ] Add toast for info
@@ -19,4 +19,4 @@ Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it h
 - [ ] Connect sliders to publish to topic (not using goals to update)
 - [ ] Perhaps make all sliders synced up? (If refresh page, will want to keep current?)
 - [ ] Connect up angle readouts to ROS
-- [ ] Allow only one target
+- [ ] Allow only one target / updates with new target?

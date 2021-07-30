@@ -19,7 +19,7 @@
             <div class="container-fluid">
 
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="#">Brand</a>
+                <a class="navbar-brand" href="#">TBM Control</a>
 
                 <!-- Toggle button -->
                 <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
@@ -52,12 +52,12 @@
                 <div class="row h-75 text-center">
                     <div class="col-md bg-info d-flex flex-column justify-content-center my-3 p-5">
                         <label for="pitch-slider" class="form-label">Pitch Slider</label>
-                        <input type="range" class="form-range" min="0" max="35" step="0.05" id="pitch-slider">
+                        <input type="range" class="form-range" min="-35" max="35" step="0.05" id="pitch-slider">
 
                         <!-- Info -->
                         <div class="row">
                             <div class="col">
-                                Target Pitch: <span id="pitch-target">0</span>°
+                                Target Pitch: <input type="number" class="form-control" id="pitch-target">
                             </div>
                             <div class="col">
                                 Current Pitch: <span id="pitch-current">0</span>°
@@ -67,7 +67,7 @@
                     </div>
                     <div class="col-md bg-info d-flex flex-column justify-content-center m-3 p-5">
                         <label for="yaw-slider" class="form-label">Yaw Slider</label>
-                        <input type="range" class="form-range" min="0" max="35" step="0.05" id="yaw-slider">
+                        <input type="range" class="form-range" min="-35" max="35" step="0.05" id="yaw-slider">
 
                         <!-- Info -->
                         <div class="row">
