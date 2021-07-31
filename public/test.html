@@ -12,7 +12,10 @@
 </head>
 
 <body class="vh-100">
+
     <div class="container-fluid">
+
+
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg bg-info navbar-light ">
             <!-- Container wrapper -->
@@ -44,78 +47,91 @@
             <!-- Container wrapper -->
         </nav>
 
-        <!-- Navbar -->
-
-        <section class="main vh-100">
-            <div class="container-fluid d-flex flex-column h-100 ">
-                <!-- Sliders -->
-                <div class="row h-75 text-center">
-                    <div class="col-md bg-info d-flex flex-column justify-content-center my-3 p-5">
-                        <label for="pitch-slider" class="form-label">Pitch Slider</label>
-                        <input type="range" class="form-range" min="-35" max="35" step="0.05" id="pitch-slider">
-
-                        <!-- Info -->
-                        <div class="row">
-                            <div class="col">
-                                Target Pitch: <input type="number" class="form-control" id="pitch-target">
-                            </div>
-                            <div class="col">
-                                Current Pitch: <span id="pitch-current">0</span>°
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md bg-info d-flex flex-column justify-content-center m-3 p-5">
-                        <label for="yaw-slider" class="form-label">Yaw Slider</label>
-                        <input type="range" class="form-range" min="-35" max="35" step="0.05" id="yaw-slider">
-
-                        <!-- Info -->
-                        <div class="row">
-                            <div class="col">
-                                Target Yaw: <span id="yaw-target">0</span>°
-                            </div>
-                            <div class="col">
-                                Current Yaw: <span id="yaw-current">0</span>°
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- Bottom Controls -->
-
-                <div class="row">
-                    <div class="col">
-                        <div class="lowerButtons d-flex justify-content-around  m-4">
-                            <div class="d-block w-100  gap-2">
-                                <button type="button" name="" id="" class="btn btn-success">Start</button>
-                                <button type="button" name="" id="" class="btn btn-danger">Stop</button>
-                                <button type="button" name="" id="" class="btn btn-primary">Info</button>
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <div class="col d-flex flex-column">
-                        <p>Longitude: <span id="longitude">2.453</span>°</p>
-                        <p>Latitude: <span id="latitude">2.453</span>°</p>
-                        <p>Pitch: <span id="pitch">2.453</span>°</p>
-                        <p>Heading: <span id="heading">2.453</span>°</p>
-                    </div>
-                </div>
-
-
-
+        <!-- Navbar End -->
+        <div aria-live="polite" aria-atomic="true" class="position-relative">
+            <!-- Position it: -->
+            <!-- - `.toast-container` for spacing between toasts -->
+            <!-- - `.position-absolute`, `top-0` & `end-0` to position the toasts in the upper right corner -->
+            <!-- - `.p-3` to prevent the toasts from sticking to the edge of the container  -->
+            <div class="toast-container position-absolute top-0 end-0 p-3">
 
 
             </div>
+        </div>
+    </div>
 
 
-        </section>
 
-        <section class="footer">
+    <section class="main vh-100">
+        <div class="container-fluid d-flex flex-column h-100 ">
+            <!-- Sliders -->
+            <div class="row h-75 text-center">
+                <div class="col-md bg-info d-flex flex-column justify-content-center my-3 p-5">
+                    <label for="pitch-slider" class="form-label">Pitch Slider</label>
+                    <input type="range" class="form-range" min="-35" max="35" step="0.05" id="pitch-slider">
 
-        </section>
+                    <!-- Info -->
+                    <div class="row">
+                        <div class="col">
+                            Target Pitch: <input type="number" class="form-control" id="pitch-target">
+                        </div>
+                        <div class="col">
+                            Current Pitch: <span id="pitch-current">0</span>°
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md bg-info d-flex flex-column justify-content-center m-3 p-5">
+                    <label for="yaw-slider" class="form-label">Yaw Slider</label>
+                    <input type="range" class="form-range" min="-35" max="35" step="0.05" id="yaw-slider">
+
+                    <!-- Info -->
+                    <div class="row">
+                        <div class="col">
+                            Target Yaw: <span id="yaw-target">0</span>°
+                        </div>
+                        <div class="col">
+                            Current Yaw: <span id="yaw-current">0</span>°
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Bottom Controls -->
+
+            <div class="row">
+                <div class="col">
+                    <div class="lowerButtons d-flex justify-content-around  m-4">
+                        <div class="d-block w-100  gap-2">
+                            <button type="button" name="" id="" class="btn btn-success">Start</button>
+                            <button type="button" name="" id="" class="btn btn-danger">Stop</button>
+                            <button type="button" name="" id="" class="btn btn-primary">Info</button>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col d-flex flex-column">
+                    <p>Longitude: <span id="longitude">2.453</span>°</p>
+                    <p>Latitude: <span id="latitude">2.453</span>°</p>
+                    <p>Pitch: <span id="pitch">2.453</span>°</p>
+                    <p>Heading: <span id="heading">2.453</span>°</p>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </section>
+
+    <section class="footer">
+
+    </section>
     </div>
 
     <!--* Scripts -->
@@ -127,8 +143,23 @@
     <script src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.js"></script>
     <script src="js/roslib.js"></script>
 
+    <script src="js/toasts.js"></script>
     <script src="js/utility.js"></script>
     <script src="js/nav-control.js"></script>
+
+
+    <!-- Toast Init -->
+    <script>
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl, {})
+        })
+
+        toastList.map(function (toast) {
+            toast.show();
+        })
+    </script>
+
 
 
 </body>

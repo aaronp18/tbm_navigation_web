@@ -1,26 +1,24 @@
 //* This file contains all the logic for the pitch and yaw sliders
 
 // * Intial ROS start
-console.log("Connecting to ROS server...")
+log("Connecting to ROS server...", true, "ROS")
 
 var ros = new ROSLIB.Ros({
     url: 'ws://localhost:9090' // Change to localhost on prod
 });
 
 ros.on('connection', function () {
-    console.log('Connected to websocket server.');
-
-    // When connected, get all values
+    log('Connected to websocket server.', true, "ROS");
 
 });
 
 ros.on('error', function (error) {
-    console.log('Error connecting to websocket server: ');
-    console.log(error);
+    log('Error connecting to websocket server: ', true, "ROS");
+    log(error, false);
 });
 
 ros.on('close', function () {
-    console.log('Connection to websocket server closed.');
+    log('Connection to websocket server closed.', true, "ROS");
 });
 
 
@@ -57,7 +55,7 @@ listenTopics.forEach(elem => {
         // Allows for different treatment for different values
         elem.updateFunction(elem.labelID, message.data);
     });
-    console.log(`Subscribed to "${elem.name}" on "${elem.topic}"`);
+    log(`Subscribed to "${elem.name}" on "${elem.topic}"`);
 
 });
 
@@ -129,7 +127,7 @@ function sendAngle(axisName, targetAngle) {
         updateAngleText(axis.currentLabel, feedback.current_angle);
     });
     goal.on('result', function (result) {
-        console.log('Reached final result!');
+        log('Reached ' + axisName + ' result: ' + round2dp(result.final_angle));
         updateAngleText(axis.currentLabel, result.final_angle);
     });
 
@@ -138,23 +136,4 @@ function sendAngle(axisName, targetAngle) {
 
 }
 
-// Updates angle text which is rounded to 2 dp
-function updateAngleText(id, value) {
 
-    // Update the Current value text
-    $(id).val(round2dp(value));
-    $(id).text(round2dp(value));
-
-    // Update and animate simulation
-    //TODO
-}
-// Sets slider postion
-function setSliderPosition(elemID, angle) {
-    $(elemID).val(angle);
-    $(elemID).trigger("change");
-}
-
-// Updates the given element with the given text
-function updateText(id, value) {
-    $(id).text(value);
-}

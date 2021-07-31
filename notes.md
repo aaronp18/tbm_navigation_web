@@ -12,7 +12,7 @@ Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it h
 - [X] Make target angle writable?
 - [ ] Add animated readout
 - [ ] Make everything offline
-- [ ] Add toast for info
+- [X] Add toast for info
 - [ ] Toggle
 - [ ] Max min vals buttons
 - [ ] Table of depth distance lat long heading etc
@@ -25,3 +25,4 @@ Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it h
 - [ ] Connect up angle readouts to ROS
 - [ ] Allow only one target / updates with new target?
 - [ ] Have param for max pitch and yaw
+- [X] Add infrastructure for listeners
