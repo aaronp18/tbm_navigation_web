@@ -24,7 +24,6 @@ ros.on('close', function () {
 
 
 
-
 // Array of listenTopics 
 var listenTopics = [
     {
@@ -104,10 +103,18 @@ for (const key in axes) {
 
         setSliderPosition(axes[key].slider, angle)
 
-    })
+    });
+
+
 
 
 }
+
+$(".angle-set-buttons").on("click", (e) => {
+    elem = $(e.target);
+    // Set slider position
+    setSliderPosition(axes[elem.data("axis")].slider, elem.data("value"));
+})
 
 
 // * Functions
