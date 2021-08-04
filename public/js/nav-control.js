@@ -58,6 +58,29 @@ listenTopics.forEach(elem => {
 
 });
 
+// * Publish Topics
+var publishTopics = {
+    "pitch-enabled": {
+        "name": "Pitch Enabled", // The user friendly name of the topic
+        "topicName": "/set_angles/pitch_enabled", // The actual topic name
+        "messageType": 'std_msgs/Bool', // The message type
+        "topic": null,
+    },
+
+};
+
+for (const key in publishTopics) {
+    var topic = new ROSLIB.Topic({
+        ros: ros,
+        name: publishTopics[key].topicName,
+        messageType: publishTopics[key].messageType,
+        latch: true,
+
+    })
+    log(`Publish initiated  "${publishTopics[key].name}" on "${publishTopics[key].topicName}"`);
+    publishTopics[key].topic = topic;
+}
+
 // * Action Clients
 
 var pitchClient = new ROSLIB.ActionClient({
@@ -78,6 +101,7 @@ var axes = {
         "targetLabel": "#pitch-target",
         "slider": "#pitch-slider",
         "currentAngleTopic": "/set_angles/current_pitch",
+        "enabled-topic": publishTopics["pitch-enabled"],
     },
     'yaw': {
         "client": yawClient,
@@ -85,6 +109,7 @@ var axes = {
         "targetLabel": "#yaw-target",
         "slider": "#yaw-slider",
         "currentAngleTopic": "/set_angles/current_yaw",
+        "enabled-topic": "/set_angles/yaw_enabled",
     },
 
 };
@@ -116,6 +141,15 @@ $(".angle-set-buttons").on("click", (e) => {
     setSliderPosition(axes[elem.data("axis")].slider, elem.data("value"));
 })
 
+$(".target-enable-button").on("click", (e) => {
+    elem = $(e.target);
+    res = elem.is(':checked') ? true : false;
+    msg = new ROSLIB.Message(res);
+
+    // Publish chanegd
+    publishTopics[elem.data("axis")].topic.publish(msg);
+
+})
 
 // * Functions
 
