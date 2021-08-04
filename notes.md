@@ -11,11 +11,13 @@ Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it h
 - [X] Add angle readouts
 - [X] Make target angle writable?
 - [ ] Add animated readout
+- [ ] Screen size updates model render
 - [ ] Make everything offline
 - [X] Add toast for info
 - [ ] Toggle
 - [X] Max min vals buttons
-- [ ] Table of depth distance lat long heading etc
+- [X] Table of depth distance lat long heading etc
+- [ ] Pretty table of values
 - [ ] Auto reconnect
 
 

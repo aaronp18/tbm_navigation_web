@@ -48,6 +48,7 @@ app.use(express.static("public"));
 // define a route handler for the default home page
 app.get("/", (req, res) => {
     res.render("main")
+
 });
 
 // start the Express server

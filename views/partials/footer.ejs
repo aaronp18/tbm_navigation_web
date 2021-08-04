@@ -7,16 +7,21 @@
 <script src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.js"></script>
 <script src="js/roslib.js"></script>
 
+<script src="js/three.js"></script>
+
 <script src="js/toasts.js"></script>
 <script src="js/utility.js"></script>
 <script src="js/nav-control.js"></script>
+
+<script src="js/animate.js"></script>
+
 
 
 <!-- Toast Init -->
 <script>
     var toastElList = [].slice.call(document.querySelectorAll('.toast'))
     var toastList = toastElList.map(function (toastEl) {
-        return new bootstrap.Toast(toastEl, option)
+        return new bootstrap.Toast(toastEl, {})
     })
 </script>
 
