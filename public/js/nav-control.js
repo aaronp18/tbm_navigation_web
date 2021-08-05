@@ -31,7 +31,7 @@ ros.on('close', function () {
 var listenTopics = [
     {
         "name": "Current Pitch", // The user friendly name of the topic
-        "topic": "/set_angles/current_pitch", // The actual topic name
+        "topic": "/set_angles/pitch/current", // The actual topic name
         "messageType": 'std_msgs/Float32', // The message type
         "labelID": "#pitch-current", // The id of the label to update
         "updateFunction": updateAngleText, // The function to use when updating the label
@@ -41,6 +41,41 @@ var listenTopics = [
         "topic": "/set_angles/longitude",
         "messageType": 'std_msgs/Float32',
         "labelID": "#longitude",
+        "updateFunction": updateText,
+    },
+    {
+        "name": "Latitude",
+        "topic": "/set_angles/latitude",
+        "messageType": 'std_msgs/Float32',
+        "labelID": "#latitude",
+        "updateFunction": updateText,
+    },
+    {
+        "name": "Pitch",
+        "topic": "/set_angles/pitch/current",
+        "messageType": 'std_msgs/Float32',
+        "labelID": "#pitch",
+        "updateFunction": updateText,
+    },
+    {
+        "name": "Heading",
+        "topic": "/set_angles/yaw/current",
+        "messageType": 'std_msgs/Float32',
+        "labelID": "#heading",
+        "updateFunction": updateText,
+    },
+    {
+        "name": "Depth",
+        "topic": "/set_angles/depth",
+        "messageType": 'std_msgs/Float32',
+        "labelID": "#depth",
+        "updateFunction": updateText,
+    },
+    {
+        "name": "Length",
+        "topic": "/set_angles/length",
+        "messageType": 'std_msgs/Float32',
+        "labelID": "#length",
         "updateFunction": updateText,
     },
 ]
@@ -65,10 +100,26 @@ listenTopics.forEach(elem => {
 var publishTopics = {
     "pitch-enabled": {
         "name": "Pitch Enabled", // The user friendly name of the topic
-        "topicName": "/set_angles/pitch_enabled", // The actual topic name
+        "topicName": "/set_angles/pitch/enabled", // The actual topic name
         "messageType": 'std_msgs/Bool', // The message type
         "topic": null,
+        "latch": false,
     },
+    "pitch-target": {
+        "name": "Pitch Target", // The user friendly name of the topic
+        "topicName": "/set_angles/pitch/target", // The actual topic name
+        "messageType": 'std_msgs/Float32', // The message type
+        "topic": null,
+        "latch": false,
+    },
+    "yaw-target": {
+        "name": "Yaw Target", // The user friendly name of the topic
+        "topicName": "/set_angles/yaw/target", // The actual topic name
+        "messageType": 'std_msgs/Float32', // The message type
+        "topic": null,
+        "latch": false,
+    },
+
 
 };
 
@@ -77,7 +128,7 @@ for (const key in publishTopics) {
         ros: ros,
         name: publishTopics[key].topicName,
         messageType: publishTopics[key].messageType,
-        latch: true,
+        latch: publishTopics[key].latch,
 
     })
     log(`Publish initiated  "${publishTopics[key].name}" on "${publishTopics[key].topicName}"`);
@@ -100,18 +151,20 @@ var yawClient = new ROSLIB.ActionClient({
 var axes = {
     'pitch': {
         "client": pitchClient,
+        "targetPublisher": publishTopics["pitch-target"].topic,
         "currentLabel": "#pitch-current",
         "targetLabel": "#pitch-target",
         "slider": "#pitch-slider",
-        "currentAngleTopic": "/set_angles/current_pitch",
+        "currentAngleTopic": "/set_angles/pitch/current",
         "enabled-topic": publishTopics["pitch-enabled"],
     },
     'yaw': {
         "client": yawClient,
+        "targetPublisher": publishTopics["yaw-target"].topic,
         "currentLabel": "#yaw-current",
         "targetLabel": "#yaw-target",
         "slider": "#yaw-slider",
-        "currentAngleTopic": "/set_angles/current_yaw",
+        "currentAngleTopic": "/set_angles/pitch/current",
         "enabled-topic": "/set_angles/yaw_enabled",
     },
 
@@ -158,8 +211,6 @@ $(".target-enable-button").on("click", (e) => {
 
 function loadParams() {
     loadAxisMinMax();
-
-
 }
 
 function loadAxisMinMax() {
@@ -213,7 +264,8 @@ function loadAxisMinMax() {
     });
 }
 
-function setElementAttr({ element = "", value = 0, attr }) {
+// Sets a given elements attrtibute with the given value
+function setElementAttr({ element = "", value, attr }) {
     // Gets the element and sets the given attributes value
     $(element).attr(attr, value)
 }
@@ -222,23 +274,28 @@ function setElementAttr({ element = "", value = 0, attr }) {
 function sendAngle(axisName, targetAngle) {
     var axis = axes[axisName];
 
-    // Init the goal with the target angle
-    var goal = new ROSLIB.Goal({
-        actionClient: axis.client,
-        goalMessage: {
-            target_angle: targetAngle
-        }
-    })
-    goal.on('feedback', function (feedback) {
-        updateAngleText(axis.currentLabel, feedback.current_angle);
-    });
-    goal.on('result', function (result) {
-        log('Reached ' + axisName + ' result: ' + round2dp(result.final_angle));
-        updateAngleText(axis.currentLabel, result.final_angle);
-    });
+    // // Init the goal with the target angle
+    // var goal = new ROSLIB.Goal({
+    //     actionClient: axis.client,
+    //     goalMessage: {
+    //         target_angle: targetAngle
+    //     }
+    // })
+    // goal.on('feedback', function (feedback) {
+    //     updateAngleText(axis.currentLabel, feedback.current_angle);
+    // });
+    // goal.on('result', function (result) {
+    //     log('Reached ' + axisName + ' result: ' + round2dp(result.final_angle));
+    //     updateAngleText(axis.currentLabel, result.final_angle);
+    // });
 
-    // Send goal
-    goal.send();
+    // // Send goal
+    // goal.send();
+
+    var msg = new ROSLIB.Message({ "data": targetAngle });
+    axes[axisName].targetPublisher.publish(msg)
+
+
 
 }
 
