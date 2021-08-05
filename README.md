@@ -1,5 +1,12 @@
+# Building
+1) `npm install` to install all of the required packages
+2) `nodemon` should start up the web server
+3) Start up the ROS bridge server
+4) Visit `ip:8080` for the website
+
+
 # Notes
-Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it has something to do with the WSL
+Currently this uses actions rather than just publishing directly to a topic so I need to do that.
 
 ## Todo
 
@@ -14,7 +21,7 @@ Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it h
 - [ ] Screen size updates model render
 - [ ] Make everything offline
 - [X] Add toast for info
-- [ ] Toggle
+- [X] Toggle
 - [X] Max min vals buttons
 - [X] Table of depth distance lat long heading etc
 - [ ] Pretty table of values
@@ -27,5 +34,8 @@ Noticed that the locahost IP is a bit iffy, so have to use actual ip? Think it h
 - [ ] Perhaps make all sliders synced up? (If refresh page, will want to keep current?)
 - [X] Connect up angle readouts to ROS
 - [ ] Allow only one target / updates with new target?
-- [ ] Have param for max pitch and yaw
+- [X] Have param for max pitch and yaw
 - [X] Add infrastructure for listeners
+- [X] ROs paramaters with min max
+- [ ] Change everything to just publish to ros topic
+- [ ] Fix enable button

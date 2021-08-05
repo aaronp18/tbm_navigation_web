@@ -1,14 +1,16 @@
 //* This file contains all the logic for the pitch and yaw sliders
 
+
 // * Intial ROS start
 log("Connecting to ROS server...", true, "ROS")
 
 var ros = new ROSLIB.Ros({
-    url: 'ws://localhost:9090' // Change to localhost on prod
+    url: 'ws://172.19.223.49:9090' // Change to localhost on prod
 });
 
 ros.on('connection', function () {
     log('Connected to websocket server.', true, "ROS");
+    loadParams();
 
 });
 
@@ -20,6 +22,7 @@ ros.on('error', function (error) {
 ros.on('close', function () {
     log('Connection to websocket server closed.', true, "ROS");
 });
+
 
 
 
@@ -152,6 +155,69 @@ $(".target-enable-button").on("click", (e) => {
 })
 
 // * Functions
+
+function loadParams() {
+    // Set slider min max
+    // ros.getParams(function (params) {
+    //     console.log(params);
+
+    // });
+
+    // Axis min / max
+    var params = [
+        {
+            "name": "pitch/max",
+            "callback": setElementAttr,
+            "args": {
+                "attr": "max",
+                "element": "#pitch-slider"
+            },
+        },
+        {
+            "name": "pitch/min",
+            "callback": setElementAttr,
+            "args": {
+                "attr": "min",
+                "element": "#pitch-slider"
+            },
+        },
+        {
+            "name": "yaw/max",
+            "callback": setElementAttr,
+            "args": {
+                "attr": "max",
+                "element": "#yaw-slider"
+            },
+        },
+        {
+            "name": "yaw/min",
+            "callback": setElementAttr,
+            "args": {
+                "attr": "min",
+                "element": "#yaw-slider"
+            },
+        },
+
+    ];
+
+    params.forEach((param) => {
+        var rosParam = new ROSLIB.Param({
+            ros: ros,
+            name: param.name
+        });
+        rosParam.get((value) => {
+            param.args.value = value;
+            param.callback(param.args)
+            log(`Parameter: ${param.name} = ${value}`)
+        })
+    })
+
+}
+
+function setElementAttr({ element = "", value = 0, attr }) {
+    // Gets the element and sets the given attributes value
+    $(element).attr(attr, value)
+}
 
 // Initialises and sets a axis goal
 function sendAngle(axisName, targetAngle) {
