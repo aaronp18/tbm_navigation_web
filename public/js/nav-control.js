@@ -157,12 +157,12 @@ $(".target-enable-button").on("click", (e) => {
 // * Functions
 
 function loadParams() {
-    // Set slider min max
-    // ros.getParams(function (params) {
-    //     console.log(params);
+    loadAxisMinMax();
 
-    // });
 
+}
+
+function loadAxisMinMax() {
     // Axis min / max
     var params = [
         {
@@ -210,8 +210,7 @@ function loadParams() {
             param.callback(param.args)
             log(`Parameter: ${param.name} = ${value}`)
         })
-    })
-
+    });
 }
 
 function setElementAttr({ element = "", value = 0, attr }) {

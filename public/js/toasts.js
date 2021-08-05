@@ -10,17 +10,28 @@ function log(text = "", showToast = true, header = "TBM Notification", delay = 5
 function createToast(body = "", header = "TBM Notification", delay = 5000) {
     let id = Math.random().toString(36).substring(2, 15);
 
-    let toastText = `<div class="toast" id="${id}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="${delay}">
-    <div class="toast-header">
-     
-      <strong class="me-auto">${header}</strong>
-      <small class="text-muted">just now</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-        ${body}
+    // let toastText = `<div class="toast" id="${id}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="${delay}">
+    // <div class="toast-header">
+
+    //   <strong class="me-auto">${header}</strong>
+    //   <small class="text-muted">just now</small>
+    //   <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    // </div>
+    // <div class="toast-body">
+    //     ${body}
+    // </div>
+    // </div>`;
+
+    // Smaller toast
+    toastText = `<div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="${id}" data-bs-delay="${delay}">
+    <div class="d-flex">
+      <div class="toast-body">
+      ${body}
+     </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>`;
+
 
     // Add to DOM
     let t = $(".toast-container").prepend(toastText);
