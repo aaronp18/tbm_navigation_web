@@ -2,6 +2,8 @@
 import express from "express";
 import winston from 'winston';
 
+import path from 'path';
+
 const app = express();
 const PORT = 8080; // default PORT to listen
 
@@ -47,7 +49,8 @@ app.use(express.static("public"));
 
 // define a route handler for the default home page
 app.get("/", (req, res) => {
-    res.render("main")
+    // res.render("main");
+    res.sendFile(path.join(__dirname, '/../public/test.html'));
 
 });
 
