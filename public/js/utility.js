@@ -38,20 +38,33 @@ function updatePositionText(id, pose) {
             "name": "Longitude",
             "labelID": "#longitude",
             "updateFunction": updateText,
-            "value": 4
+            "value": "N/A"
         },
         {
             "name": "Latitude",
             "labelID": "#latitude",
             "updateFunction": updateText,
-            "value": 4
+            "value": "N/A"
         },
         {
-            "name": "Depth",
-            "labelID": "#depth",
+            "name": "X",
+            "labelID": "#x",
+            "updateFunction": updateText,
+            "value": pose.position.x
+        },
+        {
+            "name": "Y",
+            "labelID": "#y",
+            "updateFunction": updateText,
+            "value": pose.position.y
+        },
+        {
+            "name": "Z",
+            "labelID": "#z",
             "updateFunction": updateText,
             "value": pose.position.z
         },
+
         {
             "name": "Roll",
             "labelID": "#roll",
