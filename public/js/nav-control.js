@@ -99,21 +99,21 @@ listenTopics.forEach(elem => {
 // * Publish Topics
 var publishTopics = {
     "pitch-enabled": {
-        "name": "Pitch Enabled", // The user friendly name of the topic
+        "name": "pitch-enabled",
         "topicName": "/set_angles/pitch/enabled", // The actual topic name
         "messageType": 'std_msgs/Bool', // The message type
         "topic": null,
         "latch": false,
     },
     "pitch-target": {
-        "name": "Pitch Target", // The user friendly name of the topic
+        "name": "pitch-target",
         "topicName": "/set_angles/pitch/target", // The actual topic name
         "messageType": 'std_msgs/Float32', // The message type
         "topic": null,
         "latch": false,
     },
     "yaw-target": {
-        "name": "Yaw Target", // The user friendly name of the topic
+        "name": "yaw-target",
         "topicName": "/set_angles/yaw/target", // The actual topic name
         "messageType": 'std_msgs/Float32', // The message type
         "topic": null,
@@ -151,7 +151,7 @@ var yawClient = new ROSLIB.ActionClient({
 var axes = {
     'pitch': {
         "client": pitchClient,
-        "targetPublisher": publishTopics["pitch-target"].topic,
+        "targetPublisher": publishTopics["pitch-target"],
         "currentLabel": "#pitch-current",
         "targetLabel": "#pitch-target",
         "slider": "#pitch-slider",
@@ -160,7 +160,7 @@ var axes = {
     },
     'yaw': {
         "client": yawClient,
-        "targetPublisher": publishTopics["yaw-target"].topic,
+        "targetPublisher": publishTopics["yaw-target"],
         "currentLabel": "#yaw-current",
         "targetLabel": "#yaw-target",
         "slider": "#yaw-slider",
@@ -200,10 +200,12 @@ $(".angle-set-buttons").on("click", (e) => {
 $(".target-enable-button").on("click", (e) => {
     elem = $(e.target);
     res = elem.is(':checked') ? true : false;
-    msg = new ROSLIB.Message(res);
+    //msg = new ROSLIB.Message(res);
 
     // Publish chanegd
-    publishTopics[elem.data("axis")].topic.publish(msg);
+    // publishTopics[elem.data("axis")].topic.publish(msg);
+
+    publish(publishTopics[elem.data("axis")].name, res);
 
 })
 
@@ -292,11 +294,34 @@ function sendAngle(axisName, targetAngle) {
     // // Send goal
     // goal.send();
 
-    var msg = new ROSLIB.Message({ "data": targetAngle });
-    axes[axisName].targetPublisher.publish(msg)
+
+    // var msg = new ROSLIB.Message({ "data": targetAngle });
+    // axes[axisName].targetPublisher.publish(msg)
 
 
+    // Send request to web server to publish
 
+    publish(axes[axisName].targetPublisher.name, targetAngle);
+
+
+}
+
+function publish(topicName, value) {
+    $.ajax({
+        type: "POST",
+        url: `api/publish/${topicName}/${value}`,
+        success: handleResponse
+
+    });
+}
+
+function handleResponse(response) {
+    if (response?.success) {
+        log(response?.message, false);
+    }
+    else {
+        log("ERROR: " + response?.message);
+    }
 }
 
 

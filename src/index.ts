@@ -2,43 +2,44 @@
 import express from "express";
 import winston from 'winston';
 
+
+const store = require("./store")
+const { webLogger, rosLogger } = require("./logger");
+
 import path from 'path';
+import ROSLIB from "roslib";
+
 
 const app = express();
 const PORT = 8080; // default PORT to listen
 
 // * Logging
 
-const { createLogger, format, transports } = winston;
 
-const winstonFormat = winston.format.printf(({ level, message, label, timestamp }) => {
-    return `${timestamp} [${label}] ${level}: ${message}`;
+// * Initatie ROS
+// * Intial ROS start
+
+rosLogger.info("Connecting to ROS server...")
+
+var ros = new ROSLIB.Ros({
+    url: 'ws://172.26.108.126:9090' // Change to localhost on prod
 });
 
-// Logger for the WEB component
-const webLogger = winston.createLogger({
-    format: winston.format.combine(
-        winston.format.label({ label: 'WEB' }),
-        winston.format.timestamp(),
-        winstonFormat
-    ),
-    transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: 'log.log' })
-    ]
+ros.on('connection', function () {
+    rosLogger.info('Connected to websocket server.');
+    store.initPublishers(ros);
+
 });
-// Logger for the ROS component
-const rosLogger = winston.createLogger({
-    format: winston.format.combine(
-        winston.format.label({ label: 'ROS' }),
-        winston.format.timestamp(),
-        winstonFormat
-    ),
-    transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: 'log.log' })
-    ]
+
+ros.on('error', function (error) {
+    rosLogger.error('Error connecting to websocket server: ');
+    rosLogger.error(error);
 });
+
+ros.on('close', function () {
+    rosLogger.info('Connection to websocket server closed.');
+});
+
 
 // * Express Init
 
@@ -46,6 +47,12 @@ const rosLogger = winston.createLogger({
 app.set("view engine", "ejs");
 //Sets public folder
 app.use(express.static("public"));
+
+// * Routes
+var apiRoute = require("./api");
+
+app.use("/api", apiRoute);
+
 
 // define a route handler for the default home page
 app.get("/", (req, res) => {
