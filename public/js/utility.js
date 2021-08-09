@@ -77,7 +77,7 @@ function updatePositionText(id, pose) {
         },
         {
             "name": "Pitch",
-            "labelID": "#pitch",
+            "labelID": ".pitch",
             "updateFunction": updateText,
             "value": rotation.y
         },
@@ -108,5 +108,5 @@ function calculatePosition(lat, long, dx, dy) {
 }
 
 function getOrigin() {
-    return { lat: 36.925815, long: -76.274069 }
+    return { lat: 36.925815, long: -76.274069 };
 }
