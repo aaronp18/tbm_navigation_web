@@ -97,11 +97,18 @@ listenTopics.forEach(elem => {
     }).subscribe(function (message) {
         // Uses the defined function in the listener topic
         // Allows for different treatment for different values
-        elem.updateFunction(elem.labelID, message.data);
+        if(elem.name == "Cutterhead Pose")
+            elem.updateFunction(elem.labelID, message);
+        else
+            elem.updateFunction(elem.labelID, message.data);
     });
     log(`Subscribed to "${elem.name}" on "${elem.topic}"`);
 
 });
+
+
+
+
 
 // * Publish Topics
 var publishTopics = {
