@@ -2,8 +2,9 @@
 import express from "express";
 import winston from 'winston';
 
-
 const store = require("./store")
+const { sendTelem, getTelem } = require("./sendPackets")
+
 const { webLogger, rosLogger } = require("./logger");
 
 import path from 'path';
@@ -12,6 +13,7 @@ import ROSLIB from "roslib";
 
 const app = express();
 const PORT = 8080; // default PORT to listen
+const IP = process.env.ROSWEBIP || "localhost" // IP of the rosweb server
 
 // * Logging
 
@@ -22,13 +24,19 @@ const PORT = 8080; // default PORT to listen
 rosLogger.info("Connecting to ROS server...")
 
 var ros = new ROSLIB.Ros({
-    url: 'ws://localhost:9090' // Change to localhost on prod
+    url: `ws://${IP}:9090` // Change to localhost on prod
 });
 
 ros.on('connection', function () {
     rosLogger.info('Connected to websocket server.');
     store.initPublishers(ros);
 
+    setInterval(() => {
+        // Get relavent telem
+        var telem = getTelem();
+        // Send telem
+        sendTelem(telem);
+    }, 1000);
 });
 
 ros.on('error', function (error) {
@@ -63,5 +71,5 @@ app.get("/", (req, res) => {
 
 // start the Express server
 app.listen(PORT, () => {
-    webLogger.info(`Server started at http://localhost:${PORT}`);
+    webLogger.info(`Server started at http://${IP}:${PORT}`);
 });

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package tbc;
+
+message TelemMessage {
+  message Telem {
+    message Progress {
+      double rate = 1;
+      double total = 2;
+    }
+
+    double cutterheadSpeed = 1;  // RPM
+    double cutterheadTorque = 2; // ft x lb
+    double totalThrust = 3;      // N
+    double pitch = 4;            // Radians
+
+    Progress distanceTravelled = 5; // rate: mm / s, total: m
+    Progress energyConsumption = 6; // rate: kW, total: kWh
+    Progress waterConsumption  = 7; // rate: L/s, total: L
+
+    bool on = 8; // true if the machine is powered up, false otherwise
+
+    double latitude  = 9;
+    double longitude = 10;
+    double depth     = 11; // depth below the surface in meters
+    double heading   = 12;
+  }
+
+  // A valid team code must be sent with each datapoint!
+  // Team codes will be provided to each team prior to the competition
+  int64 teamCode = 1;
+  double unixTimestamp = 2; // Floating point unix timestamp
+  Telem telem = 3;          // Telem data
+}
+

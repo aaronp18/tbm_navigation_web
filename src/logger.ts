@@ -30,9 +30,22 @@ const rosLogger = winston.createLogger({
         new winston.transports.File({ filename: 'log.log' })
     ]
 });
+// Logger for the ROS component
+const telemLogger = winston.createLogger({
+    format: winston.format.combine(
+        winston.format.label({ label: 'TELEM' }),
+        winston.format.timestamp(),
+        winstonFormat
+    ),
+    transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: 'log.log' })
+    ]
+});
 
 
 module.exports = {
     webLogger: webLogger,
     rosLogger: rosLogger,
+    telemLogger: telemLogger,
 }
