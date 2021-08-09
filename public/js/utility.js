@@ -1,4 +1,5 @@
 
+
 // Rounds to 2 decimal points
 function round2dp(num) {
     return Math.round((num + Number.EPSILON) * 100) / 100;
@@ -28,10 +29,12 @@ function updateText(id, value) {
 
 // Updates the position text
 function updatePositionText(id, pose) {
-    
+
     // Convert quart -> euler
     var quart = new THREE.Quaternion(pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w)
     var rotation = new THREE.Euler().setFromQuaternion(quart, 'XYZ');
+
+    var { lat, long } = calculatePosition(getOrigin().lat, getOrigin.long, pose.position.x, pose.position.y)
     // console.log(quart)
     var labels = [
 
@@ -39,13 +42,13 @@ function updatePositionText(id, pose) {
             "name": "Longitude",
             "labelID": "#longitude",
             "updateFunction": updateText,
-            "value": "N/A"
+            "value": lat,
         },
         {
             "name": "Latitude",
             "labelID": "#latitude",
             "updateFunction": updateText,
-            "value": "N/A"
+            "value": long,
         },
         {
             "name": "X",
@@ -92,4 +95,18 @@ function updatePositionText(id, pose) {
     })
 }
 
+// Takes orgin lat lon, and adds on the displacement to calculate the current lat long 
+function calculatePosition(lat, long, dx, dy) {
+    // https://stackoverflow.com/questions/7477003/calculating-new-longitude-latitude-from-old-n-meters
+    new_latitude = lat + (dy / r_earth) * (180 / pi);
+    new_longitude = long + (dx / r_earth) * (180 / pi) / cos(lat * pi / 180);
 
+    return {
+        lat: new_latitude,
+        long: new_longitude,
+    }
+}
+
+function getOrigin() {
+    return { lat: 36.925815, long: -76.274069 }
+}

@@ -97,7 +97,7 @@ listenTopics.forEach(elem => {
     }).subscribe(function (message) {
         // Uses the defined function in the listener topic
         // Allows for different treatment for different values
-        if(elem.name == "Cutterhead Pose")
+        if (elem.name == "Cutterhead Pose")
             elem.updateFunction(elem.labelID, message);
         else
             elem.updateFunction(elem.labelID, message.data);
@@ -286,35 +286,8 @@ function setElementAttr({ element = "", value, attr }) {
     $(element).attr(attr, value)
 }
 
-// Initialises and sets a axis goal
+// Initialises and sets a axis angle
 function sendAngle(axisName, targetAngle) {
-    var axis = axes[axisName];
-
-    // // Init the goal with the target angle
-    // var goal = new ROSLIB.Goal({
-    //     actionClient: axis.client,
-    //     goalMessage: {
-    //         target_angle: targetAngle
-    //     }
-    // })
-    // goal.on('feedback', function (feedback) {
-    //     updateAngleText(axis.currentLabel, feedback.current_angle);
-    // });
-    // goal.on('result', function (result) {
-    //     log('Reached ' + axisName + ' result: ' + round2dp(result.final_angle));
-    //     updateAngleText(axis.currentLabel, result.final_angle);
-    // });
-
-    // // Send goal
-    // goal.send();
-
-
-    // var msg = new ROSLIB.Message({ "data": targetAngle });
-    // axes[axisName].targetPublisher.publish(msg)
-
-
-    // Send request to web server to publish
-
     publish(axes[axisName].targetPublisher.name, targetAngle);
 
 
