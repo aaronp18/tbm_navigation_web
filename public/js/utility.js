@@ -28,10 +28,11 @@ function updateText(id, value) {
 
 // Updates the position text
 function updatePositionText(id, pose) {
-
+    
     // Convert quart -> euler
-    var rotation = new THREE.Euler().setFromQuaternion(pose.quaternion, 'XYZ');
-
+    var quart = new THREE.Quaternion(pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w)
+    var rotation = new THREE.Euler().setFromQuaternion(quart, 'XYZ');
+    // console.log(quart)
     var labels = [
 
         {
