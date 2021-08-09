@@ -22,7 +22,7 @@ const PORT = 8080; // default PORT to listen
 rosLogger.info("Connecting to ROS server...")
 
 var ros = new ROSLIB.Ros({
-    url: 'ws://172.26.108.126:9090' // Change to localhost on prod
+    url: 'ws://localhost:9090' // Change to localhost on prod
 });
 
 ros.on('connection', function () {
