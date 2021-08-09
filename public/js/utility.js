@@ -77,13 +77,13 @@ function updatePositionText(id, pose) {
         },
         {
             "name": "Pitch",
-            "labelID": ".pitch",
+            "labelID": ".pitch-label",
             "updateFunction": updateText,
             "value": rotation.y
         },
         {
             "name": "Yaw",
-            "labelID": "#heading",
+            "labelID": ".yaw-label",
             "updateFunction": updateText,
             "value": rotation.z
         },

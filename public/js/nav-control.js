@@ -29,55 +29,7 @@ ros.on('close', function () {
 
 // Array of listenTopics 
 var listenTopics = [
-    {
-        "name": "Current Pitch", // The user friendly name of the topic
-        "topic": "/set_angles/pitch/current", // The actual topic name
-        "messageType": 'std_msgs/Float32', // The message type
-        "labelID": "#pitch-current", // The id of the label to update
-        "updateFunction": updateAngleText, // The function to use when updating the label
-    },
-    {
-        "name": "Longitude",
-        "topic": "/set_angles/longitude",
-        "messageType": 'std_msgs/Float32',
-        "labelID": "#longitude",
-        "updateFunction": updateText,
-    },
-    {
-        "name": "Latitude",
-        "topic": "/set_angles/latitude",
-        "messageType": 'std_msgs/Float32',
-        "labelID": "#latitude",
-        "updateFunction": updateText,
-    },
-    {
-        "name": "Pitch",
-        "topic": "/set_angles/pitch/current",
-        "messageType": 'std_msgs/Float32',
-        "labelID": "#pitch",
-        "updateFunction": updateText,
-    },
-    {
-        "name": "Heading",
-        "topic": "/set_angles/yaw/current",
-        "messageType": 'std_msgs/Float32',
-        "labelID": "#heading",
-        "updateFunction": updateText,
-    },
-    {
-        "name": "Depth",
-        "topic": "/set_angles/depth",
-        "messageType": 'std_msgs/Float32',
-        "labelID": "#depth",
-        "updateFunction": updateText,
-    },
-    {
-        "name": "Length",
-        "topic": "/set_angles/length",
-        "messageType": 'std_msgs/Float32',
-        "labelID": "#length",
-        "updateFunction": updateText,
-    },
+
     {
         "name": "Cutterhead Pose",
         "topic": "/ch",
@@ -114,57 +66,33 @@ listenTopics.forEach(elem => {
 var publishTopics = {
     "pitch-enabled": {
         "name": "pitch-enabled",
-        "topicName": "/set_angles/pitch/enabled", // The actual topic name
         "messageType": 'std_msgs/Bool', // The message type
-        "topic": null,
-        "latch": false,
+
+    },
+    "yaw-enabled": {
+        "name": "yaw-enabled",
+        "messageType": 'std_msgs/Bool', // The message type
+
     },
     "pitch-target": {
         "name": "pitch-target",
-        "topicName": "/set_angles/pitch/target", // The actual topic name
         "messageType": 'std_msgs/Float32', // The message type
-        "topic": null,
-        "latch": false,
+
     },
     "yaw-target": {
         "name": "yaw-target",
-        "topicName": "/set_angles/yaw/target", // The actual topic name
         "messageType": 'std_msgs/Float32', // The message type
-        "topic": null,
-        "latch": false,
+
     },
 
 
 };
 
-for (const key in publishTopics) {
-    var topic = new ROSLIB.Topic({
-        ros: ros,
-        name: publishTopics[key].topicName,
-        messageType: publishTopics[key].messageType,
-        latch: publishTopics[key].latch,
-
-    })
-    log(`Publish initiated  "${publishTopics[key].name}" on "${publishTopics[key].topicName}"`);
-    publishTopics[key].topic = topic;
-}
-
 // * Action Clients
-
-var pitchClient = new ROSLIB.ActionClient({
-    ros: ros,
-    serverName: '/set_angles/set_pitch',
-    actionName: 'commander/SetAngleAction'
-})
-var yawClient = new ROSLIB.ActionClient({
-    ros: ros,
-    serverName: '/set_angles/set_yaw',
-    actionName: 'commander/SetAngleAction'
-})
 
 var axes = {
     'pitch': {
-        "client": pitchClient,
+
         "targetPublisher": publishTopics["pitch-target"],
         "currentLabel": "#pitch-current",
         "targetLabel": "#pitch-target",
@@ -173,13 +101,13 @@ var axes = {
         "enabled-topic": publishTopics["pitch-enabled"],
     },
     'yaw': {
-        "client": yawClient,
+
         "targetPublisher": publishTopics["yaw-target"],
         "currentLabel": "#yaw-current",
         "targetLabel": "#yaw-target",
         "slider": "#yaw-slider",
         "currentAngleTopic": "/set_angles/pitch/current",
-        "enabled-topic": "/set_angles/yaw_enabled",
+        "enabled-topic": publishTopics["yaw-enabled"],
     },
 
 };

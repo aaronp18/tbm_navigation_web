@@ -26,7 +26,21 @@ var publishRoutes: { [topicName: string]: PublishRoute } = {
         "type": "std_msgs/Bool",
         "latch": true,
         "topic": null,
-    }
+    },
+    "yaw-target": {
+        "name": "Target Yaw",
+        "topicName": "/set_angles/yaw/target",
+        "type": "std_msgs/Float32",
+        "latch": true,
+        "topic": null,
+    },
+    "yaw-enabled": {
+        "name": "Yaw Enabled",
+        "topicName": "/set_angles/yaw/enabled/",
+        "type": "std_msgs/Bool",
+        "latch": true,
+        "topic": null,
+    },
 }
 
 

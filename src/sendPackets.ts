@@ -61,7 +61,7 @@ function sendTelem(telem: TelemMessage) {
                     telemLogger.error("TELEM ERROR!!! - " + error);
                     client.close();
                 } else {
-                    console.log('Data sent !!!');
+                    // console.log('Data sent !!!');
                 }
             });
 

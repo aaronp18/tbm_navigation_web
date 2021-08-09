@@ -108,18 +108,47 @@
                     </div>
 
                 </div>
-                <div class="col-md bg-info d-flex flex-column justify-content-center m-3 p-5">
+
+
+                <div class="col-md bg-info d-flex flex-column justify-content-center my-3 p-5">
                     <label for="yaw-slider" class="form-label">Yaw Slider</label>
                     <input type="range" class="form-range" min="-35" max="35" step="0.05" id="yaw-slider">
 
                     <!-- Info -->
                     <div class="row">
                         <div class="col">
-                            Target Yaw: <span id="yaw-target">0</span>°
+                            Target Yaw: <input type="number" class="form-control" id="yaw-target">
                         </div>
                         <div class="col">
-                            Current Yaw: <span id="yaw-current">0</span>°
+                            Current Yaw: <span id="yaw-current" class="yaw-label">0</span>°
                         </div>
+                    </div>
+
+                    <div class="row my-2">
+                        <div class="col">
+                            <div class="d-grid gap-2">
+                                <button type="button" name="" id="yaw-min" data-value="-35" data-axis="yaw"
+                                    class="btn btn-primary angle-set-buttons">Min</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-grid gap-2">
+                                <button type="button" name="" id="yaw-zero" data-value="0" data-axis="yaw"
+                                    class="btn btn-primary angle-set-buttons">Zero</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-grid gap-2">
+                                <button type="button" name="" id="yaw-max" data-value="35" data-axis="yaw"
+                                    class="btn btn-primary angle-set-buttons">Max</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input target-enable-button" type="checkbox" id="yaw-enabled"
+                            data-axis="yaw-enabled">
+                        <label class="form-check-label " for="yaw-enabled">Yaw Targeting</label>
                     </div>
 
                 </div>
@@ -138,7 +167,7 @@
                     <p>Longitude: <span id="longitude">N/A</span>°</p>
                     <p>Latitude: <span id="latitude">N/A</span>°</p>
                     <p>Pitch: <span id="pitch" class="pitch-label">N/A</span>°</p>
-                    <p>Heading: <span id="heading">N/A</span>°</p>
+                    <p>Heading: <span id="heading" class="yaw-label">N/A</span>°</p>
                     <p>Roll: <span id="roll">N/A</span>°</p>
                     <p>X: <span id="x">N/A</span>m</p>
                     <p>Y: <span id="y">N/A</span>m</p>
