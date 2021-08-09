@@ -6,16 +6,17 @@
 
 # Topics, Services and Params
 ## Listeners
-|     Name      |          Topic Name          |        Type        |                                         Description                                          |
-| :-----------: | :--------------------------: | :----------------: | :------------------------------------------------------------------------------------------: |
-| Current Pitch | `/set_angles/pitch/current/` | `std_msgs/Float32` | Listens and updates the display of the current pitch. This is rounded to 2dp for the display |
-|  Current Yaw  |  `/set_angles/yaw/current/`  | `std_msgs/Float32` |                      Listens and updates the display of the current yaw                      |
-|   Longitude   |   `/set_angles/longitude`    | `std_msgs/Float32` |                                                                                              |
-|   Latitude    |    `/set_angles/latitude`    | `std_msgs/Float32` |                                                                                              |
-|     Pitch     | `/set_angles/pitch/current`  | `std_msgs/Float32` |                                                                                              |
-|    Heading    |  `/set_angles/yaw/current`   | `std_msgs/Float32` |                                                                                              |
-|     Depth     |     `/set_angles/depth`      | `std_msgs/Float32` |                                                                                              |
-|    Length     |     `/set_angles/length`     | `std_msgs/Float32` |                                                                                              |
+|     Name      |          Topic Name          |         Type         |                                         Description                                          |
+| :-----------: | :--------------------------: | :------------------: | :------------------------------------------------------------------------------------------: |
+| Current Pitch | `/set_angles/pitch/current/` |  `std_msgs/Float32`  | Listens and updates the display of the current pitch. This is rounded to 2dp for the display |
+|  Current Yaw  |  `/set_angles/yaw/current/`  |  `std_msgs/Float32`  |                      Listens and updates the display of the current yaw                      |
+|   Longitude   |   `/set_angles/longitude`    |  `std_msgs/Float32`  |                                                                                              |
+|   Latitude    |    `/set_angles/latitude`    |  `std_msgs/Float32`  |                                                                                              |
+|     Pitch     | `/set_angles/pitch/current`  |  `std_msgs/Float32`  |                                                                                              |
+|    Heading    |  `/set_angles/yaw/current`   |  `std_msgs/Float32`  |                                                                                              |
+|     Depth     |     `/set_angles/depth`      |  `std_msgs/Float32`  |                                                                                              |
+|    Length     |     `/set_angles/length`     |  `std_msgs/Float32`  |                                                                                              |
+|     Pose      |            `/ch`             | `geometry_msgs/Pose` |                  Has both the position and orientation of the cutter head.                   |
 ## Publishers
 |     Name      |          Topic Name          |        Type        |                                              Description                                               |
 | :-----------: | :--------------------------: | :----------------: | :----------------------------------------------------------------------------------------------------: |
@@ -54,6 +55,7 @@ Currently this uses actions rather than just publishing directly to a topic so I
 - [X] Table of depth distance lat long heading etc
 - [ ] Pretty table of values
 - [ ] Auto reconnect
+- [ ] Make IP env value
 
 
 ### ROS Integration

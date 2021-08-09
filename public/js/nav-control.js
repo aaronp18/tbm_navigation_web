@@ -5,7 +5,7 @@
 log("Connecting to ROS server...", true, "ROS")
 
 var ros = new ROSLIB.Ros({
-    url: 'ws://172.19.223.49:9090' // Change to localhost on prod
+    url: 'ws://localhost:9090' // Change to localhost on prod
 });
 
 ros.on('connection', function () {
@@ -77,6 +77,13 @@ var listenTopics = [
         "messageType": 'std_msgs/Float32',
         "labelID": "#length",
         "updateFunction": updateText,
+    },
+    {
+        "name": "Cutterhead Pose",
+        "topic": "/ch",
+        "messageType": 'geometry_msgs/Pose',
+        "labelID": "#length",
+        "updateFunction": updatePositionText,
     },
 ]
 

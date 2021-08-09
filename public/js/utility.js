@@ -26,4 +26,56 @@ function updateText(id, value) {
     $(id).text(value);
 }
 
+// Updates the position text
+function updatePositionText(id, pose) {
+
+    // Convert quart -> euler
+    var rotation = new THREE.Euler().setFromQuaternion(pose.quaternion, 'XYZ');
+
+    var labels = [
+
+        {
+            "name": "Longitude",
+            "labelID": "#longitude",
+            "updateFunction": updateText,
+            "value": 4
+        },
+        {
+            "name": "Latitude",
+            "labelID": "#latitude",
+            "updateFunction": updateText,
+            "value": 4
+        },
+        {
+            "name": "Depth",
+            "labelID": "#depth",
+            "updateFunction": updateText,
+            "value": pose.position.z
+        },
+        {
+            "name": "Roll",
+            "labelID": "#roll",
+            "updateFunction": updateText,
+            "value": rotation.x
+        },
+        {
+            "name": "Pitch",
+            "labelID": "#pitch",
+            "updateFunction": updateText,
+            "value": rotation.y
+        },
+        {
+            "name": "Yaw",
+            "labelID": "#heading",
+            "updateFunction": updateText,
+            "value": rotation.z
+        },
+
+    ];
+
+    labels.forEach((elem) => {
+        elem.updateFunction(elem.labelID, elem.value)
+    })
+}
+
 
