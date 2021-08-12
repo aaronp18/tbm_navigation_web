@@ -1,5 +1,7 @@
 //* This file contains all the logic for the pitch and yaw sliders
 
+let isReconnecting = false;
+const rosURL = 'ws://localhost:9090';
 
 // * Intial ROS start
 log("Connecting to ROS server...", true, "ROS")
@@ -19,8 +21,24 @@ ros.on('error', function (error) {
     log(error, false);
 });
 
+
 ros.on('close', function () {
-    log('Connection to websocket server closed.', true, "ROS");
+    log('Connection to websocket server closed. Waiting before retrying...', true, "ROS", 3000);
+    // Retry connect on close every 5 seconds
+    if (isReconnecting)
+        return;
+
+    isReconnecting = true;
+    let reconnectID = setInterval(() => {
+        log("Retrying connection to " + rosURL, true, "ROS", 3000)
+        ros.connect(rosURL)
+        ros.on("connection", () => {
+            // Kill reconnect interval
+            clearInterval(reconnectID);
+            isReconnecting = false;
+            log("Killed reconnect");
+        })
+    }, 10000);
 });
 
 

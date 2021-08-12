@@ -23,8 +23,11 @@ const IP = process.env.ROSWEBIP || "localhost" // IP of the rosweb server
 
 rosLogger.info("Connecting to ROS server...")
 
+const rosURL = `ws://${IP}:9090`;
+let isReconnecting = false;
+
 var ros = new ROSLIB.Ros({
-    url: `ws://${IP}:9090` // Change to localhost on prod
+    url: rosURL,
 });
 
 ros.on('connection', function () {
@@ -37,15 +40,32 @@ ros.on('connection', function () {
         // Send telem
         sendTelem(telem);
     }, 1000);
+
+
 });
 
 ros.on('error', function (error) {
-    rosLogger.error('Error connecting to websocket server: ');
     rosLogger.error(error);
 });
 
 ros.on('close', function () {
-    rosLogger.info('Connection to websocket server closed.');
+    rosLogger.info('Connection to websocket server closed. Waiting before retrying...');
+
+    // Retry connect on close every 5 seconds
+    if (isReconnecting)
+        return;
+
+    isReconnecting = true;
+    let reconnectID = setInterval(() => {
+        rosLogger.info(" == Retrying connection to " + rosURL)
+        ros.connect(rosURL)
+        ros.on("connection", () => {
+            // Kill reconnect interval
+            clearInterval(reconnectID);
+            isReconnecting = false;
+            rosLogger.info("Killed reconnect");
+        })
+    }, 10000);
 });
 
 
