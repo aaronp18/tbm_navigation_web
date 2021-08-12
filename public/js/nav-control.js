@@ -13,6 +13,7 @@ var ros = new ROSLIB.Ros({
 ros.on('connection', function () {
     log('Connected to websocket server.', true, "ROS");
     loadParams();
+    loadListeners();
 
 });
 
@@ -43,8 +44,6 @@ ros.on('close', function () {
 
 
 
-
-
 // Array of listenTopics 
 var listenTopics = [
 
@@ -55,30 +54,7 @@ var listenTopics = [
         "labelID": "#length",
         "updateFunction": updatePositionText,
     },
-]
-
-// Iterate and subscribe to each topic
-listenTopics.forEach(elem => {
-    // Init a new topic and subscribe to it
-    new ROSLIB.Topic({
-        ros: ros,
-        name: elem.topic,
-        messageType: elem.messageType
-    }).subscribe(function (message) {
-        // Uses the defined function in the listener topic
-        // Allows for different treatment for different values
-        if (elem.name == "Cutterhead Pose")
-            elem.updateFunction(elem.labelID, message);
-        else
-            elem.updateFunction(elem.labelID, message.data);
-    });
-    log(`Subscribed to "${elem.name}" on "${elem.topic}"`);
-
-});
-
-
-
-
+];
 
 // * Publish Topics
 var publishTopics = {
@@ -106,8 +82,6 @@ var publishTopics = {
 
 };
 
-// * Action Clients
-
 var axes = {
     'pitch': {
 
@@ -130,26 +104,7 @@ var axes = {
 
 };
 
-// Iterates through each axis and carries out relevant initialisation
-for (const key in axes) {
 
-    $(axes[key].slider).on("change", (elem) => {
-        let angle = parseFloat($(elem.currentTarget).val());
-
-        updateAngleText(axes[key].targetLabel, angle);
-        sendAngle(key, angle);
-    })
-    $(axes[key].targetLabel).on("change", (elem) => {
-        let angle = parseFloat($(elem.currentTarget).val());
-
-        setSliderPosition(axes[key].slider, angle)
-
-    });
-
-
-
-
-}
 
 $(".angle-set-buttons").on("click", (e) => {
     elem = $(e.target);
@@ -160,16 +115,56 @@ $(".angle-set-buttons").on("click", (e) => {
 $(".target-enable-button").on("click", (e) => {
     elem = $(e.target);
     res = elem.is(':checked') ? true : false;
-    //msg = new ROSLIB.Message(res);
-
-    // Publish chanegd
-    // publishTopics[elem.data("axis")].topic.publish(msg);
 
     publish(publishTopics[elem.data("axis")].name, res);
 
 })
 
 // * Functions
+
+function loadListeners() {
+
+
+    // Iterate and subscribe to each topic
+    listenTopics.forEach(elem => {
+        // Init a new topic and subscribe to it
+        new ROSLIB.Topic({
+            ros: ros,
+            name: elem.topic,
+            messageType: elem.messageType
+        }).subscribe(function (message) {
+            // Uses the defined function in the listener topic
+            // Allows for different treatment for different values
+            if (elem.name == "Cutterhead Pose")
+                elem.updateFunction(elem.labelID, message);
+            else
+                elem.updateFunction(elem.labelID, message.data);
+        });
+        log(`Subscribed to "${elem.name}" on "${elem.topic}"`);
+
+    });
+
+    // Iterates through each axis and carries out relevant initialisation
+    for (const key in axes) {
+
+        $(axes[key].slider).on("change", (elem) => {
+            let angle = parseFloat($(elem.currentTarget).val());
+
+            updateAngleText(axes[key].targetLabel, angle);
+            sendAngle(key, angle);
+        })
+        $(axes[key].targetLabel).on("change", (elem) => {
+            let angle = parseFloat($(elem.currentTarget).val());
+
+            setSliderPosition(axes[key].slider, angle)
+
+        });
+
+
+
+
+    }
+}
 
 function loadParams() {
     loadAxisMinMax();

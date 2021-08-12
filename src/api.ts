@@ -19,7 +19,7 @@ router.post("/publish/:key/:value", (req, res) => {
         if (req.params.key in publishRoutes) {
             let msg = new ROSLIB.Message(req.params.value);
             publishRoutes[req.params.key].topic.publish(msg);
-            rosLogger.info(`Published ${req.params.value} to ${req.params.value}`);
+            rosLogger.info(`Published ${req.params.value} to ${publishRoutes[req.params.key].name}`);
             res.send({
                 success: true,
                 message: `Published ${req.params.value} to ${publishRoutes[req.params.key].name}`,
