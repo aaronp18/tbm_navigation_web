@@ -42,6 +42,22 @@ var publishRoutes: { [topicName: string]: PublishRoute } = {
         "topic": null,
     },
 }
+type ListenerTopic = {
+    name: string,
+    topicName: string,
+    type: string,
+    value: any,
+}
+
+var listenerTopics: { [topicName: string]: ListenerTopic } = {
+    "cutterheadSpeed": {
+        "name": "Speed of the Cutterhead RPM",
+        "topicName": "/telem/cutterheadSpeed",
+        "type": "std_msgs/Float32",
+        "value": null,
+    },
+
+}
 
 
 function initPublishers(ros: any) {
@@ -67,7 +83,23 @@ function initPublishers(ros: any) {
 }
 
 
+function initListeners(ros: any) {
+    Object.entries(listenerTopics).forEach(
+        ([key, value]) => {
+            var topic = new ROSLIB.Topic({
+                ros: ros,
+                name: value.topicName,
+                messageType: value.type,
+            });
+
+            rosLogger.info(`Listen initiated  "${value.name}" on "${value.topicName}"`);
+        }
+    );
+}
+
+
 module.exports = {
     publishRoutes: publishRoutes,
     initPublishers: initPublishers,
+    initListeners: initListeners,
 }

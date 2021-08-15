@@ -73,6 +73,7 @@ function sendTelem(telem: TelemMessage) {
 
 // Gets the telemetry data and returns in a formatted object
 function getTelem(): TelemMessage {
+
     return {
         "teamCode": 1,
         "unixTimestamp": 1.0,

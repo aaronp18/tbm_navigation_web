@@ -18,8 +18,8 @@ const IP = process.env.ROSWEBIP || "localhost" // IP of the rosweb server
 // * Logging
 
 
-// * Initatie ROS
-// * Intial ROS start
+// * Initiate ROS
+// * Initial ROS start
 
 rosLogger.info("Connecting to ROS server...")
 
@@ -33,6 +33,7 @@ var ros = new ROSLIB.Ros({
 ros.on('connection', function () {
     rosLogger.info('Connected to websocket server.');
     store.initPublishers(ros);
+    store.initListeners(ros);
 
     setInterval(() => {
         // Get relavent telem
