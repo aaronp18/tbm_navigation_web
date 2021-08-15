@@ -92,7 +92,14 @@ function updatePositionText(id, pose) {
 
     labels.forEach((elem) => {
         elem.updateFunction(elem.labelID, elem.value)
-    })
+    });
+
+
+    // Update both current values
+    axes.pitch["current-value"] = rotation.y;
+    axes.yaw["current-value"] = rotation.z;
+
+
 }
 
 // Takes orgin lat lon, and adds on the displacement to calculate the current lat long 

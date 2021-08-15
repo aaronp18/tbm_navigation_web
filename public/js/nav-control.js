@@ -3,6 +3,7 @@
 let isReconnecting = false;
 const rosURL = 'ws://localhost:9090';
 
+
 // * Intial ROS start
 log("Connecting to ROS server...", true, "ROS")
 
@@ -90,6 +91,7 @@ var axes = {
         "targetLabel": "#pitch-target",
         "slider": "#pitch-slider",
         "currentAngleTopic": "/set_angles/pitch/current",
+        "current-value": null,
         "enabled-topic": publishTopics["pitch-enabled"],
     },
     'yaw': {
@@ -99,6 +101,7 @@ var axes = {
         "targetLabel": "#yaw-target",
         "slider": "#yaw-slider",
         "currentAngleTopic": "/set_angles/pitch/current",
+        "current-value": null,
         "enabled-topic": publishTopics["yaw-enabled"],
     },
 
@@ -229,7 +232,9 @@ function setElementAttr({ element = "", value, attr }) {
 
 // Initialises and sets a axis angle
 function sendAngle(axisName, targetAngle) {
-    publish(axes[axisName].targetPublisher.name, targetAngle);
+
+    let change = targetAngle - axes[axisName].currentValue;
+    publish(axes[axisName].targetPublisher.name, change);
 
 
 }
