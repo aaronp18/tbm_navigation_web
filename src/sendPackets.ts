@@ -73,10 +73,9 @@ function sendTelem(telem: TelemMessage) {
 
 // Gets the telemetry data and returns in a formatted object
 function getTelem(): TelemMessage {
-
     return {
         "teamCode": 1,
-        "unixTimestamp": 1.0,
+        "unixTimestamp": Date.now(), // Gets the current UNIX timestamp
         "telem": {
             "cutterheadSpeed": 1,  // RPM
             "cutterheadTorque": 1, // ft x lb

@@ -31,8 +31,7 @@ function updateText(id, value) {
 function updatePositionText(id, pose) {
 
     // Convert quart -> euler
-    var quart = new THREE.Quaternion(pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w)
-    var rotation = new THREE.Euler().setFromQuaternion(quart, 'XYZ');
+    var rotation = getRotationFromPose(pose);
 
     var { lat, long } = calculatePosition(getOrigin().lat, getOrigin.long, pose.position.x, pose.position.y)
     // console.log(quart)
@@ -100,6 +99,14 @@ function updatePositionText(id, pose) {
     axes.yaw["current-value"] = rotation.z;
 
 
+
+}
+
+// Converts the pose quart orientation to radiens
+function getRotationFromPose(pose) {
+    var quart = new THREE.Quaternion(pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w);
+    var rotation = new THREE.Euler().setFromQuaternion(quart, 'XYZ');
+    return rotation;
 }
 
 // Takes orgin lat lon, and adds on the displacement to calculate the current lat long 
@@ -116,4 +123,9 @@ function calculatePosition(lat, long, dx, dy) {
 
 function getOrigin() {
     return { lat: 36.925815, long: -76.274069 };
+}
+
+// Creates a new label html for a topic and returns the html
+function createNewLabel(name, id) {
+    return `<p>${name}: <span id=${id}>N/A</span></p>`
 }

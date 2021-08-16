@@ -8,7 +8,8 @@ function log(text = "", showToast = true, header = "TBM Notification", delay = 2
 
 // Creates a toast and adds it to the stack
 function createToast(body = "", header = "TBM Notification", delay = 2000) {
-  let id = Math.random().toString(36).substring(2, 15);
+
+  let id = generateRandomID();
 
   // Smaller toast
   toastText = `<div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="${id}" data-bs-delay="${delay}">
@@ -34,4 +35,8 @@ function createToast(body = "", header = "TBM Notification", delay = 2000) {
   toast.show();
 
 
+}
+
+function generateRandomID() {
+  return Math.random().toString(36).substring(2, 15);
 }

@@ -46,16 +46,119 @@ ros.on('close', function () {
 
 
 // Array of listenTopics 
+/**
+ * id: ID for getting later if required
+ * name: User friendly name of the topic
+ * topic: the topic address
+ * messageType: A string of the message type eg: std_msgs/Float32
+ * labelID: The id to be passed to the updatefunction. (Optional if programmed)
+ * updateFunction(labelID, data): The function that is called with the new data. The data is extracted using getData() .
+ * lastData: The last data received. Is null if no data
+ * getData(message): Returns the required data from the message and passes it to the updateFunction. (Optional, otherwise the message is passed directly.)
+ * disablePrint: [TODO]
+ */
 var listenTopics = [
 
     {
+        "id": "cutterheadPose",
         "name": "Cutterhead Pose",
         "topic": "/ch",
         "messageType": 'geometry_msgs/Pose',
         "labelID": "#length",
         "updateFunction": updatePositionText,
-        "lastMsg": null, // The last message sent
-        "getMsg": (message) => message.data, // The method to run to get the data from the publish (so can filter out header etc if needed)
+        "getData": (message) => message.data, // The method to run to get the data from the publish (so can filter out header etc if needed)
+    },
+    {
+        "id": "cutterheadSpeed",
+        "name": "Cutterhead Seed (RPM)",
+        "topic": "/ch/speed",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+    },
+    {
+        "id": "cutterheadTorque",
+        "name": "Cutterhead Torque (ft x lb)",
+        "topic": "/ch/torque",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
+    },
+    {
+        "id": "totalThrust",
+        "name": "Total Thrust (N)",
+        "topic": "/tbm/thrust",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
+    },
+
+    // Rates
+    {
+        "id": "distanceTravelledRate",
+        "name": "Distance Travelled Rate (mm/s)",
+        "topic": "/tbm/telem/distance/rate",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
+    },
+    {
+        "id": "distanceTravelledTotal",
+        "name": "Distance Travelled Total (m)",
+        "topic": "/tbm/telem/distance/total",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
+    },
+
+    {
+        "id": "energyConsumptionRate",
+        "name": "Energy Consumption Rate (kW)",
+        "topic": "/tbm/telem/energy/rate",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
+    },
+    {
+        "id": "energyConsumptionTotal",
+        "name": "Energy Consumption Total (kWh)",
+        "topic": "/tbm/telem/energy/total",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
+    },
+    {
+        "id": "waterConsumptionRate",
+        "name": "Water Consumption Rate (L/s)",
+        "topic": "/tbm/telem/water/rate",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
+    },
+    {
+        "id": "waterConsumptionTotal",
+        "name": "Water Consumption Total (L)",
+        "topic": "/tbm/telem/water/total",
+        "messageType": 'std_msgs/Float32',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
+    },
+    {
+        "id": "on",
+        "name": "TBM Status",
+        "topic": "/tbm/status",
+        "messageType": 'std_msgs/Bool',
+        "labelID": undefined, //
+        "updateFunction": updateText,
+
     },
 ];
 
@@ -125,6 +228,8 @@ $(".target-enable-button").on("click", (e) => {
 
 })
 
+
+
 // * Functions
 
 function loadListeners() {
@@ -132,6 +237,14 @@ function loadListeners() {
 
     // Iterate and subscribe to each topic
     listenTopics.forEach(elem => {
+        // Generate label ID if none exists
+        if (elem.labelID === undefined)
+            elem.labelID = generateRandomID();
+
+        // Create label for it in the listeners and add it to the dom
+        $("#listenDiv").append(createNewLabel(elem.name, elem.labelID))
+
+
         // Init a new topic and subscribe to it
         new ROSLIB.Topic({
             ros: ros,
@@ -143,16 +256,16 @@ function loadListeners() {
             let data;
 
             // Extract required data
-            if (elem.getMsg === undefined)
+            if (elem.getData === undefined)
                 data = message;
             else
-                data = elem.getMsg(message);
+                data = elem.getData(message);
 
             elem.updateFunction(elem.labelID, data);
 
 
             // Save data to object for last received
-            elem.lastMsg = data;
+            elem.lastData = data;
 
         });
         log(`Subscribed to "${elem.name}" on "${elem.topic}"`);
