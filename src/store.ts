@@ -42,19 +42,87 @@ var publishRoutes: { [topicName: string]: PublishRoute } = {
         "topic": null,
     },
 }
+/**
+ * name: User friendly name of the topic
+ * topic: the topic address
+ * messageType: A string of the message type eg: std_msgs/Float32
+ * lastData: The last data received. Is null if no data
+ 
+ */
 type ListenerTopic = {
     name: string,
-    topicName: string,
+    topic: string,
     type: string,
-    value: any,
+    lastData?: any,
+
 }
 
-var listenerTopics: { [topicName: string]: ListenerTopic } = {
+var listenerTopics: { [id: string]: ListenerTopic } = {
+    "cutterheadPose": {
+        "name": "Cutterhead Pose",
+        "topic": "/ch",
+        "type": "geometry_msgs/Pose",
+        "lastData": null,
+    },
     "cutterheadSpeed": {
-        "name": "Speed of the Cutterhead RPM",
-        "topicName": "/telem/cutterheadSpeed",
+        "name": "Cutterhead Seed (RPM)",
+        "topic": "/ch/speed",
         "type": "std_msgs/Float32",
-        "value": null,
+        "lastData": null,
+    },
+    "cutterheadTorque": {
+        "name": "Cutterhead Torque (ft x lb)",
+        "topic": "/ch/torque",
+        "type": "std_msgs/Float32",
+        "lastData": null,
+    },
+    "totalThrust": {
+        "name": "Total Thrust (N)",
+        "topic": "/tbm/thrust",
+        "type": "std_msgs/Float32",
+        "lastData": null,
+    },
+    "distanceTravelledRate": {
+        "name": "Distance Travelled Rate (mm/s)",
+        "topic": "/tbm/telem/distance/rate",
+        "type": "std_msgs/Float32",
+        "lastData": null,
+    },
+    "distanceTravelledTotal": {
+        "name": "Distance Travelled Total (m)",
+        "topic": "/tbm/telem/distance/total",
+        "type": "std_msgs/Float32",
+        "lastData": null,
+    },
+    "energyConsumptionRate": {
+        "name": "Energy Consumption Rate (kW)",
+        "topic": "/tbm/telem/energy/rate",
+        "type": "std_msgs/Float32",
+        "lastData": null,
+    },
+    "energyConsumptionTotal": {
+        "name": "Energy Consumption Total (kWh)",
+        "topic": "/tbm/telem/energy/total",
+        "type": "std_msgs/Float32",
+        "lastData": null,
+    },
+    "waterConsumptionRate": {
+        "name": "Water Consumption Rate (L/s)",
+        "topic": "/tbm/telem/water/rate",
+        "type": "std_msgs/Float32",
+        "lastData": null,
+    },
+    "waterConsumptionTotal": {
+        "name": "Water Consumption Total (L)",
+        "topic": "/tbm/telem/water/total",
+        "type": "std_msgs/Float32",
+        "lastData": null,
+    },
+    "on": {
+        "name": "TBM Status",
+        "topic": "/tbm/status",
+        "type": "std_msgs/Bool",
+        "lastData": null,
     },
 
 }
@@ -88,11 +156,15 @@ function initListeners(ros: any) {
         ([key, value]) => {
             var topic = new ROSLIB.Topic({
                 ros: ros,
-                name: value.topicName,
+                name: value.topic,
                 messageType: value.type,
             });
 
-            rosLogger.info(`Listen initiated  "${value.name}" on "${value.topicName}"`);
+            topic.subscribe((message) => {
+                value.lastData = message;
+            })
+
+            rosLogger.info(`Listen initiated  "${value.name}" on "${value.topic}"`);
         }
     );
 }
@@ -102,4 +174,5 @@ module.exports = {
     publishRoutes: publishRoutes,
     initPublishers: initPublishers,
     initListeners: initListeners,
+    listenerTopics: listenerTopics,
 }

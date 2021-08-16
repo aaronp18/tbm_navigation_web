@@ -242,8 +242,14 @@ function loadListeners() {
             elem.labelID = generateRandomID();
 
 
+        let temp = `<p>"${elem.id}": {
+            "name": "${elem.name}",
+            "topic": "${elem.topic}",
+            "type": "${elem.messageType}",
+        }, </p> `
         // Create label for it in the listeners and add it to the dom
-        $("#listenDiv").append(createNewLabel(elem.name, elem.labelID))
+        // $("#listenDiv").append(createNewLabel(elem.name, elem.labelID))
+        $("#listenDiv").append(temp)
 
 
 

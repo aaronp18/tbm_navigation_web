@@ -1,6 +1,7 @@
 import protobuf from "protobufjs";
 
 let { webLogger, rosLogger, telemLogger } = require("./logger");
+let { listenerTopics } = require("./store");
 
 import udp from "dgram"
 var client = udp.createSocket('udp4');
@@ -8,6 +9,8 @@ var client = udp.createSocket('udp4');
 // Connection details for the boring
 const TELEMIP = 'localhost';
 const TELEMPORT = 2222;
+
+const TEAMID = 1;
 
 // Telemetry Type
 type TelemJS = {
@@ -61,7 +64,7 @@ function sendTelem(telem: TelemMessage) {
                     telemLogger.error("TELEM ERROR!!! - " + error);
                     client.close();
                 } else {
-                    // console.log('Data sent !!!');
+                    console.log(message.toJSON());
                 }
             });
 
@@ -74,30 +77,30 @@ function sendTelem(telem: TelemMessage) {
 // Gets the telemetry data and returns in a formatted object
 function getTelem(): TelemMessage {
     return {
-        "teamCode": 1,
+        "teamCode": TEAMID,
         "unixTimestamp": Date.now(), // Gets the current UNIX timestamp
         "telem": {
-            "cutterheadSpeed": 1,  // RPM
-            "cutterheadTorque": 1, // ft x lb
-            "totalThrust": 1,      // N
-            "pitch": 1,            // Radians
+            "cutterheadSpeed": listenerTopics.cutterheadSpeed.lastData,  // RPM
+            "cutterheadTorque": listenerTopics.cutterheadTorque.lastData, // ft x lb
+            "totalThrust": listenerTopics.totalThrust.lastData,      // N
+            "pitch": null,            // Radians
             "distanceTravelled": { // rate: mm / s, total: m
-                "rate": 1,
-                "total": 1,
+                "rate": listenerTopics.distanceTravelledRate.lastData,
+                "total": listenerTopics.distanceTravelledTotal.lastData,
             },
             "energyConsumption": { // rate: kW, total: kWh
-                "rate": 1,
-                "total": 1,
+                "rate": listenerTopics.energyConsumptionRate.lastData,
+                "total": listenerTopics.energyConsumptionTotal.lastData,
             },
             "waterConsumption": { // rate: L/s, total: L
-                "rate": 1,
-                "total": 1,
+                "rate": listenerTopics.waterConsumptionRate.lastData,
+                "total": listenerTopics.waterConsumptionTotal.lastData,
             },
-            "on": true, // true if the machine is powered up, false otherwise
-            "latitude": 1,
-            "longitude": 1,
-            "depth": 1, // depth below the surface in meters
-            "heading": 1,
+            "on": listenerTopics.on.lastData, // true if the machine is powered up, false otherwise
+            "latitude": null,
+            "longitude": null,
+            "depth": null, // depth below the surface in meters
+            "heading": null,
 
         }
     }
