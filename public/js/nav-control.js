@@ -54,6 +54,8 @@ var listenTopics = [
         "messageType": 'geometry_msgs/Pose',
         "labelID": "#length",
         "updateFunction": updatePositionText,
+        "last": null,
+        "getMsg": (message) => message.data, // The method to run to get the data from the publish (so can filter out header etc if needed)
     },
 ];
 
@@ -138,10 +140,10 @@ function loadListeners() {
         }).subscribe(function (message) {
             // Uses the defined function in the listener topic
             // Allows for different treatment for different values
-            if (elem.name == "Cutterhead Pose")
-                elem.updateFunction(elem.labelID, message);
-            else
-                elem.updateFunction(elem.labelID, message.data);
+            let data;
+
+            if (elem.getMsg != undefined)
+                data = elem?.getMsg(message) || message;
         });
         log(`Subscribed to "${elem.name}" on "${elem.topic}"`);
 
