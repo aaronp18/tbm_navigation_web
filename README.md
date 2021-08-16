@@ -6,17 +6,29 @@
 
 # Topics, Services and Params
 ## Listeners
-|     Name      |          Topic Name          |         Type         |                                         Description                                          |
-| :-----------: | :--------------------------: | :------------------: | :------------------------------------------------------------------------------------------: |
-| Current Pitch | `/set_angles/pitch/current/` |  `std_msgs/Float32`  | Listens and updates the display of the current pitch. This is rounded to 2dp for the display |
-|  Current Yaw  |  `/set_angles/yaw/current/`  |  `std_msgs/Float32`  |                      Listens and updates the display of the current yaw                      |
-|   Longitude   |   `/set_angles/longitude`    |  `std_msgs/Float32`  |                                                                                              |
-|   Latitude    |    `/set_angles/latitude`    |  `std_msgs/Float32`  |                                                                                              |
-|     Pitch     | `/set_angles/pitch/current`  |  `std_msgs/Float32`  |                                                                                              |
-|    Heading    |  `/set_angles/yaw/current`   |  `std_msgs/Float32`  |                                                                                              |
-|     Depth     |     `/set_angles/depth`      |  `std_msgs/Float32`  |                                                                                              |
-|    Length     |     `/set_angles/length`     |  `std_msgs/Float32`  |                                                                                              |
-|     Pose      |            `/ch`             | `geometry_msgs/Pose` |                  Has both the position and orientation of the cutter head.                   |
+|              Name              |          Topic Name          |         Type         |                                         Description                                          |
+| :----------------------------: | :--------------------------: | :------------------: | :------------------------------------------------------------------------------------------: |
+|         Current Pitch          | `/set_angles/pitch/current/` |  `std_msgs/Float32`  | Listens and updates the display of the current pitch. This is rounded to 2dp for the display |
+|          Current Yaw           |  `/set_angles/yaw/current/`  |  `std_msgs/Float32`  |                      Listens and updates the display of the current yaw                      |
+|           Longitude            |   `/set_angles/longitude`    |  `std_msgs/Float32`  |                                                                                              |
+|            Latitude            |    `/set_angles/latitude`    |  `std_msgs/Float32`  |                                                                                              |
+|             Pitch              | `/set_angles/pitch/current`  |  `std_msgs/Float32`  |                                                                                              |
+|            Heading             |  `/set_angles/yaw/current`   |  `std_msgs/Float32`  |                                                                                              |
+|             Depth              |     `/set_angles/depth`      |  `std_msgs/Float32`  |                                                                                              |
+|             Length             |     `/set_angles/length`     |  `std_msgs/Float32`  |                                                                                              |
+|              Pose              |            `/ch`             | `geometry_msgs/Pose` |                  Has both the position and orientation of the cutter head.                   |
+|      **Telemetry Topics**      |
+|        Cutterhead Pose         |            `/ch`             | `geometry_msgs/Pose` |                                     ID: `cutterheadPose`                                     |
+|     Cutterhead Seed (RPM)      |         `/ch/speed`          |  `std_msgs/Float32`  |                                    ID: `cutterheadSpeed`                                     |
+|  Cutterhead Torque (ft x lb)   |         `/ch/torque`         |  `std_msgs/Float32`  |                                    ID: `cutterheadTorque`                                    |
+|        Total Thrust (N)        |        `/tbm/thrust`         |  `std_msgs/Float32`  |                                      ID: `totalThrust`                                       |
+| Distance Travelled Rate (mm/s) |  `/tbm/telem/distance/rate`  |  `std_msgs/Float32`  |                                 ID: `distanceTravelledRate`                                  |
+|  Distance Travelled Total (m)  | `/tbm/telem/distance/total`  |  `std_msgs/Float32`  |                                 ID: `distanceTravelledTotal`                                 |
+|  Energy Consumption Rate (kW)  |   `/tbm/telem/energy/rate`   |  `std_msgs/Float32`  |                                 ID: `energyConsumptionRate`                                  |
+| Energy Consumption Total (kWh) |  `/tbm/telem/energy/total`   |  `std_msgs/Float32`  |                                 ID: `energyConsumptionTotal`                                 |
+|  Water Consumption Rate (L/s)  |   `/tbm/telem/water/rate`    |  `std_msgs/Float32`  |                                  ID: `waterConsumptionRate`                                  |
+|  Water Consumption Total (L)   |   `/tbm/telem/water/total`   |  `std_msgs/Float32`  |                                 ID: `waterConsumptionTotal`                                  |
+|           TBM Status           |        `/tbm/status`         |   `std_msgs/Bool`    |                                           ID: `on`                                           |
 ## Publishers
 |     Name      |          Topic Name          |        Type        |                                              Description                                               |
 | :-----------: | :--------------------------: | :----------------: | :----------------------------------------------------------------------------------------------------: |

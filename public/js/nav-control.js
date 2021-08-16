@@ -241,8 +241,10 @@ function loadListeners() {
         if (elem.labelID === undefined)
             elem.labelID = generateRandomID();
 
+
         // Create label for it in the listeners and add it to the dom
         $("#listenDiv").append(createNewLabel(elem.name, elem.labelID))
+
 
 
         // Init a new topic and subscribe to it
