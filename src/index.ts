@@ -15,6 +15,8 @@ const app = express();
 const PORT = 8080; // default PORT to listen
 const IP = process.env.ROSWEBIP || "localhost" // IP of the rosweb server
 
+
+
 // * Logging
 
 
@@ -40,7 +42,7 @@ ros.on('connection', function () {
         var telem = getTelem();
         // Send telem
         sendTelem(telem);
-    }, 1000);
+    }, 5000);
 
 
 });
