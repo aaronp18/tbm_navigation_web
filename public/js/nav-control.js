@@ -54,7 +54,7 @@ var listenTopics = [
         "messageType": 'geometry_msgs/Pose',
         "labelID": "#length",
         "updateFunction": updatePositionText,
-        "last": null,
+        "lastMsg": null, // The last message sent
         "getMsg": (message) => message.data, // The method to run to get the data from the publish (so can filter out header etc if needed)
     },
 ];
@@ -142,8 +142,18 @@ function loadListeners() {
             // Allows for different treatment for different values
             let data;
 
-            if (elem.getMsg != undefined)
-                data = elem?.getMsg(message) || message;
+            // Extract required data
+            if (elem.getMsg === undefined)
+                data = message;
+            else
+                data = elem.getMsg(message);
+
+            elem.updateFunction(elem.labelID, data);
+
+
+            // Save data to object for last received
+            elem.lastMsg = data;
+
         });
         log(`Subscribed to "${elem.name}" on "${elem.topic}"`);
 
