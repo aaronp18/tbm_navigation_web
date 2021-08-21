@@ -3,12 +3,14 @@ import ROSLIB from "roslib"
 
 const { webLogger, rosLogger } = require("./logger");
 
+const { addConsumptionPulse } = require("./consumption");
+
 
 type PublishRoute = {
     name: string,
     topicName: string,
     type: string,
-    latch: boolean,
+    latch?: boolean,
     topic: any
 }
 
@@ -41,7 +43,34 @@ var publishRoutes: { [topicName: string]: PublishRoute } = {
         "latch": true,
         "topic": null,
     },
+    "water-consumption-rate": {
+        "name": "Rate of Water Consumption",
+        "topicName": "/tbm/telem/water/rate",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
+    "water-consumption-total": {
+        "name": "Total Water Consumption",
+        "topicName": "/tbm/telem/water/total",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
+    "energy-consumption-rate": {
+        "name": "Rate of Energy Consumption",
+        "topicName": "/tbm/telem/energy/rate",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
+    "energy-consumption-total": {
+        "name": "Total Energy Consumption",
+        "topicName": "/tbm/telem/energy/total",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
+
 }
+
+type UpdateFunction = (value: any, options?: {}) => void;
 /**
  * name: User friendly name of the topic
  * topic: the topic address
@@ -54,6 +83,8 @@ type ListenerTopic = {
     topic: string,
     type: string,
     lastData?: any,
+    update?: UpdateFunction,
+    options?: {},
 
 }
 
@@ -124,6 +155,27 @@ var listenerTopics: { [id: string]: ListenerTopic } = {
         "type": "std_msgs/Bool",
         "lastData": null,
     },
+    "energyPulse": {
+        "name": "Energy Pulse",
+        "topic": "/restapi/energy/ping",
+        "type": "std_msgs/Int64",
+        "lastData": null,
+        "update": addConsumptionPulse,
+        "options": {
+            "consumptionType": "energy",
+        }
+    },
+    "waterPulse": {
+        "name": "Water Pulse",
+        "topic": "/restapi/water/ping",
+        "type": "std_msgs/Int64",
+        "lastData": null,
+        "update": addConsumptionPulse,
+        "options": {
+            "consumptionType": "water",
+        }
+    },
+
 
 }
 
@@ -162,6 +214,16 @@ function initListeners(ros: any) {
 
             topic.subscribe((message) => {
                 value.lastData = message;
+
+                // Check if it has an update function
+                if (typeof value.update !== 'undefined') {
+                    if (typeof value.options !== "undefined") {
+                        value.update(message, value.options);
+                    }
+                    else {
+                        value.update(message);
+                    }
+                }
             })
 
             rosLogger.info(`Listen initiated  "${value.name}" on "${value.topic}"`);
@@ -170,9 +232,11 @@ function initListeners(ros: any) {
 }
 
 
-module.exports = {
-    publishRoutes: publishRoutes,
-    initPublishers: initPublishers,
-    initListeners: initListeners,
-    listenerTopics: listenerTopics,
+
+
+export {
+    publishRoutes,
+    initPublishers,
+    initListeners,
+    listenerTopics,
 }

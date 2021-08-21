@@ -58,7 +58,14 @@ ros.on('close', function () {
  * disablePrint: [TODO]
  */
 var listenTopics = [
+    {
+        "id": "energyPulse",
+        "name": "Energy Pulse",
+        "topic": "/restapi/energy/ping",
+        "messageType": 'std_msgs/Int64',
+        "updateFunction": updateText,
 
+    },
     {
         "id": "cutterheadPose",
         "name": "Cutterhead Pose",
@@ -68,6 +75,7 @@ var listenTopics = [
         "updateFunction": updatePositionText,
         "getData": (message) => message.data, // The method to run to get the data from the publish (so can filter out header etc if needed)
     },
+
     {
         "id": "cutterheadSpeed",
         "name": "Cutterhead Seed (RPM)",
@@ -239,19 +247,10 @@ function loadListeners() {
     listenTopics.forEach(elem => {
         // Generate label ID if none exists
         if (elem.labelID === undefined)
-            elem.labelID = generateRandomID();
+            elem.labelID = "#" + generateRandomID();
 
-
-        let temp = `<p>"${elem.id}": {
-            "name": "${elem.name}",
-            "topic": "${elem.topic}",
-            "type": "${elem.messageType}",
-        }, </p> `
         // Create label for it in the listeners and add it to the dom
-        // $("#listenDiv").append(createNewLabel(elem.name, elem.labelID))
-        $("#listenDiv").append(temp)
-
-
+        $("#listenDiv").append(createNewLabel(elem.name, elem.labelID.replace('#', '')))
 
         // Init a new topic and subscribe to it
         new ROSLIB.Topic({
@@ -265,7 +264,7 @@ function loadListeners() {
 
             // Extract required data
             if (elem.getData === undefined)
-                data = message;
+                data = message.data;
             else
                 data = elem.getData(message);
 
