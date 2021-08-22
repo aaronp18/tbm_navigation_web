@@ -1,8 +1,13 @@
 # Building
 1) Start up the ROS bridge server
 2) `npm install` to install all of the required packages
-3) `nodemon` should start up the web server
-4) Visit `ip:8080` for the website
+3) `cd client` -> `npm install` to install react client packages
+   
+# Starting
+1) cd to the root directory
+2) `nodemon` to start up the node server
+3) `npm run client-start` to startup the react client
+4) Visit `localhost:8080` for the website
 
 # Topics, Services and Params
 ## Listeners
