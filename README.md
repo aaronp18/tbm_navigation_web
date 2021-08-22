@@ -94,3 +94,15 @@ Currently this uses actions rather than just publishing directly to a topic so I
 - [X] Change everything to just publish to ros topic
 - [ ] Fix enable button
 - [X] Publish from server
+
+# UI
+- [ ] Graphs
+- [ ] Model
+- [ ] Telemetry
+    - Pitch
+    - Yaw
+    - Heading
+    - Postition
+    - Long / lat
+    - Switches for navigation phases
+- [ ] Status
