@@ -1,11 +1,11 @@
 import { DoublyLinkedList, DoublyLinkedListNode } from "@datastructures-js/linked-list";
 import ROSLIB from "roslib";
 
+import { webLogger, rosLogger } from "./logger";
+import { publishRoutes } from "./rosRoutes";
 
-const { webLogger, rosLogger } = require("./logger");
-import { publishRoutes } from "./store";
+import * as optionsF from './options' // Options from file
 
-const AVERAGEPERIOD = 5000; // ms
 
 type Consumption = {
     "rate": number,
@@ -57,10 +57,10 @@ function addConsumptionPulse(timestamp: number, options: { consumptionType: stri
     // Calculate rate from last 1 second
     let recentPulses = consumptions[options.consumptionType].previous.filter((node, position) => {
         // Get all from last second
-        return node.getValue() > Date.now() - AVERAGEPERIOD;
+        return node.getValue() > Date.now() - optionsF.AVERAGEPERIOD;
     })
 
-    consumptions[options.consumptionType].rate = recentPulses.count() / AVERAGEPERIOD;
+    consumptions[options.consumptionType].rate = recentPulses.count() / optionsF.AVERAGEPERIOD;
 
     // Publish new value
     let rateTopicName = consumptions[options.consumptionType].rateTopicName;

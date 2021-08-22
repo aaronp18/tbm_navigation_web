@@ -44,8 +44,8 @@ const telemLogger = winston.createLogger({
 });
 
 
-module.exports = {
-    webLogger: webLogger,
-    rosLogger: rosLogger,
-    telemLogger: telemLogger,
+export {
+    webLogger,
+    rosLogger,
+    telemLogger,
 }

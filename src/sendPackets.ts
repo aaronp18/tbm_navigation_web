@@ -2,8 +2,8 @@ import protobuf from "protobufjs";
 
 import * as options from "./options";
 
-let { webLogger, rosLogger, telemLogger } = require("./logger");
-let { listenerTopics } = require("./store");
+import { webLogger, rosLogger, telemLogger } from "./logger";
+import { listenerTopics } from "./rosRoutes";
 
 import udp from "dgram"
 var client = udp.createSocket('udp4');
@@ -105,7 +105,7 @@ function getTelem(): TelemMessage {
     }
 }
 
-module.exports = {
-    sendTelem: sendTelem,
-    getTelem: getTelem,
+export {
+    sendTelem,
+    getTelem,
 }

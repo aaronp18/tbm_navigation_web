@@ -2,10 +2,13 @@
 import express from "express";
 import winston from 'winston';
 
-const store = require("./store")
-const { sendTelem, getTelem } = require("./sendPackets")
+import * as store from "./rosRoutes";
 
-const { webLogger, rosLogger } = require("./logger");
+import * as options from './options'
+
+import { sendTelem, getTelem } from "./sendPackets";
+
+import { webLogger, rosLogger } from "./logger";
 
 import path from 'path';
 import ROSLIB from "roslib";
@@ -13,7 +16,7 @@ import ROSLIB from "roslib";
 
 const app = express();
 
-import * as options from './options'
+
 
 
 

@@ -2,9 +2,8 @@ import express from "express";
 import ROSLIB from "roslib";
 var router = express.Router();
 
-const { webLogger, rosLogger } = require("./logger");
-
-var { publishRoutes } = require("./store");
+import { webLogger, rosLogger } from "./logger";
+import { publishRoutes } from './rosRoutes';
 
 router.get("/", (req, res) => {
     // res.render("main");

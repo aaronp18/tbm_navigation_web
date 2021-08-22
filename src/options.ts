@@ -18,6 +18,9 @@ const TELEMINTERVAL = 5000; // The delay between each telemetry send
 const TELEMON = false; // Determines whether telemetry is sent
 const TEAMID = 1;
 
+// * Consumption
+const AVERAGEPERIOD = 5000; // ms
+
 
 
 export {
@@ -29,5 +32,6 @@ export {
     TELEMPORT,
     TEAMID,
     TELEMON,
+    AVERAGEPERIOD,
 
 }
