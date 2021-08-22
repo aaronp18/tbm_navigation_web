@@ -16,15 +16,21 @@ import ROSLIB from "roslib";
 
 const app = express();
 
-
-
-
-
-// * Logging
-
-
 // * Initiate ROS
 // * Initial ROS start
+let startupText = ` \n === Options ===
+- ROS -
+SILENTRECONNECT: ${options.SILENTRECONNECT}
+AUTORECONNECTINTERVAL: ${options.AUTORECONNECT}
+
+- TELEM -
+TEAMID: ${options.TEAMID}
+TELEMON: ${options.TELEMON}
+TELEMINTERVAL: ${options.TELEMINTERVAL}
+ ==============
+`;
+
+rosLogger.info(startupText);
 
 rosLogger.info("Connecting to ROS server...")
 
@@ -53,12 +59,16 @@ ros.on('connection', function () {
 
 });
 
-ros.on('error', function (error) {
-    rosLogger.error(error);
+ros.on('error', function (e) {
+    // Only print if silent reconnect is off
+
+    if (!options.SILENTRECONNECT || e.error.code != "ECONNREFUSED")
+        rosLogger.error(e);
 });
 
 ros.on('close', function () {
-    rosLogger.info('Connection to websocket server closed. Waiting before retrying...');
+    if (!options.SILENTRECONNECT)
+        rosLogger.info('Connection to websocket server closed. Waiting before retrying...');
 
     // Retry connect on close every 5 seconds
     if (isReconnecting)
@@ -66,15 +76,18 @@ ros.on('close', function () {
 
     isReconnecting = true;
     let reconnectID = setInterval(() => {
-        rosLogger.info(" == Retrying connection to " + options.ROSURL)
+        if (!options.SILENTRECONNECT)
+            rosLogger.info(" == Retrying connection to " + options.ROSURL)
         ros.connect(options.ROSURL)
         ros.on("connection", () => {
             // Kill reconnect interval
             clearInterval(reconnectID);
             isReconnecting = false;
-            rosLogger.info("Killed reconnect");
+
+            if (!options.SILENTRECONNECT)
+                rosLogger.info("Killed reconnect");
         })
-    }, 10000);
+    }, options.AUTORECONNECT);
 });
 
 

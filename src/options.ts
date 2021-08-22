@@ -3,11 +3,12 @@
 // * Main
 
 const WEBPORT = process.env.WEBPORT || 8080; // Webserver port to run on
-const ROSIP = process.env.ROSWEBIP || "localhost" // IP of the rosweb server
-
-
+const ROSIP = process.env.ROSWEBIP || process.env.WSLIP || "localhost" // IP of the rosweb server
 
 const ROSURL = `ws://${ROSIP}:9090`; // URL that is used to connect to the ROS Bridge
+
+const AUTORECONNECT = 10000; // Interval of auto reconnect, 
+const SILENTRECONNECT = true; // If true, then reconnects aren't printed to console
 
 // * Telem
 
@@ -26,6 +27,8 @@ const AVERAGEPERIOD = 5000; // ms
 export {
     WEBPORT,
     ROSIP,
+    AUTORECONNECT,
+    SILENTRECONNECT,
     TELEMINTERVAL,
     ROSURL,
     TELEMIP,
