@@ -2,7 +2,7 @@
 
 // * Main
 
-const WEB_PORT = process.env.WEB_PORT || 8080; // Webserver port to run on
+const WEB_PORT = process.env.WEB_PORT || 3000; // Webserver port to run on
 const ROS_IP = process.env.ROSWEBIP || process.env.WSLIP || "localhost" // IP of the rosweb server
 
 const ROS_URL = `ws://${ROS_IP}:9090`; // URL that is used to connect to the ROS Bridge
