@@ -67,6 +67,22 @@ var listenTopics = [
 
     },
     {
+        "id": "latitude",
+        "name": "Latitude of Cutterhead",
+        "topic": "/tbm/pos/lat",
+        "messageType": 'std_msgs/Float32',
+        "updateFunction": updateText,
+
+    },
+    {
+        "id": "longitude",
+        "name": "Longitude of Cutterhead",
+        "topic": "/tbm/pos/long",
+        "messageType": 'std_msgs/Float32',
+        "updateFunction": updateText,
+
+    },
+    {
         "id": "cutterheadPose",
         "name": "Cutterhead Pose",
         "topic": "/ch",

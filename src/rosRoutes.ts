@@ -1,9 +1,11 @@
 import ROSLIB from "roslib"
 
 
-const { webLogger, rosLogger } = require("./logger");
+import { webLogger, rosLogger } from "./logger";
 
-const { addConsumptionPulse } = require("./consumption");
+import { addConsumptionPulse } from "./consumption";
+
+import * as navigation from './navigation';
 
 
 type PublishRoute = {
@@ -11,7 +13,7 @@ type PublishRoute = {
     topicName: string,
     type: string,
     latch?: boolean,
-    topic: any
+    topic: ROSLIB.Topic
 }
 
 var publishRoutes: { [topicName: string]: PublishRoute } = {
@@ -67,6 +69,18 @@ var publishRoutes: { [topicName: string]: PublishRoute } = {
         "type": "std_msgs/Float32",
         "topic": null,
     },
+    "latitude": {
+        "name": "Latitude",
+        "topicName": "/tbm/pos/lat",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
+    "longitude": {
+        "name": "Longitude",
+        "topicName": "/tbm/pos/long",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
 
 }
 
@@ -94,6 +108,10 @@ var listenerTopics: { [id: string]: ListenerTopic } = {
         "topic": "/ch",
         "type": "geometry_msgs/Pose",
         "lastData": null,
+        "update": (pose) => {
+            let { lat, long } = navigation.calculatePosition(pose.position.x, pose.position.y);
+            navigation.publishPosition(lat, long);
+        }
     },
     "cutterheadSpeed": {
         "name": "Cutterhead Seed (RPM)",

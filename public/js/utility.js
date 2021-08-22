@@ -33,22 +33,7 @@ function updatePositionText(id, pose) {
     // Convert quart -> euler
     var rotation = getRotationFromPose(pose);
 
-    var { lat, long } = calculatePosition(getOrigin().lat, getOrigin.long, pose.position.x, pose.position.y)
-    // console.log(quart)
     var labels = [
-
-        {
-            "name": "Longitude",
-            "labelID": "#longitude",
-            "updateFunction": updateText,
-            "value": lat,
-        },
-        {
-            "name": "Latitude",
-            "labelID": "#latitude",
-            "updateFunction": updateText,
-            "value": long,
-        },
         {
             "name": "X",
             "labelID": "#x",
@@ -107,22 +92,6 @@ function getRotationFromPose(pose) {
     var quart = new THREE.Quaternion(pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w);
     var rotation = new THREE.Euler().setFromQuaternion(quart, 'XYZ');
     return rotation;
-}
-
-// Takes orgin lat lon, and adds on the displacement to calculate the current lat long 
-function calculatePosition(lat, long, dx, dy) {
-    // https://stackoverflow.com/questions/7477003/calculating-new-longitude-latitude-from-old-n-meters
-    new_latitude = lat + (dy / r_earth) * (180 / pi);
-    new_longitude = long + (dx / r_earth) * (180 / pi) / cos(lat * pi / 180);
-
-    return {
-        lat: new_latitude,
-        long: new_longitude,
-    }
-}
-
-function getOrigin() {
-    return { lat: 36.925815, long: -76.274069 };
 }
 
 // Creates a new label html for a topic and returns the html

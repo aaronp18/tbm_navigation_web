@@ -10,8 +10,8 @@
 | :----------------------------: | :--------------------------: | :------------------: | :------------------------------------------------------------------------------------------: |
 |         Current Pitch          | `/set_angles/pitch/current/` |  `std_msgs/Float32`  | Listens and updates the display of the current pitch. This is rounded to 2dp for the display |
 |          Current Yaw           |  `/set_angles/yaw/current/`  |  `std_msgs/Float32`  |                      Listens and updates the display of the current yaw                      |
-|           Longitude            |   `/set_angles/longitude`    |  `std_msgs/Float32`  |                                                                                              |
-|            Latitude            |    `/set_angles/latitude`    |  `std_msgs/Float32`  |                                                                                              |
+|           Longitude            |       `/tbm/pos/long`        |  `std_msgs/Float32`  |                                                                                              |
+|            Latitude            |        `/tbm/pos/lat`        |  `std_msgs/Float32`  |                                                                                              |
 |             Pitch              | `/set_angles/pitch/current`  |  `std_msgs/Float32`  |                                                                                              |
 |            Heading             |  `/set_angles/yaw/current`   |  `std_msgs/Float32`  |                                                                                              |
 |             Depth              |     `/set_angles/depth`      |  `std_msgs/Float32`  |                                                                                              |
@@ -30,12 +30,18 @@
 |  Water Consumption Total (L)   |   `/tbm/telem/water/total`   |  `std_msgs/Float32`  |                                 ID: `waterConsumptionTotal`                                  |
 |           TBM Status           |        `/tbm/status`         |   `std_msgs/Bool`    |                                           ID: `on`                                           |
 ## Publishers
-|     Name      |          Topic Name          |        Type        |                                              Description                                               |
-| :-----------: | :--------------------------: | :----------------: | :----------------------------------------------------------------------------------------------------: |
-| Target Pitch  | `/set_angles/pitch/target/`  | `std_msgs/Float32` | Publishes the angle required to get to the target pitch. Is updated every time the slider is adjusted. |
-| Pitch Enabled | `/set_angles/pitch/enabled/` |  `std_msgs/Bool`   |        Publishes whether the TBM should use the target pitch and or not. Toggled by the switch         |
-|  Target Yaw   |  `/set_angles/yaw/target/`   | `std_msgs/Float32` | Publishes the angle required to get to the target yaw.  Is updated every time the slider is adjusted.  |
-|  Yaw Enabled  |  `/set_angles/yaw/enabled/`  |  `std_msgs/Bool`   |         Publishes whether the TBM should use the target yaw and or not. Toggled by the switch          |
+|              Name              |          Topic Name          |        Type        |                                              Description                                               |
+| :----------------------------: | :--------------------------: | :----------------: | :----------------------------------------------------------------------------------------------------: |
+|          Target Pitch          | `/set_angles/pitch/target/`  | `std_msgs/Float32` | Publishes the angle required to get to the target pitch. Is updated every time the slider is adjusted. |
+|         Pitch Enabled          | `/set_angles/pitch/enabled/` |  `std_msgs/Bool`   |        Publishes whether the TBM should use the target pitch and or not. Toggled by the switch         |
+|           Target Yaw           |  `/set_angles/yaw/target/`   | `std_msgs/Float32` | Publishes the angle required to get to the target yaw.  Is updated every time the slider is adjusted.  |
+|          Yaw Enabled           |  `/set_angles/yaw/enabled/`  |  `std_msgs/Bool`   |         Publishes whether the TBM should use the target yaw and or not. Toggled by the switch          |
+|           Longitude            |       `/tbm/pos/long`        | `std_msgs/Float32` |                                                                                                        |
+|            Latitude            |        `/tbm/pos/lat`        | `std_msgs/Float32` |                                                                                                        |
+|  Water Consumption Rate (L/s)  |   `/tbm/telem/water/rate`    | `std_msgs/Float32` |                                                                                                        |
+|  Water Consumption Total (L)   |   `/tbm/telem/water/total`   | `std_msgs/Float32` |                                                                                                        |
+|  Energy Consumption Rate (kW)  |   `/tbm/telem/energy/rate`   | `std_msgs/Float32` |                                                                                                        |
+| Energy Consumption Total (kWh) |  `/tbm/telem/energy/total`   | `std_msgs/Float32` |                                                                                                        |
 
 ## Params
 |   Name    |  Param Name  |        Type        |                Description                |
