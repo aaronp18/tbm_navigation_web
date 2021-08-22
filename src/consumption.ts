@@ -49,6 +49,11 @@ function addConsumptionPulse(timestamp: number, options: { consumptionType: stri
     // Add to the list of consumptions
     consumptions[options.consumptionType].previous.insertFirst(timestamp);
 
+    if (consumptions[options.consumptionType].previous.count() > optionsF.CONSUMPTION_CACHE_SIZE) {
+        // Remove last
+        consumptions[options.consumptionType].previous.removeLast();
+    }
+
     // Add to total
     consumptions[options.consumptionType].total += consumptions[options.consumptionType].pulseValue;
 
@@ -57,10 +62,10 @@ function addConsumptionPulse(timestamp: number, options: { consumptionType: stri
     // Calculate rate from last 1 second
     let recentPulses = consumptions[options.consumptionType].previous.filter((node, position) => {
         // Get all from last second
-        return node.getValue() > Date.now() - optionsF.AVERAGEPERIOD;
+        return node.getValue() > Date.now() - optionsF.AVERAGE_PERIOD;
     })
 
-    consumptions[options.consumptionType].rate = recentPulses.count() / optionsF.AVERAGEPERIOD;
+    consumptions[options.consumptionType].rate = recentPulses.count() / optionsF.AVERAGE_PERIOD;
 
     // Publish new value
     let rateTopicName = consumptions[options.consumptionType].rateTopicName;

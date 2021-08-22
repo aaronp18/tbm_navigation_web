@@ -57,7 +57,7 @@ function sendTelem(telem: TelemMessage) {
             var buffer = TelemMsg.encode(message).finish();
 
             //Sending msg
-            client.send(buffer, options.TELEMPORT, options.TELEMIP, function (error) {
+            client.send(buffer, options.TELEM_PORT, options.TELEM_IP, function (error) {
                 if (error) {
                     telemLogger.error("TELEM ERROR!!! - " + error);
                     client.close();
@@ -76,7 +76,7 @@ function sendTelem(telem: TelemMessage) {
 // Gets the telemetry data and returns in a formatted object
 function getTelem(): TelemMessage {
     return {
-        "teamCode": options.TEAMID,
+        "teamCode": options.TEAM_ID,
         "unixTimestamp": Date.now(), // Gets the current UNIX timestamp
         "telem": {
             "cutterheadSpeed": listenerTopics.cutterheadSpeed.lastData,  // RPM
