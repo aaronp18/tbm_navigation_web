@@ -12,8 +12,8 @@ import ROSLIB from "roslib";
 
 
 const app = express();
-const PORT = 8080; // default PORT to listen
-const IP = process.env.ROSWEBIP || "localhost" // IP of the rosweb server
+
+import * as options from './options'
 
 
 
@@ -25,11 +25,11 @@ const IP = process.env.ROSWEBIP || "localhost" // IP of the rosweb server
 
 rosLogger.info("Connecting to ROS server...")
 
-const rosURL = `ws://${IP}:9090`;
+
 let isReconnecting = false;
 
 var ros = new ROSLIB.Ros({
-    url: rosURL,
+    url: options.ROSURL,
 });
 
 ros.on('connection', function () {
@@ -38,11 +38,14 @@ ros.on('connection', function () {
     store.initListeners(ros);
 
     setInterval(() => {
+        //If telemetry is off, pass;
+        if (!options.TELEMON)
+            return;
         // Get relavent telem
         var telem = getTelem();
         // Send telem
         sendTelem(telem);
-    }, 5000);
+    }, options.TELEMINTERVAL);
 
 
 });
@@ -60,8 +63,8 @@ ros.on('close', function () {
 
     isReconnecting = true;
     let reconnectID = setInterval(() => {
-        rosLogger.info(" == Retrying connection to " + rosURL)
-        ros.connect(rosURL)
+        rosLogger.info(" == Retrying connection to " + options.ROSURL)
+        ros.connect(options.ROSURL)
         ros.on("connection", () => {
             // Kill reconnect interval
             clearInterval(reconnectID);
@@ -93,6 +96,6 @@ app.get("/", (req, res) => {
 });
 
 // start the Express server
-app.listen(PORT, () => {
-    webLogger.info(`Server started at http://${IP}:${PORT}`);
+app.listen(options.WEBPORT, () => {
+    webLogger.info(`Server started at http://${options.ROSIP}:${options.WEBPORT}`);
 });

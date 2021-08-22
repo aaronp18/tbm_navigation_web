@@ -1,16 +1,14 @@
 import protobuf from "protobufjs";
 
+import * as options from "./options";
+
 let { webLogger, rosLogger, telemLogger } = require("./logger");
 let { listenerTopics } = require("./store");
 
 import udp from "dgram"
 var client = udp.createSocket('udp4');
 
-// Connection details for the boring
-const TELEMIP = 'localhost';
-const TELEMPORT = 2222;
 
-const TEAMID = 1;
 
 // Telemetry Type
 type TelemJS = {
@@ -59,7 +57,7 @@ function sendTelem(telem: TelemMessage) {
             var buffer = TelemMsg.encode(message).finish();
 
             //Sending msg
-            client.send(buffer, TELEMPORT, TELEMIP, function (error) {
+            client.send(buffer, options.TELEMPORT, options.TELEMIP, function (error) {
                 if (error) {
                     telemLogger.error("TELEM ERROR!!! - " + error);
                     client.close();
@@ -78,7 +76,7 @@ function sendTelem(telem: TelemMessage) {
 // Gets the telemetry data and returns in a formatted object
 function getTelem(): TelemMessage {
     return {
-        "teamCode": TEAMID,
+        "teamCode": options.TEAMID,
         "unixTimestamp": Date.now(), // Gets the current UNIX timestamp
         "telem": {
             "cutterheadSpeed": listenerTopics.cutterheadSpeed.lastData,  // RPM
