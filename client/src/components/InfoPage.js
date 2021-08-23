@@ -6,37 +6,25 @@ import {
 } from 'semantic-ui-react'
 import StatsCard from './StatsCard'
 
-let statsTemp = [
-    {
-        "name": "Heading",
-        "id": "heading",
-        "value": "N/A"
-    }, {
-        "name": "Pitch",
-        "id": "pitch",
-        "value": "N/AA"
-    },
-]
+import rosLogic from '../utility/rosLogic';
 
-let intervalID = null;
-
-const initateROS = () => {
-
-
-}
-
+import store from '../utility/store'
 
 let InfoPage = () => {
-    const [state, setState] = React.useState({ stats: statsTemp });
+    store.statsTemp.forEach((stat) => {
+        if (stat.value === undefined)
+            stat.value = "N/A";
+    })
+
+    const [state, setState] = React.useState({ stats: store.statsTemp, isReconnecting: false });
 
     // Emulate onComponentMount
     React.useEffect(() => {
-        initateROS()
-        intervalID = setInterval(() => {
+        rosLogic.initiateROS(state, setState);
+        setInterval(() => {
 
             setState(prevState => {
                 prevState.stats.find((stat) => stat.id === "pitch").value = Date.now();
-                // console.log("State changed " + prevState.stats.find((stat) => stat.id === "pitch").value);
                 return { ...prevState };
             })
 

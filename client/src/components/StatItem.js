@@ -10,7 +10,7 @@ const StatItem = ({ header, value }) => {
             <List.Content floated='right'>
                 {value}
             </List.Content>
-            <List.Content><Header as='h3'>{header}</Header></List.Content>
+            <List.Content><Header as='h4'>{header}</Header></List.Content>
         </List.Item>
     )
 }

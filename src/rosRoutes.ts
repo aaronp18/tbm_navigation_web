@@ -73,6 +73,7 @@ var publishRoutes: { [topicName: string]: PublishRoute } = {
         "name": "Latitude",
         "topicName": "/tbm/pos/lat",
         "type": "std_msgs/Float32",
+        "latch": false,
         "topic": null,
     },
     "longitude": {

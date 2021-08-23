@@ -8,20 +8,19 @@ import {
 import StatItem from './StatItem';
 
 const StatsCard = ({ stats }) => {
+    // Stats 1
+    let stats1 = stats.slice(0, stats.length / 2);
+    let stats2 = stats.slice(stats.length / 2,);
+
     return (
-        // <ul>
-        //     {stats.map((stat) => (
-        //         <li key={stat.id}>{stat.value}</li>
-        //     ))}
-        // </ul>
 
         <Card fluid style={{ padding: 10 }}>
             <Header as={"h2"} dividing textAlign={'center'}>Stats</Header>
-            <Grid>
+            <Grid stackable>
                 <Grid.Row columns={2}>
                     <Grid.Column>
                         <List style={{ padding: 20 }} divided verticalAlign='middle'>
-                            {stats.map((stat) => (
+                            {stats1.map((stat) => (
                                 <StatItem header={stat.name} key={stat.id} value={stat.value}></StatItem>
                             ))}
                         </List>
@@ -29,7 +28,9 @@ const StatsCard = ({ stats }) => {
                     </Grid.Column>
                     <Grid.Column>
                         <List style={{ padding: 20 }} divided verticalAlign='middle'>
-
+                            {stats2.map((stat) => (
+                                <StatItem header={stat.name} key={stat.id} value={stat.value}></StatItem>
+                            ))}
 
                         </List>
 
