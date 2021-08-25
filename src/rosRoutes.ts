@@ -82,6 +82,24 @@ var publishRoutes: { [topicName: string]: PublishRoute } = {
         "type": "std_msgs/Float32",
         "topic": null,
     },
+    "pitch": {
+        "name": "Pitch",
+        "topicName": "/tbm/rot/pitch",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
+    "roll": {
+        "name": "Roll",
+        "topicName": "/tbm/rot/roll",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
+    "yaw": {
+        "name": "Yaw",
+        "topicName": "/tbm/rot/yaw",
+        "type": "std_msgs/Float32",
+        "topic": null,
+    },
 
 }
 
@@ -109,10 +127,7 @@ var listenerTopics: { [id: string]: ListenerTopic } = {
         "topic": "/ch",
         "type": "geometry_msgs/Pose",
         "lastData": null,
-        "update": (pose) => {
-            let { lat, long } = navigation.calculatePosition(pose.position.x, pose.position.y);
-            navigation.publishPosition(lat, long);
-        }
+        "update": navigation.poseUpdate,
     },
     "cutterheadSpeed": {
         "name": "Cutterhead Seed (RPM)",

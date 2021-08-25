@@ -41,8 +41,14 @@
 |         Pitch Enabled          | `/set_angles/pitch/enabled/` |  `std_msgs/Bool`   |        Publishes whether the TBM should use the target pitch and or not. Toggled by the switch         |
 |           Target Yaw           |  `/set_angles/yaw/target/`   | `std_msgs/Float32` | Publishes the angle required to get to the target yaw.  Is updated every time the slider is adjusted.  |
 |          Yaw Enabled           |  `/set_angles/yaw/enabled/`  |  `std_msgs/Bool`   |         Publishes whether the TBM should use the target yaw and or not. Toggled by the switch          |
+|             Pitch              |       `/tbm/rot/pitch`       | `std_msgs/Float32` |                                                                                                        |
+|              Yaw               |        `/tbm/rot/yaw`        | `std_msgs/Float32` |                                                                                                        |
+|              Roll              |       `/tbm/rot/roll`        | `std_msgs/Float32` |                                                                                                        |
 |           Longitude            |       `/tbm/pos/long`        | `std_msgs/Float32` |                                                                                                        |
 |            Latitude            |        `/tbm/pos/lat`        | `std_msgs/Float32` |                                                                                                        |
+|               X                |         `/tbm/pos/x`         | `std_msgs/Float32` |                                                                                                        |
+|               Y                |         `/tbm/pos/y`         | `std_msgs/Float32` |                                                                                                        |
+|               Z                |         `/tbm/pos/z`         | `std_msgs/Float32` |                                                                                                        |
 |  Water Consumption Rate (L/s)  |   `/tbm/telem/water/rate`    | `std_msgs/Float32` |                                                                                                        |
 |  Water Consumption Total (L)   |   `/tbm/telem/water/total`   | `std_msgs/Float32` |                                                                                                        |
 |  Energy Consumption Rate (kW)  |   `/tbm/telem/energy/rate`   | `std_msgs/Float32` |                                                                                                        |

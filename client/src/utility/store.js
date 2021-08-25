@@ -1,31 +1,52 @@
-
+// Inital template for stats
 let statsTemp = [
-    // {
-    //     "name": "Heading",
-    //     "id": "heading",
-    //     "value": "N/A"
-
     {
         "id": "orientation-subtitle",
         "name": "Orientation",
         "isSubtitle": true,
     },
     {
-        "name": "Pitch",
         "id": "pitch",
-        "value": "N/A",
-        "rosignore": true,
+        "name": "Pitch",
+        "topic": "/tbm/rot/pitch",
+        "messageType": 'std_msgs/Float32',
     },
     {
+        "id": "yaw",
         "name": "Heading",
-        "id": "heading",
-        "value": "N/A",
-        "rosignore": true,
+        "topic": "/tbm/rot/yaw",
+        "messageType": 'std_msgs/Float32',
     },
+    {
+        "id": "roll",
+        "name": "Roll",
+        "topic": "/tbm/rot/roll",
+        "messageType": 'std_msgs/Float32',
+    },
+
+
     {
         "id": "position-subtitle",
         "name": "Position",
         "isSubtitle": true,
+    },
+    {
+        "id": "x",
+        "name": "X",
+        "topic": "/tbm/pos/x",
+        "messageType": 'std_msgs/Float32',
+    },
+    {
+        "id": "y",
+        "name": "Y",
+        "topic": "/tbm/pos/y",
+        "messageType": 'std_msgs/Float32',
+    },
+    {
+        "id": "z",
+        "name": "Z",
+        "topic": "/tbm/pos/z",
+        "messageType": 'std_msgs/Float32',
     },
     {
         "id": "latitude",
