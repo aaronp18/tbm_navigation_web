@@ -4,6 +4,12 @@ let statsTemp = [
     //     "name": "Heading",
     //     "id": "heading",
     //     "value": "N/A"
+
+    {
+        "id": "orientation-subtitle",
+        "name": "Orientation",
+        "isSubtitle": true,
+    },
     {
         "name": "Pitch",
         "id": "pitch",
@@ -11,18 +17,21 @@ let statsTemp = [
         "rosignore": true,
     },
     {
-        "id": "energyPulse",
-        "name": "Energy Pulse",
-        "topic": "/restapi/energy/ping",
-        "messageType": 'std_msgs/Int64',
+        "name": "Heading",
+        "id": "heading",
+        "value": "N/A",
+        "rosignore": true,
+    },
+    {
+        "id": "position-subtitle",
+        "name": "Position",
+        "isSubtitle": true,
     },
     {
         "id": "latitude",
         "name": "Latitude of Cutterhead",
         "topic": "/tbm/pos/lat",
         "messageType": 'std_msgs/Float32',
-
-
     },
     {
         "id": "longitude",
@@ -38,6 +47,17 @@ let statsTemp = [
         "getData": (message) => message.data, // The method to run to get the data from the publish (so can filter out header etc if needed)
     },
 
+    {
+        "id": "tbm-subtitle",
+        "name": "TBM",
+        "isSubtitle": true,
+    },
+    {
+        "id": "on",
+        "name": "TBM Status",
+        "topic": "/tbm/status",
+        "messageType": 'std_msgs/Bool',
+    },
     {
         "id": "cutterheadSpeed",
         "name": "Cutterhead Seed (RPM)",
@@ -58,6 +78,11 @@ let statsTemp = [
     },
 
     // Rates
+    {
+        "id": "rates-subtitle",
+        "name": "Rates",
+        "isSubtitle": true,
+    },
     {
         "id": "distanceTravelledRate",
         "name": "Distance Travelled Rate (mm/s)",
@@ -95,12 +120,8 @@ let statsTemp = [
         "topic": "/tbm/telem/water/total",
         "messageType": 'std_msgs/Float32',
     },
-    {
-        "id": "on",
-        "name": "TBM Status",
-        "topic": "/tbm/status",
-        "messageType": 'std_msgs/Bool',
-    },
+
+
 
 ];
 
