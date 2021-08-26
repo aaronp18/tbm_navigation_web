@@ -2,6 +2,7 @@ import { log } from './logger'
 import ROSLIB from 'roslib';
 import { rosURL } from './options';
 
+let reconnectIntervalID = null;
 
 async function initiateROS(state, setState) {
     // * Intial ROS start
@@ -18,9 +19,9 @@ async function initiateROS(state, setState) {
         loadListeners(state, setState, ros);
 
         // Reset isConnecting
-        if (state.reconnectIntervalID != null) {
-            clearInterval(state.reconnectIntervalID);
-            await setState((prevState) => { return { ...prevState, reconnectIntervalID: null, } });
+        if (reconnectIntervalID != null) {
+            clearInterval(reconnectIntervalID);
+            reconnectIntervalID = null;
         }
 
 
@@ -33,24 +34,20 @@ async function initiateROS(state, setState) {
     });
 
 
-    ros.on('close', async function () {
+    ros.on('close', async () => {
         log('Connection to websocket server closed. Waiting before retrying...', true, "ROS", 3000);
         // Retry connect on close every 5 seconds
-
-        if (state.reconnectIntervalID != null)
+        if (reconnectIntervalID != null)
             return;
 
-        log(state.reconnectIntervalID != null)
+
         let reconnectID = setInterval(async () => {
             log("Retrying connection to " + rosURL, true, "ROS", 3000)
             ros.connect(rosURL);
 
         }, 10000);
 
-        await setState((prevState) => {
-            state = { ...prevState, reconnectIntervalID: reconnectID, }; // Set new state
-            return state;
-        });
+        reconnectIntervalID = reconnectID;
     });
 
 

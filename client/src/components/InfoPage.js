@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    Button,
     CardGroup,
     Container,
     Grid,
@@ -9,6 +10,7 @@ import StatsCard from './StatsCard'
 import rosLogic from '../utility/rosLogic';
 
 import store from '../utility/store'
+import GraphCard from './GraphCard';
 
 let InfoPage = () => {
     store.statsTemp.forEach((stat) => {
@@ -16,7 +18,7 @@ let InfoPage = () => {
             stat.value = "N/A";
     })
 
-    const [state, setState] = React.useState({ stats: store.statsTemp, isReconnecting: false });
+    const [state, setState] = React.useState({ stats: store.statsTemp });
 
     // Emulate onComponentMount
     React.useEffect(() => {
@@ -40,10 +42,12 @@ let InfoPage = () => {
                         <CardGroup>
                             {/* <StatCards stats={stats} /> */}
                             <StatsCard stats={state.stats}></StatsCard>
+                            <GraphCard></GraphCard>
                         </CardGroup>
+                    </Grid.Column>
+                    <Grid.Column>
 
                     </Grid.Column>
-
 
                 </Grid.Row>
 
