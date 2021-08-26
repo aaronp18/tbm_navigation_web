@@ -202,10 +202,52 @@ let consumptions = [
     },
 ]
 
+let navigationPhases = [
+    {
+        name: "launch",
+        title: "Launch",
+        option: {
+            targetPitch: -30,
+            on: true,
+        },
+        color: "green",
+        selected: false,
+    },
+    {
+        name: "cruise",
+        title: "Cruise",
+        option: {
+            targetPitch: 0,
+            on: true,
+        },
+        color: "grey",
+        selected: false,
+    },
+    {
+        name: "exit",
+        title: "Exit",
+        option: {
+            targetPitch: 30,
+            on: true,
+        },
+        color: "grey",
+        selected: false,
+    },
+    {
+        name: "stop",
+        title: "Stop",
+        option: {
+            on: false,
+        },
+        color: "grey",
+        selected: true,
+    },
+]
 
 let exported = {
     statsTemp,
     consumptions,
+    navigationPhases,
 }
 
 export default exported

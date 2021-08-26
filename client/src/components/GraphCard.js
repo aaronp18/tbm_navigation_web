@@ -35,7 +35,7 @@ const GraphCard = ({ dataPoints, header, total, average }) => {
         <Card fluid style={{ padding: 10 }} >
             <div ref={cardRef} >
                 <Header as={"h2"} dividing textAlign={'center'}>{header}</Header>
-                <Grid stackable>
+                <Grid stackable style={{ padding: 10 }}>
                     <Grid.Row>
                         <Grid.Column width={12}>
                             <ConsumptionGraph chartLabel={header} dataPoints={dataPoints} width={graphWidth} height={225}></ConsumptionGraph>

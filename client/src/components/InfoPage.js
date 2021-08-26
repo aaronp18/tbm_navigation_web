@@ -13,6 +13,7 @@ import store from '../utility/store'
 import GraphCard from './GraphCard';
 
 import TestsCard from './TestsCard';
+import NavigationCard from './NavigationCard';
 
 let InfoPage = () => {
     store.statsTemp.forEach((stat) => {
@@ -22,12 +23,21 @@ let InfoPage = () => {
             stat.update = rosLogic.handleMessageStat;
     })
 
-    const [state, setState] = React.useState({ stats: store.statsTemp, consumptions: store.consumptions });
+    const [state, setState] = React.useState({
+        stats: store.statsTemp, consumptions: store.consumptions,
+        navigation: {
+            targetPitch: 0,
+            phases: store.navigationPhases,
+        }
+    });
 
     // Emulate onComponentMount
     React.useEffect(() => {
         rosLogic.initiateROS(state, setState);
     }, []);
+
+    // If targetpitch has changed, then need to publish
+
 
     return (
         <Container fluid style={{ margin: 20, padding: 20 }}>
@@ -38,6 +48,7 @@ let InfoPage = () => {
                         <CardGroup>
 
                             <StatsCard stats={state.stats}></StatsCard>
+                            <NavigationCard state={state} setState={setState}></NavigationCard>
                             <TestsCard></TestsCard>
 
 
