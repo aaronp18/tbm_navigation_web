@@ -38,7 +38,7 @@ const GraphCard = ({ dataPoints, header, total, average }) => {
                 <Grid stackable>
                     <Grid.Row>
                         <Grid.Column width={12}>
-                            <ConsumptionGraph chartLabel={header} dataPoints={dataPoints} width={graphWidth} height={225} key={header}></ConsumptionGraph>
+                            <ConsumptionGraph chartLabel={header} dataPoints={dataPoints} width={graphWidth} height={225}></ConsumptionGraph>
                         </Grid.Column >
                         <Grid.Column width={4} verticalAlign='middle'>
                             <Grid stackable stretched >

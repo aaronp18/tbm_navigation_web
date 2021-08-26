@@ -1,6 +1,15 @@
 
-function testEnergyConsumption() {
-    fetch("http://localhost:3000/api/test/energy");
+async function testEnergyConsumption(setState) {
+    await setState((prevState) => {
+        return { ...prevState, energyConsumptionTestRunning: true, }
+    });
+    fetch("/api/test/energy",).then(async (response) => {
+        // Done
+        console.log("Done!");
+        await setState((prevState) => {
+            return { ...prevState, energyConsumptionTestRunning: false, }
+        });
+    });
 }
 
 

@@ -11,7 +11,8 @@ import rosLogic from '../utility/rosLogic';
 
 import store from '../utility/store'
 import GraphCard from './GraphCard';
-import tests from '../utility/tests';
+
+import TestsCard from './TestsCard';
 
 let InfoPage = () => {
     store.statsTemp.forEach((stat) => {
@@ -26,15 +27,6 @@ let InfoPage = () => {
     // Emulate onComponentMount
     React.useEffect(() => {
         rosLogic.initiateROS(state, setState);
-        // setInterval(() => {
-
-        //     setState(prevState => {
-        //         prevState.stats.find((stat) => stat.id === "pitch").value = Date.now();
-
-        //         return { ...prevState };
-        //     })
-
-        // }, 100)
     }, []);
 
     return (
@@ -46,7 +38,8 @@ let InfoPage = () => {
                         <CardGroup>
 
                             <StatsCard stats={state.stats}></StatsCard>
-                            <Button onClick={tests.testEnergyConsumption}>Do Energy Consumption Test</Button>
+                            <TestsCard></TestsCard>
+
 
 
                         </CardGroup>
@@ -54,7 +47,7 @@ let InfoPage = () => {
                     <Grid.Column>
                         <CardGroup>
                             {state.consumptions.map((consumption) => {
-                                return (<GraphCard dataPoints={consumption.dataPoints} header={consumption.header} total={consumption.total} average={consumption.average}></GraphCard>)
+                                return (<GraphCard dataPoints={consumption.dataPoints} header={consumption.header} total={consumption.total} average={consumption.average} key={consumption.name}></GraphCard>)
                             })}
                         </CardGroup>
                     </Grid.Column>

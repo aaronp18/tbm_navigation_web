@@ -43,6 +43,7 @@ router.post("/publish/:key/:value", (req, res) => {
 })
 
 router.get("/test/energy", (req, res) => {
+
     const func = () => {
         if (!send)
             return;
@@ -53,17 +54,20 @@ router.get("/test/energy", (req, res) => {
 
     }
     // res.render("main");
-    let period = 20; // 50ms
-    let timeout = 10000; // 10 Seconds
+    let period = 25; // 50ms
+    let timeout = 5000; // 10 Seconds
     let send = true;
+
+
+
     func();
 
     setTimeout(() => {
         // Clear interval
         send = false;
+        res.send({ message: `Running energy test with a period of ${period}ms for ${timeout / 1000} seconds... `, timeout: timeout, });
     }, timeout)
 
-    res.send(`Running energy test with a period of ${period}ms for ${timeout / 1000} seconds... `);
 
 });
 
