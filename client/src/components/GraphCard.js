@@ -3,7 +3,8 @@ import {
     Card,
     Grid,
     Header,
-    Container
+    Container,
+    Statistic
 
 } from 'semantic-ui-react'
 
@@ -23,7 +24,7 @@ export const useClientRect = () => {
     return [rect, ref];
 };
 
-const GraphCard = ({ dataPoints, header, }) => {
+const GraphCard = ({ dataPoints, header, total, average }) => {
     const [rect, cardRef] = useClientRect();
     const { width, height } = rect; // Width / height of the card
 
@@ -39,12 +40,25 @@ const GraphCard = ({ dataPoints, header, }) => {
                         <Grid.Column width={12}>
                             <ConsumptionGraph chartLabel={header} dataPoints={dataPoints} width={graphWidth} height={225} key={header}></ConsumptionGraph>
                         </Grid.Column >
-                        <Grid.Column width={4}>
-                            Hello
+                        <Grid.Column width={4} verticalAlign='middle'>
+                            <Grid stackable stretched >
+                                <Grid.Row centered >
+                                    <Container>
+                                        <Statistic label={"Total"} value={total}></Statistic>
+                                    </Container>
+                                </Grid.Row>
+                                <Grid.Row centered >
+                                    <Container>
+                                        <Statistic label={"Average"} value={average}></Statistic>
+                                    </Container>
+
+                                </Grid.Row>
+                            </Grid>
+
                         </Grid.Column >
                     </Grid.Row>
                 </Grid>
-            </div >
+            </div>
         </Card >
 
     )

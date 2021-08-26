@@ -51,7 +51,7 @@ let InfoPage = () => {
                     <Grid.Column>
                         <CardGroup>
                             {state.consumptions.map((consumption) => {
-                                return (<GraphCard dataPoints={consumption.dataPoints} header={consumption.header}></GraphCard>)
+                                return (<GraphCard dataPoints={consumption.dataPoints} header={consumption.header} total={consumption.total} average={consumption.average}></GraphCard>)
                             })}
                         </CardGroup>
                     </Grid.Column>

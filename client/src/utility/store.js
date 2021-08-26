@@ -150,17 +150,23 @@ let consumptions = [
     {
         "name": "energy",
         "header": "Energy Consumption Rate (kW)",
-        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }]
+        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }],
+        "average": 0,
+        "total": 4898,
     },
     {
-        "name": "energy",
-        "header": "Energy Consumption Rate (kW)",
-        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }]
+        "name": "water",
+        "header": "Water Consumption Rate (L/s)",
+        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }],
+        "average": 0,
+        "total": 0,
     },
     {
-        "name": "energy",
-        "header": "Energy Consumption Rate (kW)",
-        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }]
+        "name": "distance",
+        "header": "Distance Travelled (m)",
+        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }],
+        "average": 0,
+        "total": 0,
     },
 ]
 
