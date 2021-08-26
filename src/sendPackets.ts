@@ -6,7 +6,7 @@ import { webLogger, rosLogger, telemLogger } from "./logger";
 import { listenerTopics } from "./rosRoutes";
 
 import udp from "dgram"
-var client = udp.createSocket('udp4');
+let client = udp.createSocket('udp4');
 
 
 
@@ -41,22 +41,22 @@ function sendTelem(telem: TelemMessage) {
     protobuf.load("./src/telem.proto")
         .then(function (root) {
             // Obtain a message type
-            var TelemMsg = root.lookupType("tbc.TelemMessage");
+            let TelemMsg = root.lookupType("tbc.TelemMessage");
 
             // Verify the payload if necessary (i.e. when possibly incomplete or invalid)
-            var errMsg = TelemMsg.verify(telem);
+            let errMsg = TelemMsg.verify(telem);
             if (errMsg) {
                 telemLogger.error(errMsg);
                 throw Error(errMsg);
             }
 
             // Create a new message
-            var message = TelemMsg.create(telem);
+            let message = TelemMsg.create(telem);
 
             // Encode a message to an Uint8Array (browser) or Buffer (node)
-            var buffer = TelemMsg.encode(message).finish();
+            let buffer = TelemMsg.encode(message).finish();
 
-            //Sending msg
+            // Sending msg
             client.send(buffer, options.TELEM_PORT, options.TELEM_IP, function (error) {
                 if (error) {
                     telemLogger.error("TELEM ERROR!!! - " + error);
