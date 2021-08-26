@@ -1,12 +1,17 @@
 import { log } from './logger'
 import ROSLIB from 'roslib';
 import { rosURL } from './options';
+import store from './store'
 
 let reconnectIntervalID = null;
 
 async function initiateROS(state, setState) {
     // * Intial ROS start
     log("Connecting to ROS server...", true, "ROS")
+    setState((prevState) => {
+        prevState.status = store.statuses["connecting"];
+        return { ...prevState }
+    });
 
     var ros = new ROSLIB.Ros({
         url: rosURL // Change to localhost on prod
@@ -17,6 +22,11 @@ async function initiateROS(state, setState) {
         log('Connected to websocket server.', true, "ROS");
         // loadParams();
         loadListeners(state, setState, ros);
+
+        setState((prevState) => {
+            prevState.status = store.statuses["connected"];
+            return { ...prevState }
+        });
 
         // Reset isConnecting
         if (reconnectIntervalID != null) {
@@ -35,6 +45,10 @@ async function initiateROS(state, setState) {
 
 
     ros.on('close', async () => {
+        setState((prevState) => {
+            prevState.status = store.statuses["notconnected"];
+            return { ...prevState }
+        });
         log('Connection to websocket server closed. Waiting before retrying...', true, "ROS", 3000);
         // Retry connect on close every 5 seconds
         if (reconnectIntervalID != null)
@@ -43,6 +57,10 @@ async function initiateROS(state, setState) {
 
         let reconnectID = setInterval(async () => {
             log("Retrying connection to " + rosURL, true, "ROS", 3000)
+            setState((prevState) => {
+                prevState.status = store.statuses["connecting"];
+                return { ...prevState }
+            });
             ros.connect(rosURL);
 
         }, 10000);

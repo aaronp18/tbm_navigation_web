@@ -3,11 +3,13 @@ import {
     Grid,
     Header,
     List,
-    Card
+    Card,
+    Icon
 } from 'semantic-ui-react'
 import StatItem from './StatItem';
+import StatusIcon from './StatusIcon';
 
-const StatsCard = ({ stats }) => {
+const StatsCard = ({ status, stats }) => {
     // Stats 1
     let stats1 = stats.slice(0, stats.length / 2);
     let stats2 = stats.slice(stats.length / 2,);
@@ -15,7 +17,12 @@ const StatsCard = ({ stats }) => {
     return (
 
         <Card fluid style={{ padding: 10 }}>
-            <Header as={"h2"} dividing textAlign={'center'}>Stats</Header>
+            <Header as={"h2"} dividing textAlign={'center'}>
+                Stats
+                <StatusIcon status={status}></StatusIcon>
+
+            </Header>
+
             <Grid stackable>
                 <Grid.Row columns={2}>
                     <Grid.Column>

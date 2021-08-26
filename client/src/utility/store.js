@@ -244,10 +244,28 @@ let navigationPhases = [
     },
 ]
 
+let statuses = {
+    connected: {
+        color: "green",
+        text: "Connected"
+    },
+    connecting: {
+        color: "yellow",
+        text: "Connecting..."
+
+    },
+    notconnected: {
+        color: "red",
+        text: "Not Connected",
+
+    }
+}
+
 let exported = {
     statsTemp,
     consumptions,
     navigationPhases,
+    statuses
 }
 
 export default exported

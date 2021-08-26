@@ -28,7 +28,8 @@ let InfoPage = () => {
         navigation: {
             targetPitch: 0,
             phases: store.navigationPhases,
-        }
+        },
+        status: store.statuses["notconnected"],
     });
 
     // Emulate onComponentMount
@@ -47,7 +48,7 @@ let InfoPage = () => {
                     <Grid.Column>
                         <CardGroup>
 
-                            <StatsCard stats={state.stats}></StatsCard>
+                            <StatsCard stats={state.stats} status={state.status}></StatsCard>
                             <NavigationCard state={state} setState={setState}></NavigationCard>
                             <TestsCard></TestsCard>
 
