@@ -17,10 +17,10 @@ const NavMenu = () => (
 
         <Menu.Item as='a' header>
             <Image size='mini' src='/logo.png' style={{ marginRight: '1.5em' }} />
-            TBM Navigation
+            Navigation
         </Menu.Item>
         <Menu.Item as='a'>Home</Menu.Item>
-        <Menu.Item as='a'>Controller</Menu.Item>
+        {/* <Menu.Item as='a'>Controller</Menu.Item> */}
         <Menu.Item as='a'>Config</Menu.Item>
 
     </Menu>

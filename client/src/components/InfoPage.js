@@ -18,7 +18,7 @@ let InfoPage = () => {
             stat.value = "N/A";
     })
 
-    const [state, setState] = React.useState({ stats: store.statsTemp });
+    const [state, setState] = React.useState({ stats: store.statsTemp, consumptions: store.consumptions });
 
     // Emulate onComponentMount
     React.useEffect(() => {
@@ -27,10 +27,11 @@ let InfoPage = () => {
 
             setState(prevState => {
                 prevState.stats.find((stat) => stat.id === "pitch").value = Date.now();
+
                 return { ...prevState };
             })
 
-        }, 1000)
+        }, 100)
     }, []);
 
     return (
@@ -40,13 +41,19 @@ let InfoPage = () => {
                 <Grid.Row >
                     <Grid.Column>
                         <CardGroup>
-                            {/* <StatCards stats={stats} /> */}
+
                             <StatsCard stats={state.stats}></StatsCard>
-                            <GraphCard></GraphCard>
+
+
+
                         </CardGroup>
                     </Grid.Column>
                     <Grid.Column>
-
+                        <CardGroup>
+                            {state.consumptions.map((consumption) => {
+                                return (<GraphCard dataPoints={consumption.dataPoints} header={consumption.header}></GraphCard>)
+                            })}
+                        </CardGroup>
                     </Grid.Column>
 
                 </Grid.Row>

@@ -11,15 +11,15 @@ import '../../node_modules/react-vis/dist/style.css';
 import { XYPlot, LineSeries, HorizontalGridLines, VerticalGridLines, XAxis, YAxis } from 'react-vis';
 
 
-const ConsumptionGraph = ({ dataPoints, chartLabel }) => {
+const ConsumptionGraph = ({ dataPoints, chartLabel, width, height }) => {
 
     let data = dataPoints.map((datapoint, index) => ({ x: datapoint.timestamp, y: datapoint.value }))
 
     return (
         <XYPlot
             xType="time"
-            width={600}
-            height={300}
+            width={width}
+            height={height}
         >
             <HorizontalGridLines />
             <VerticalGridLines />

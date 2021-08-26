@@ -146,8 +146,27 @@ let statsTemp = [
 
 ];
 
+let consumptions = [
+    {
+        "name": "energy",
+        "header": "Energy Consumption Rate (kW)",
+        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }]
+    },
+    {
+        "name": "energy",
+        "header": "Energy Consumption Rate (kW)",
+        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }]
+    },
+    {
+        "name": "energy",
+        "header": "Energy Consumption Rate (kW)",
+        "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }]
+    },
+]
+
 let exported = {
     statsTemp,
+    consumptions,
 }
 
 export default exported
