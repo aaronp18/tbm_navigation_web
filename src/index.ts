@@ -34,8 +34,7 @@ rosLogger.info(startupText);
 
 rosLogger.info("Connecting to ROS server...")
 
-
-let isReconnecting = false;
+let reconnectID: NodeJS.Timer = null;
 
 var ros = new ROSLIB.Ros({
     url: options.ROS_URL,
@@ -45,6 +44,13 @@ ros.on('connection', function () {
     rosLogger.info('Connected to websocket server.');
     store.initPublishers(ros);
     store.initListeners(ros);
+
+    if (reconnectID != null) {
+        reconnectID = null;
+        clearInterval(reconnectID);
+    }
+    // Clear reconnect if needed
+
 
     setInterval(() => {
         //If telemetry is off, pass;
@@ -71,22 +77,15 @@ ros.on('close', function () {
         rosLogger.info('Connection to websocket server closed. Waiting before retrying...');
 
     // Retry connect on close every 5 seconds
-    if (isReconnecting)
+    if (reconnectID != null)
         return;
 
-    isReconnecting = true;
-    let reconnectID = setInterval(() => {
+
+    reconnectID = setInterval(() => {
         if (!options.SILENT_RECONNECT)
             rosLogger.info(" == Retrying connection to " + options.ROS_URL)
         ros.connect(options.ROS_URL)
-        ros.on("connection", () => {
-            // Kill reconnect interval
-            clearInterval(reconnectID);
-            isReconnecting = false;
 
-            if (!options.SILENT_RECONNECT)
-                rosLogger.info("Killed reconnect");
-        })
     }, options.AUTO_RECONNECT_INTERVAL);
 });
 

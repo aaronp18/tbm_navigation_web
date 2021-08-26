@@ -3,7 +3,7 @@ import ROSLIB from 'roslib';
 import { rosURL } from './options';
 
 
-function initiateROS(state, setState) {
+async function initiateROS(state, setState) {
     // * Intial ROS start
     log("Connecting to ROS server...", true, "ROS")
 
@@ -11,36 +11,46 @@ function initiateROS(state, setState) {
         url: rosURL // Change to localhost on prod
     });
 
-    ros.on('connection', function () {
+
+    ros.on('connection', async function () {
         log('Connected to websocket server.', true, "ROS");
         // loadParams();
         loadListeners(state, setState, ros);
 
+        // Reset isConnecting
+        if (state.reconnectIntervalID != null) {
+            clearInterval(state.reconnectIntervalID);
+            await setState((prevState) => { return { ...prevState, reconnectIntervalID: null, } });
+        }
+
+
     });
 
-    ros.on('error', function (error) {
+    ros.on('error', async function (error) {
         log('Error connecting to websocket server: ', true, "ROS");
         log(error, false);
+
     });
 
 
     ros.on('close', async function () {
         log('Connection to websocket server closed. Waiting before retrying...', true, "ROS", 3000);
         // Retry connect on close every 5 seconds
-        if (state.isReconnecting)
+
+        if (state.reconnectIntervalID != null)
             return;
 
-        await setState((prevState) => { return { ...prevState, isReconnecting: true, } })
+        log(state.reconnectIntervalID != null)
         let reconnectID = setInterval(async () => {
             log("Retrying connection to " + rosURL, true, "ROS", 3000)
-            ros.connect(rosURL)
-            ros.on("connection", async () => {
-                // Kill reconnect interval
-                clearInterval(reconnectID);
-                await setState((prevState) => { return { ...prevState, isReconnecting: false, } })
-                log("Killed reconnect");
-            })
+            ros.connect(rosURL);
+
         }, 10000);
+
+        await setState((prevState) => {
+            state = { ...prevState, reconnectIntervalID: reconnectID, }; // Set new state
+            return state;
+        });
     });
 
 
