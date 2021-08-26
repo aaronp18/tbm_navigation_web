@@ -16,7 +16,7 @@ type PublishRoute = {
     topic: ROSLIB.Topic
 }
 
-var publishRoutes: { [topicName: string]: PublishRoute } = {
+let publishRoutes: { [topicName: string]: PublishRoute } = {
     "pitch-target": {
         "name": "Target Pitch",
         "topicName": "/set_angles/pitch/target",
@@ -57,11 +57,19 @@ var publishRoutes: { [topicName: string]: PublishRoute } = {
         "type": "std_msgs/Float32",
         "topic": null,
     },
+    "energy-consumption-pulse": {
+        "name": "Energy Consumption Pulse",
+        "topicName": "/restapi/energy/ping/",
+        "type": "std_msgs/Int64",
+        "topic": null,
+        "latch": false,
+    },
     "energy-consumption-rate": {
         "name": "Rate of Energy Consumption",
         "topicName": "/tbm/telem/energy/rate",
         "type": "std_msgs/Float32",
         "topic": null,
+        "latch": false,
     },
     "energy-consumption-total": {
         "name": "Total Energy Consumption",
@@ -109,7 +117,7 @@ type UpdateFunction = (value: any, options?: {}) => void;
  * topic: the topic address
  * messageType: A string of the message type eg: std_msgs/Float32
  * lastData: The last data received. Is null if no data
- 
+
  */
 type ListenerTopic = {
     name: string,
@@ -121,7 +129,7 @@ type ListenerTopic = {
 
 }
 
-var listenerTopics: { [id: string]: ListenerTopic } = {
+let listenerTopics: { [id: string]: ListenerTopic } = {
     "cutterheadPose": {
         "name": "Cutterhead Pose",
         "topic": "/ch",
@@ -217,8 +225,8 @@ var listenerTopics: { [id: string]: ListenerTopic } = {
 function initPublishers(ros: any) {
     Object.entries(publishRoutes).forEach(
         ([key, value]) => {
-            var topic = new ROSLIB.Topic({
-                ros: ros,
+            let topic = new ROSLIB.Topic({
+                ros,
                 name: value.topicName,
                 messageType: value.type,
                 latch: value.latch,
@@ -240,8 +248,8 @@ function initPublishers(ros: any) {
 function initListeners(ros: any) {
     Object.entries(listenerTopics).forEach(
         ([key, value]) => {
-            var topic = new ROSLIB.Topic({
-                ros: ros,
+            let topic = new ROSLIB.Topic({
+                ros,
                 name: value.topic,
                 messageType: value.type,
             });

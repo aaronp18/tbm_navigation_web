@@ -1,3 +1,5 @@
+import rosLogic from './rosLogic'
+
 // Inital template for stats
 let statsTemp = [
     {
@@ -109,12 +111,16 @@ let statsTemp = [
         "name": "Distance Travelled Rate (mm/s)",
         "topic": "/tbm/telem/distance/rate",
         "messageType": 'std_msgs/Float32',
+        "consumptionName": "distance",
+        "update": handleRateConsumptionUpdate,
     },
     {
         "id": "distanceTravelledTotal",
         "name": "Distance Travelled Total (m)",
         "topic": "/tbm/telem/distance/total",
         "messageType": 'std_msgs/Float32',
+        "consumptionName": "distance",
+        "update": handleTotalConsumptionUpdate,
     },
 
     {
@@ -122,29 +128,55 @@ let statsTemp = [
         "name": "Energy Consumption Rate (kW)",
         "topic": "/tbm/telem/energy/rate",
         "messageType": 'std_msgs/Float32',
+        "consumptionName": "energy",
+        "update": handleRateConsumptionUpdate,
     },
     {
         "id": "energyConsumptionTotal",
         "name": "Energy Consumption Total (kWh)",
         "topic": "/tbm/telem/energy/total",
         "messageType": 'std_msgs/Float32',
+        "consumptionName": "energy",
+        "update": handleTotalConsumptionUpdate,
     },
     {
         "id": "waterConsumptionRate",
         "name": "Water Consumption Rate (L/s)",
         "topic": "/tbm/telem/water/rate",
         "messageType": 'std_msgs/Float32',
+        "consumptionName": "water",
+        "update": handleRateConsumptionUpdate,
     },
     {
         "id": "waterConsumptionTotal",
         "name": "Water Consumption Total (L)",
         "topic": "/tbm/telem/water/total",
         "messageType": 'std_msgs/Float32',
+        "consumptionName": "water",
+        "update": handleTotalConsumptionUpdate,
     },
 
 
 
 ];
+function handleTotalConsumptionUpdate({ data, topic, setState }) {
+    rosLogic.handleMessageStat({ data, topic, setState });
+    setState((prevState) => {
+        prevState.consumptions.find((elem) => elem.name === topic.consumptionName).total = data;
+        return { ...prevState }
+    });
+}
+function handleRateConsumptionUpdate({ data, topic, setState }) {
+
+    rosLogic.handleMessageStat({ data, topic, setState });
+    setState((prevState) => {
+        let found = prevState.consumptions.find((elem) => elem.name === topic.consumptionName)
+        found.rate = data;
+        found.dataPoints.push({ timestamp: Date.now(), value: data })
+        return { ...prevState }
+    });
+}
+
 
 let consumptions = [
     {
@@ -169,6 +201,7 @@ let consumptions = [
         "total": 0,
     },
 ]
+
 
 let exported = {
     statsTemp,

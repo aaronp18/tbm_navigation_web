@@ -18,7 +18,7 @@ const app = express();
 
 // * Initiate ROS
 // * Initial ROS start
-let startupText = ` \n === Options ===
+const startupText = ` \n === Options ===
 - ROS -
 SILENT_RECONNECT: ${options.SILENT_RECONNECT}
 AUTO_RECONNECTINTERVAL: ${options.AUTO_RECONNECT_INTERVAL}
@@ -36,7 +36,7 @@ rosLogger.info("Connecting to ROS server...")
 
 let reconnectID: NodeJS.Timer = null;
 
-var ros = new ROSLIB.Ros({
+const ros = new ROSLIB.Ros({
     url: options.ROS_URL,
 });
 
@@ -53,11 +53,11 @@ ros.on('connection', function () {
 
 
     setInterval(() => {
-        //If telemetry is off, pass;
+        // If telemetry is off, pass;
         if (!options.TELEM_ON)
             return;
         // Get relavent telem
-        var telem = getTelem();
+        const telem = getTelem();
         // Send telem
         sendTelem(telem);
     }, options.TELEM_INTERVAL);
@@ -92,13 +92,13 @@ ros.on('close', function () {
 
 // * Express Init
 
-//Sets view engine to ejs
+// Sets view engine to ejs
 app.set("view engine", "ejs");
-//Sets public folder
+// Sets public folder
 app.use(express.static("public"));
 
 // * Routes
-var apiRoute = require("./api");
+const apiRoute = require("./api");
 
 app.use("/api", apiRoute);
 

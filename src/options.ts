@@ -7,7 +7,7 @@ const ROS_IP = process.env.ROSWEBIP || process.env.WSLIP || "localhost" // IP of
 
 const ROS_URL = `ws://${ROS_IP}:9090`; // URL that is used to connect to the ROS Bridge
 
-const AUTO_RECONNECT_INTERVAL = 10000; // Interval of auto reconnect, 
+const AUTO_RECONNECT_INTERVAL = 10000; // Interval of auto reconnect,
 const SILENT_RECONNECT = true; // If true, then reconnects aren't printed to console
 
 // * Telem
@@ -20,7 +20,7 @@ const TELEM_ON = false; // Determines whether telemetry is sent
 const TEAM_ID = 1;
 
 // * Consumption
-const AVERAGE_PERIOD = 5000; // ms
+const AVERAGE_PERIOD = 1000; // ms
 // Number of consumption points to keep before pruning. This needs to be large enough to allow for all points in
 // average period to be considered
 const CONSUMPTION_CACHE_SIZE = 5000;

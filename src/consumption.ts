@@ -37,14 +37,15 @@ let consumptions: { [name: string]: Consumption; } = {
     },
 }
 
-function addConsumptionPulse(timestamp: number, options: { consumptionType: string },) {
+function addConsumptionPulse(timestamp: any, options: { consumptionType: string },) {
     // Check if exists in map
     if (!(options.consumptionType in consumptions)) {
         webLogger.error(`No ${options.consumptionType} in consumptions`);
         return;
 
     }
-    console.log(timestamp);
+    timestamp = timestamp.data;
+    // console.log(timestamp);
 
     // Add to the list of consumptions
     consumptions[options.consumptionType].previous.insertFirst(timestamp);
@@ -58,21 +59,28 @@ function addConsumptionPulse(timestamp: number, options: { consumptionType: stri
     consumptions[options.consumptionType].total += consumptions[options.consumptionType].pulseValue;
 
 
+    let now = Date.now();
 
     // Calculate rate from last 1 second
     let recentPulses = consumptions[options.consumptionType].previous.filter((node, position) => {
         // Get all from last second
-        return node.getValue() > Date.now() - optionsF.AVERAGE_PERIOD;
+        return node.getValue() > (now - optionsF.AVERAGE_PERIOD);
     })
 
-    consumptions[options.consumptionType].rate = recentPulses.count() / optionsF.AVERAGE_PERIOD;
+    let x = (recentPulses.count() / (optionsF.AVERAGE_PERIOD / 1000.0));
+    consumptions[options.consumptionType].rate = x;
+
+    console.log("Count: " + recentPulses.count() + "/" + consumptions[options.consumptionType].previous.count() + " >>> " + consumptions[options.consumptionType].rate)
+
+
 
     // Publish new value
     let rateTopicName = consumptions[options.consumptionType].rateTopicName;
-    let totalTopicName = consumptions[options.consumptionType].rateTopicName;
+    let totalTopicName = consumptions[options.consumptionType].totalTopicName;
 
-    publishRoutes[rateTopicName].topic.publish(new ROSLIB.Message(consumptions[options.consumptionType].rate));
-    publishRoutes[totalTopicName].topic.publish(new ROSLIB.Message(consumptions[options.consumptionType].total));
+    // console.log(consumptions[options.consumptionType].rate);
+    publishRoutes[rateTopicName].topic.publish(new ROSLIB.Message({ data: consumptions[options.consumptionType].rate }));
+    publishRoutes[totalTopicName].topic.publish(new ROSLIB.Message({ data: consumptions[options.consumptionType].total }));
 
 
 }

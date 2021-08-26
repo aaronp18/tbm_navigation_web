@@ -56,49 +56,56 @@ async function initiateROS(state, setState) {
 
 function loadListeners(state, setState, ros) {
     // Iterate and subscribe to each topic
+    state.stats.forEach(stat => subscribeToTopic({ topic: stat, ros: ros, setState: setState }));
 
-    state.stats.forEach(stat => {
+}
+// Is called for each topic and subscribes
+function subscribeToTopic({ topic, ros, setState }) {
+    // Ignore stat
+    if (topic?.rosignore)
+        return;
 
-        // Ignore stat
-        if (stat?.rosignore)
-            return;
+    // Init a new topic and subscribe to it
+    new ROSLIB.Topic({
+        ros: ros,
+        name: topic.topic,
+        messageType: topic.messageType,
+    }).subscribe(function (message) {
+        // Uses the defined function in the listener topic
+        // Allows for different treatment for different values
+        let data;
 
-        // Create label for it in the listeners and add it to the dom
-        // TODO
+        // Extract required data
+        if (topic.getData === undefined)
+            data = message.data;
+        else
+            data = topic.getData(message);
 
-        // Init a new topic and subscribe to it
-        new ROSLIB.Topic({
-            ros: ros,
-            name: stat.topic,
-            messageType: stat.messageType
-        }).subscribe(function (message) {
-            // Uses the defined function in the listener topic
-            // Allows for different treatment for different values
-            let data;
+        // Run necessary update function
+        topic.update({ data: data, topic: topic, setState: setState });
 
-            // Extract required data
-            if (stat.getData === undefined)
-                data = message.data;
-            else
-                data = stat.getData(message);
-
-            setState((prevState) => {
-                let found = prevState.stats.find((elem) => elem.id === stat.id);
-                found.value = data;
-                found.lastData = data;
-                return { ...prevState, }
-            })
-
-
-        });
-        log(`Subscribed to "${stat.name}" on "${stat.topic}"`);
 
     });
+    log(`Subscribed to "${topic.name}" on "${topic.topic}"`);
 
+}
+
+// Handle the subscribe with data for a stat
+function handleMessageStat({ data, topic, setState }) {
+    setState((prevState) => {
+        // Find the stat
+        let found = prevState.stats.find((elem) => elem.id === topic.id);
+        // Update values
+        found.value = data;
+        found.lastData = data;
+
+        return { ...prevState, }
+    })
 }
 
 let exported = {
     initiateROS,
+    handleMessageStat,
 }
 
 export default exported
