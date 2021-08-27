@@ -15,6 +15,7 @@ import GraphCard from './GraphCard';
 import TestsCard from './TestsCard';
 import NavigationCard from './NavigationCard';
 
+
 let InfoPage = () => {
     store.statsTemp.forEach((stat) => {
         if (stat.value === undefined)
@@ -35,6 +36,22 @@ let InfoPage = () => {
     // Emulate onComponentMount
     React.useEffect(() => {
         rosLogic.initiateROS(state, setState);
+
+        // Setup check for webserver every 10 seconds
+        setInterval(() => {
+            fetch("/api/").then((response) => {
+                let res = response.status === 200 ? store.statuses.on.text : store.statuses.off.text
+                setState((prevState) => {
+                    prevState.stats.find((stat) => stat.id === "web-status").value = res;
+                    return { ...prevState }
+                });
+            }).catch((err) => {
+                setState((prevState) => {
+                    prevState.stats.find((stat) => stat.id === "web-status").value = store.statuses.off.text;
+                    return { ...prevState }
+                });
+            })
+        }, 10000)
     }, []);
 
     // If targetpitch has changed, then need to publish

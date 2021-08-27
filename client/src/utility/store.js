@@ -71,6 +71,22 @@ let statsTemp = [
     },
 
     {
+        "id": "status-subtitle",
+        "name": "Statuses",
+        "isSubtitle": true,
+    },
+    {
+        "id": "rosBridge",
+        "name": "ROS Bridge Server",
+        "rosignore": true,
+    },
+    {
+        "id": "web-status",
+        "name": "Web Server",
+        "rosignore": true,
+    },
+
+    {
         "id": "tbm-subtitle",
         "name": "TBM",
         "isSubtitle": true,
@@ -258,7 +274,17 @@ let statuses = {
         color: "red",
         text: "Not Connected",
 
-    }
+    },
+    on: {
+        color: "green",
+        text: "ON",
+
+    },
+    off: {
+        color: "red",
+        text: "OFF",
+
+    },
 }
 
 let exported = {
