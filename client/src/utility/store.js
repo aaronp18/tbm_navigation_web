@@ -251,7 +251,7 @@ let otherListeners = {
         "name": "Target Pitch",
         "topic": "/nav/pitch/target",
         "messageType": 'std_msgs/Float32',
-        "value": null
+        "value": "N/A"
     },
     pitchEnabled: {
         "id": "pitchEnabled",
@@ -321,6 +321,8 @@ let publishRoutes = {
     yawEnabled: "yaw-enabled",
     phase: "phase",
 }
+
+
 
 let exported = {
     statsTemp,

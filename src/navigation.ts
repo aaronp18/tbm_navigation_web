@@ -3,7 +3,7 @@
 import * as options from "./options";
 
 import { webLogger, rosLogger, telemLogger } from "./logger";
-import { publishRoutes } from "./rosRoutes";
+import { publishRoutes, params } from "./rosRoutes";
 
 import * as THREE from 'three';
 import ROSLIB from "roslib";
@@ -21,11 +21,12 @@ type Phase = {
 }
 
 const phases: { [id: string]: Phase } = {
+    // Gets     
     launch: {
         id: "launch",
         title: "Launch",
         option: {
-            targetPitch: -30,
+            targetPitch: null,
         },
         color: "green",
     },
@@ -41,7 +42,7 @@ const phases: { [id: string]: Phase } = {
         id: "exit",
         title: "Exit",
         option: {
-            targetPitch: 30,
+            targetPitch: null,
         },
         color: "grey",
     },
@@ -127,4 +128,5 @@ function handlePhaseChange(message: any) {
 export {
     poseUpdate,
     handlePhaseChange,
+    phases,
 }

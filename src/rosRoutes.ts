@@ -1,4 +1,4 @@
-import ROSLIB from "roslib"
+import ROSLIB, { Ros } from "roslib"
 
 
 import { webLogger, rosLogger } from "./logger";
@@ -6,6 +6,77 @@ import { webLogger, rosLogger } from "./logger";
 import { addConsumptionPulse } from "./consumption";
 
 import * as navigation from './navigation';
+
+
+
+function initiateParams(ros: Ros) {
+    loadAxisMinMax(ros);
+
+}
+
+type ParamUpdateFunction = (value: any,) => void;
+
+type Param = {
+    route: string,
+    value: any,
+    param?: ROSLIB.Param,
+    update?: ParamUpdateFunction,
+}
+let params: { [id: string]: Param } = {
+    pitchMax: {
+        route: "pitch/max",
+        value: null,
+        update: (value) => {
+            navigation.phases["launch"].option.targetPitch = value;
+        }
+
+    },
+    pitchMin: {
+        route: "pitch/min",
+        value: null,
+        update: (value) => {
+            navigation.phases["exit"].option.targetPitch = value;
+        }
+    },
+    yawMax: {
+        route: "yaw/max",
+        value: null,
+    },
+    yawMin: {
+        route: "yaw/min",
+        value: null,
+    },
+
+
+}
+function loadAxisMinMax(ros: Ros) {
+    // Axis min / max
+    Object.entries(params).forEach(
+        ([key, param]) => {
+            var rosParam = new ROSLIB.Param({
+                ros: ros,
+                name: param.route,
+            });
+            // Save to object
+            param.param = rosParam;
+
+            // Get inital value
+            getParam(param);
+
+        })
+
+}
+
+// Gets the given parameter and saves it to itself
+function getParam(param: Param) {
+    param.param.get((value) => {
+        params.value = value;
+        // Update function
+        if (param.update !== undefined)
+            param.update(value);
+    });
+
+}
 
 
 type PublishRoute = {
@@ -296,9 +367,10 @@ function initListeners(ros: any) {
 
 
 
-
 export {
     publishRoutes,
+    initiateParams,
+    params,
     initPublishers,
     initListeners,
     listenerTopics,

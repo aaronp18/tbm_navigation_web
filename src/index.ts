@@ -42,6 +42,7 @@ const ros = new ROSLIB.Ros({
 
 ros.on('connection', function () {
     rosLogger.info('Connected to websocket server.');
+    store.initiateParams(ros);
     store.initPublishers(ros);
     store.initListeners(ros);
 
