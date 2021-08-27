@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 router.post("/publish/:key/:value", (req, res) => {
     try {
         if (req.params.key in publishRoutes) {
-            const msg = new ROSLIB.Message(req.params.value);
+            const msg = new ROSLIB.Message({ data: req.params.value });
             publishRoutes[req.params.key].topic.publish(msg);
             rosLogger.info(`Published ${req.params.value} to ${publishRoutes[req.params.key].name}`);
             res.send({
@@ -26,6 +26,7 @@ router.post("/publish/:key/:value", (req, res) => {
             });
         }
         else {
+            rosLogger.info("Invalid Topic " + req.params.key);
             res.send({
                 success: false,
                 message: "Invalid Topic " + req.params.key,
@@ -33,6 +34,7 @@ router.post("/publish/:key/:value", (req, res) => {
             });
         }
     } catch (err) {
+        rosLogger.error("Error: " + err);
         res.send({
             success: false,
             message: "Error: " + err,
@@ -65,7 +67,7 @@ router.get("/test/energy", (req, res) => {
     setTimeout(() => {
         // Clear interval
         send = false;
-        res.send({ message: `Running energy test with a period of ${period}ms for ${timeout / 1000} seconds... `, timeout, });
+        res.send({ message: `Running energy test with a period of ${period} ms for ${timeout / 1000} seconds... `, timeout, });
     }, timeout)
 
 

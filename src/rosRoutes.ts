@@ -19,28 +19,28 @@ type PublishRoute = {
 const publishRoutes: { [topicName: string]: PublishRoute } = {
     "pitch-target": {
         "name": "Target Pitch",
-        "topicName": "/set_angles/pitch/target",
+        "topicName": "/nav/pitch/target",
         "type": "std_msgs/Float32",
         "latch": true,
         "topic": null,
     },
     "pitch-enabled": {
         "name": "Pitch Enabled",
-        "topicName": "/set_angles/pitch/enabled/",
+        "topicName": "/nav/pitch/enabled/",
         "type": "std_msgs/Bool",
         "latch": true,
         "topic": null,
     },
     "yaw-target": {
         "name": "Target Yaw",
-        "topicName": "/set_angles/yaw/target",
+        "topicName": "/nav/yaw/target",
         "type": "std_msgs/Float32",
         "latch": true,
         "topic": null,
     },
     "yaw-enabled": {
         "name": "Yaw Enabled",
-        "topicName": "/set_angles/yaw/enabled/",
+        "topicName": "/nav/yaw/enabled/",
         "type": "std_msgs/Bool",
         "latch": true,
         "topic": null,
@@ -106,6 +106,12 @@ const publishRoutes: { [topicName: string]: PublishRoute } = {
         "name": "Yaw",
         "topicName": "/tbm/rot/yaw",
         "type": "std_msgs/Float32",
+        "topic": null,
+    },
+    "phase": {
+        "name": "Phase",
+        "topicName": "/nav/phase",
+        "type": "std_msgs/String",
         "topic": null,
     },
 
