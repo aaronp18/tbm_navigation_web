@@ -16,96 +16,103 @@ type PublishRoute = {
     topic: ROSLIB.Topic
 }
 
+const msgTypes = {
+    FLOAT: "std_msgs/Float32",
+    STRING: "std_msgs/String",
+    INT: "std_msgs/Int32",
+    BOOL: "std_msgs/Bool",
+}
+
 const publishRoutes: { [topicName: string]: PublishRoute } = {
     "pitch-target": {
         "name": "Target Pitch",
         "topicName": "/nav/pitch/target",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "latch": true,
         "topic": null,
     },
     "pitch-enabled": {
         "name": "Pitch Enabled",
         "topicName": "/nav/pitch/enabled/",
-        "type": "std_msgs/Bool",
+        "type": msgTypes.BOOL,
         "latch": true,
         "topic": null,
     },
     "yaw-target": {
         "name": "Target Yaw",
         "topicName": "/nav/yaw/target",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "latch": true,
         "topic": null,
     },
     "yaw-enabled": {
         "name": "Yaw Enabled",
         "topicName": "/nav/yaw/enabled/",
-        "type": "std_msgs/Bool",
+        "type": msgTypes.BOOL,
         "latch": true,
         "topic": null,
     },
     "water-consumption-rate": {
         "name": "Rate of Water Consumption",
         "topicName": "/tbm/telem/water/rate",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "topic": null,
     },
     "water-consumption-total": {
         "name": "Total Water Consumption",
         "topicName": "/tbm/telem/water/total",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "topic": null,
     },
     "energy-consumption-pulse": {
         "name": "Energy Consumption Pulse",
         "topicName": "/restapi/energy/ping/",
-        "type": "std_msgs/Int64",
+        "type": msgTypes.INT,
         "topic": null,
         "latch": false,
     },
     "energy-consumption-rate": {
         "name": "Rate of Energy Consumption",
         "topicName": "/tbm/telem/energy/rate",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "topic": null,
         "latch": false,
     },
     "energy-consumption-total": {
         "name": "Total Energy Consumption",
         "topicName": "/tbm/telem/energy/total",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "topic": null,
     },
     "latitude": {
         "name": "Latitude",
         "topicName": "/tbm/pos/lat",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "latch": false,
         "topic": null,
     },
     "longitude": {
         "name": "Longitude",
         "topicName": "/tbm/pos/long",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "topic": null,
     },
     "pitch": {
         "name": "Pitch",
         "topicName": "/tbm/rot/pitch",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "topic": null,
     },
     "roll": {
         "name": "Roll",
         "topicName": "/tbm/rot/roll",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "topic": null,
     },
     "yaw": {
         "name": "Yaw",
         "topicName": "/tbm/rot/yaw",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "topic": null,
     },
     "phase": {
@@ -113,6 +120,7 @@ const publishRoutes: { [topicName: string]: PublishRoute } = {
         "topicName": "/nav/phase",
         "type": "std_msgs/String",
         "topic": null,
+        "latch": true,
     },
 
 }
@@ -146,67 +154,67 @@ const listenerTopics: { [id: string]: ListenerTopic } = {
     "cutterheadSpeed": {
         "name": "Cutterhead Seed (RPM)",
         "topic": "/ch/speed",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "cutterheadTorque": {
         "name": "Cutterhead Torque (ft x lb)",
         "topic": "/ch/torque",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "totalThrust": {
         "name": "Total Thrust (N)",
         "topic": "/tbm/thrust",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "distanceTravelledRate": {
         "name": "Distance Travelled Rate (mm/s)",
         "topic": "/tbm/telem/distance/rate",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "distanceTravelledTotal": {
         "name": "Distance Travelled Total (m)",
         "topic": "/tbm/telem/distance/total",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "energyConsumptionRate": {
         "name": "Energy Consumption Rate (kW)",
         "topic": "/tbm/telem/energy/rate",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "energyConsumptionTotal": {
         "name": "Energy Consumption Total (kWh)",
         "topic": "/tbm/telem/energy/total",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "waterConsumptionRate": {
         "name": "Water Consumption Rate (L/s)",
         "topic": "/tbm/telem/water/rate",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "waterConsumptionTotal": {
         "name": "Water Consumption Total (L)",
         "topic": "/tbm/telem/water/total",
-        "type": "std_msgs/Float32",
+        "type": msgTypes.FLOAT,
         "lastData": null,
     },
     "on": {
         "name": "TBM Status",
         "topic": "/tbm/status",
-        "type": "std_msgs/Bool",
+        "type": msgTypes.BOOL,
         "lastData": null,
     },
     "energyPulse": {
         "name": "Energy Pulse",
         "topic": "/restapi/energy/ping",
-        "type": "std_msgs/Int64",
+        "type": msgTypes.INT,
         "lastData": null,
         "update": addConsumptionPulse,
         "options": {
@@ -216,11 +224,20 @@ const listenerTopics: { [id: string]: ListenerTopic } = {
     "waterPulse": {
         "name": "Water Pulse",
         "topic": "/restapi/water/ping",
-        "type": "std_msgs/Int64",
+        "type": msgTypes.INT,
         "lastData": null,
         "update": addConsumptionPulse,
         "options": {
             "consumptionType": "water",
+        }
+    },
+    "phase": {
+        "name": "Phase",
+        "topic": "/nav/phase",
+        "type": msgTypes.STRING,
+        "lastData": null,
+        "update": (value) => {
+
         }
     },
 
@@ -253,28 +270,28 @@ function initPublishers(ros: any) {
 
 function initListeners(ros: any) {
     Object.entries(listenerTopics).forEach(
-        ([key, value]) => {
+        ([key, listener]) => {
             const topic = new ROSLIB.Topic({
                 ros,
-                name: value.topic,
-                messageType: value.type,
+                name: listener.topic,
+                messageType: listener.type,
             });
 
             topic.subscribe((message) => {
-                value.lastData = message;
+                listener.lastData = message;
 
                 // Check if it has an update function
-                if (typeof value.update !== 'undefined') {
-                    if (typeof value.options !== "undefined") {
-                        value.update(message, value.options);
+                if (typeof listener.update !== 'undefined') {
+                    if (typeof listener.options !== "undefined") {
+                        listener.update(message, listener.options);
                     }
                     else {
-                        value.update(message);
+                        listener.update(message);
                     }
                 }
             })
 
-            rosLogger.info(`Listen initiated  "${value.name}" on "${value.topic}"`);
+            rosLogger.info(`Listen initiated  "${listener.name}" on "${listener.topic}"`);
         }
     );
 }
@@ -287,4 +304,5 @@ export {
     initPublishers,
     initListeners,
     listenerTopics,
+    msgTypes,
 }

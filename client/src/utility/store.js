@@ -193,7 +193,6 @@ function handleRateConsumptionUpdate({ data, topic, setState }) {
     });
 }
 
-
 let consumptions = [
     {
         "name": "energy",
@@ -220,45 +219,72 @@ let consumptions = [
 
 let navigationPhases = [
     {
-        name: "launch",
+        id: "launch",
         title: "Launch",
-        option: {
-            targetPitch: -30,
-            on: true,
-        },
         color: "green",
         selected: false,
     },
     {
-        name: "cruise",
+        id: "cruise",
         title: "Cruise",
-        option: {
-            targetPitch: 0,
-            on: true,
-        },
         color: "grey",
         selected: false,
     },
     {
-        name: "exit",
+        id: "exit",
         title: "Exit",
-        option: {
-            targetPitch: 30,
-            on: true,
-        },
         color: "grey",
         selected: false,
     },
     {
-        name: "stop",
+        id: "stop",
         title: "Stop",
-        option: {
-            on: false,
-        },
         color: "grey",
         selected: true,
     },
 ]
+
+let otherListeners = {
+
+    pitchTarget: {
+        "id": "pitchTarget",
+        "name": "Target Pitch",
+        "topic": "/nav/pitch/target",
+        "messageType": 'std_msgs/Float32',
+        "value": null
+    },
+    pitchEnabled: {
+        "id": "pitchEnabled",
+        "name": "Pitch Enabled",
+        "topic": "/nav/pitch/enabled",
+        "messageType": 'std_msgs/Bool',
+        "value": null
+    },
+
+    yawTarget: {
+        "id": "yawTarget",
+        "name": "Target Yaw",
+        "topic": "/nav/yaw/target",
+        "messageType": 'std_msgs/Float32',
+        "value": null
+    },
+    yawEnabled: {
+        "id": "yawEnabled",
+        "name": "Yaw Enabled",
+        "topic": "/nav/yaw/enabled",
+        "messageType": 'std_msgs/Bool',
+        "value": null
+    },
+    phase: {
+        "id": "phase",
+        "name": "Phase",
+        "topic": "/nav/phase/",
+        "messageType": 'std_msgs/String',
+        "value": null
+    },
+
+}
+
 
 let statuses = {
     connected: {
@@ -287,11 +313,22 @@ let statuses = {
     },
 }
 
+// Routes to use to publish values (basically the name on the server)
+let publishRoutes = {
+    pitchTarget: "pitch-target",
+    pitchEnabled: "pitch-enabled",
+    yawTarget: "yaw-target",
+    yawEnabled: "yaw-enabled",
+    phase: "phase",
+}
+
 let exported = {
     statsTemp,
     consumptions,
     navigationPhases,
-    statuses
+    statuses,
+    otherListeners,
+    publishRoutes,
 }
 
 export default exported

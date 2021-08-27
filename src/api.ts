@@ -3,7 +3,8 @@ import ROSLIB from "roslib";
 const router = express.Router();
 
 import { webLogger, rosLogger } from "./logger";
-import { publishRoutes } from './rosRoutes';
+import { publishRoutes, msgTypes } from './rosRoutes';
+
 
 router.get("/", (req, res) => {
     // res.render("main");
@@ -16,12 +17,28 @@ router.get("/", (req, res) => {
 router.post("/publish/:key/:value", (req, res) => {
     try {
         if (req.params.key in publishRoutes) {
-            const msg = new ROSLIB.Message({ data: req.params.value });
+            // Extract the value
+            let value: any;
+
+            // Parse if required
+            switch (publishRoutes[req.params.key].type) {
+                case (msgTypes.FLOAT): {
+                    value = parseFloat(req.params.value);
+                    break;
+                }
+                default: {
+                    value = req.params.value;
+                }
+            }
+
+
+
+            let msg = new ROSLIB.Message({ data: value });
             publishRoutes[req.params.key].topic.publish(msg);
-            rosLogger.info(`Published ${req.params.value} to ${publishRoutes[req.params.key].name}`);
+            rosLogger.info(`Published ${value} to ${publishRoutes[req.params.key].name}`);
             res.send({
                 success: true,
-                message: `Published ${req.params.value} to ${publishRoutes[req.params.key].name}`,
+                message: `Published ${value} to ${publishRoutes[req.params.key].name}`,
 
             });
         }

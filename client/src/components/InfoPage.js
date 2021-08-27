@@ -23,6 +23,12 @@ let InfoPage = () => {
         if (stat.update === undefined)
             stat.update = rosLogic.handleMessageStat;
     })
+    for (const [key, listener] of Object.entries(store.otherListeners)) {
+        if (listener.update === undefined)
+            listener.update = rosLogic.handleOtherListener;
+    }
+
+
 
     const [state, setState] = React.useState({
         stats: store.statsTemp, consumptions: store.consumptions,
@@ -31,6 +37,7 @@ let InfoPage = () => {
             phases: store.navigationPhases,
         },
         status: store.statuses["notconnected"],
+        otherListeners: store.otherListeners,
     });
 
     // Emulate onComponentMount

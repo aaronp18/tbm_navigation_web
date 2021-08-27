@@ -11,48 +11,43 @@
 
 # Topics, Services and Params
 ## Listeners
-|              Name              |          Topic Name          |         Type         |                                         Description                                          |
-| :----------------------------: | :--------------------------: | :------------------: | :------------------------------------------------------------------------------------------: |
-|         Current Pitch          | `/set_angles/pitch/current/` |  `std_msgs/Float32`  | Listens and updates the display of the current pitch. This is rounded to 2dp for the display |
-|          Current Yaw           |  `/set_angles/yaw/current/`  |  `std_msgs/Float32`  |                      Listens and updates the display of the current yaw                      |
-|           Longitude            |       `/tbm/pos/long`        |  `std_msgs/Float32`  |                                                                                              |
-|            Latitude            |        `/tbm/pos/lat`        |  `std_msgs/Float32`  |                                                                                              |
-|             Pitch              | `/set_angles/pitch/current`  |  `std_msgs/Float32`  |                                                                                              |
-|            Heading             |  `/set_angles/yaw/current`   |  `std_msgs/Float32`  |                                                                                              |
-|             Depth              |     `/set_angles/depth`      |  `std_msgs/Float32`  |                                                                                              |
-|             Length             |     `/set_angles/length`     |  `std_msgs/Float32`  |                                                                                              |
-|              Pose              |            `/ch`             | `geometry_msgs/Pose` |                  Has both the position and orientation of the cutter head.                   |
+|              Name              |         Topic Name          |         Type         |         Description          |
+| :----------------------------: | :-------------------------: | :------------------: | :--------------------------: |
 |      **Telemetry Topics**      |
-|        Cutterhead Pose         |            `/ch`             | `geometry_msgs/Pose` |                                     ID: `cutterheadPose`                                     |
-|     Cutterhead Seed (RPM)      |         `/ch/speed`          |  `std_msgs/Float32`  |                                    ID: `cutterheadSpeed`                                     |
-|  Cutterhead Torque (ft x lb)   |         `/ch/torque`         |  `std_msgs/Float32`  |                                    ID: `cutterheadTorque`                                    |
-|        Total Thrust (N)        |        `/tbm/thrust`         |  `std_msgs/Float32`  |                                      ID: `totalThrust`                                       |
-| Distance Travelled Rate (mm/s) |  `/tbm/telem/distance/rate`  |  `std_msgs/Float32`  |                                 ID: `distanceTravelledRate`                                  |
-|  Distance Travelled Total (m)  | `/tbm/telem/distance/total`  |  `std_msgs/Float32`  |                                 ID: `distanceTravelledTotal`                                 |
-|  Energy Consumption Rate (kW)  |   `/tbm/telem/energy/rate`   |  `std_msgs/Float32`  |                                 ID: `energyConsumptionRate`                                  |
-| Energy Consumption Total (kWh) |  `/tbm/telem/energy/total`   |  `std_msgs/Float32`  |                                 ID: `energyConsumptionTotal`                                 |
-|  Water Consumption Rate (L/s)  |   `/tbm/telem/water/rate`    |  `std_msgs/Float32`  |                                  ID: `waterConsumptionRate`                                  |
-|  Water Consumption Total (L)   |   `/tbm/telem/water/total`   |  `std_msgs/Float32`  |                                 ID: `waterConsumptionTotal`                                  |
-|           TBM Status           |        `/tbm/status`         |   `std_msgs/Bool`    |                                           ID: `on`                                           |
+|        Cutterhead Pose         |            `/ch`            | `geometry_msgs/Pose` |     ID: `cutterheadPose`     |
+|     Cutterhead Seed (RPM)      |         `/ch/speed`         |  `std_msgs/Float32`  |    ID: `cutterheadSpeed`     |
+|  Cutterhead Torque (ft x lb)   |        `/ch/torque`         |  `std_msgs/Float32`  |    ID: `cutterheadTorque`    |
+|        Total Thrust (N)        |        `/tbm/thrust`        |  `std_msgs/Float32`  |      ID: `totalThrust`       |
+| Distance Travelled Rate (mm/s) | `/tbm/telem/distance/rate`  |  `std_msgs/Float32`  | ID: `distanceTravelledRate`  |
+|  Distance Travelled Total (m)  | `/tbm/telem/distance/total` |  `std_msgs/Float32`  | ID: `distanceTravelledTotal` |
+|  Energy Consumption Rate (kW)  |  `/tbm/telem/energy/rate`   |  `std_msgs/Float32`  | ID: `energyConsumptionRate`  |
+| Energy Consumption Total (kWh) |  `/tbm/telem/energy/total`  |  `std_msgs/Float32`  | ID: `energyConsumptionTotal` |
+|  Water Consumption Rate (L/s)  |   `/tbm/telem/water/rate`   |  `std_msgs/Float32`  |  ID: `waterConsumptionRate`  |
+|  Water Consumption Total (L)   |  `/tbm/telem/water/total`   |  `std_msgs/Float32`  | ID: `waterConsumptionTotal`  |
+|           TBM Status           |        `/tbm/status`        |   `std_msgs/Bool`    |           ID: `on`           |
+|           Longitude            |       `/tbm/pos/long`       |  `std_msgs/Float32`  |                              |
+|            Latitude            |       `/tbm/pos/lat`        |  `std_msgs/Float32`  |                              |
+
 ## Publishers
-|              Name              |          Topic Name          |        Type        |                                              Description                                               |
-| :----------------------------: | :--------------------------: | :----------------: | :----------------------------------------------------------------------------------------------------: |
-|          Target Pitch          | `/set_angles/pitch/target/`  | `std_msgs/Float32` | Publishes the angle required to get to the target pitch. Is updated every time the slider is adjusted. |
-|         Pitch Enabled          | `/set_angles/pitch/enabled/` |  `std_msgs/Bool`   |        Publishes whether the TBM should use the target pitch and or not. Toggled by the switch         |
-|           Target Yaw           |  `/set_angles/yaw/target/`   | `std_msgs/Float32` | Publishes the angle required to get to the target yaw.  Is updated every time the slider is adjusted.  |
-|          Yaw Enabled           |  `/set_angles/yaw/enabled/`  |  `std_msgs/Bool`   |         Publishes whether the TBM should use the target yaw and or not. Toggled by the switch          |
-|             Pitch              |       `/tbm/rot/pitch`       | `std_msgs/Float32` |                                                                                                        |
-|              Yaw               |        `/tbm/rot/yaw`        | `std_msgs/Float32` |                                                                                                        |
-|              Roll              |       `/tbm/rot/roll`        | `std_msgs/Float32` |                                                                                                        |
-|           Longitude            |       `/tbm/pos/long`        | `std_msgs/Float32` |                                                                                                        |
-|            Latitude            |        `/tbm/pos/lat`        | `std_msgs/Float32` |                                                                                                        |
-|               X                |         `/tbm/pos/x`         | `std_msgs/Float32` |                                                                                                        |
-|               Y                |         `/tbm/pos/y`         | `std_msgs/Float32` |                                                                                                        |
-|               Z                |         `/tbm/pos/z`         | `std_msgs/Float32` |                                                                                                        |
-|  Water Consumption Rate (L/s)  |   `/tbm/telem/water/rate`    | `std_msgs/Float32` |                                                                                                        |
-|  Water Consumption Total (L)   |   `/tbm/telem/water/total`   | `std_msgs/Float32` |                                                                                                        |
-|  Energy Consumption Rate (kW)  |   `/tbm/telem/energy/rate`   | `std_msgs/Float32` |                                                                                                        |
-| Energy Consumption Total (kWh) |  `/tbm/telem/energy/total`   | `std_msgs/Float32` |                                                                                                        |
+|              Name              |        Topic Name         |        Type        |                                              Description                                               |
+| :----------------------------: | :-----------------------: | :----------------: | :----------------------------------------------------------------------------------------------------: |
+|          Target Pitch          |   `/nav/pitch/target/`    | `std_msgs/Float32` | Publishes the angle required to get to the target pitch. Is updated every time the slider is adjusted. |
+|         Pitch Enabled          |   `/nav/pitch/enabled/`   |  `std_msgs/Bool`   |        Publishes whether the TBM should use the target pitch and or not. Toggled by the switch         |
+|           Target Yaw           |    `/nav/yaw/target/`     | `std_msgs/Float32` | Publishes the angle required to get to the target yaw.  Is updated every time the slider is adjusted.  |
+|          Yaw Enabled           |    `/nav/yaw/enabled/`    |  `std_msgs/Bool`   |         Publishes whether the TBM should use the target yaw and or not. Toggled by the switch          |
+|             Pitch              |     `/tbm/rot/pitch`      | `std_msgs/Float32` |                                                                                                        |
+|              Yaw               |      `/tbm/rot/yaw`       | `std_msgs/Float32` |                                                                                                        |
+|              Roll              |      `/tbm/rot/roll`      | `std_msgs/Float32` |                                                                                                        |
+|           Longitude            |      `/tbm/pos/long`      | `std_msgs/Float32` |                                                                                                        |
+|            Latitude            |      `/tbm/pos/lat`       | `std_msgs/Float32` |                                                                                                        |
+|               X                |       `/tbm/pos/x`        | `std_msgs/Float32` |                                                                                                        |
+|               Y                |       `/tbm/pos/y`        | `std_msgs/Float32` |                                                                                                        |
+|               Z                |       `/tbm/pos/z`        | `std_msgs/Float32` |                                                                                                        |
+|  Water Consumption Rate (L/s)  |  `/tbm/telem/water/rate`  | `std_msgs/Float32` |                                                                                                        |
+|  Water Consumption Total (L)   | `/tbm/telem/water/total`  | `std_msgs/Float32` |                                                                                                        |
+|  Energy Consumption Rate (kW)  | `/tbm/telem/energy/rate`  | `std_msgs/Float32` |                                                                                                        |
+| Energy Consumption Total (kWh) | `/tbm/telem/energy/total` | `std_msgs/Float32` |                                                                                                        |
+|         Current Phase          |       `/nav/phase/`       | `std_msgs/String`  |                                `launch` \| `cruise` \| `exit` \| `stop`                                |
 
 ## Params
 |   Name    |  Param Name  |        Type        |                Description                |

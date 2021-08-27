@@ -76,6 +76,11 @@ function loadListeners(state, setState, ros) {
     // Iterate and subscribe to each topic
     state.stats.forEach(stat => subscribeToTopic({ topic: stat, ros: ros, setState: setState }));
 
+    for (const [key, listener] of Object.entries(state.otherListeners)) {
+        subscribeToTopic({ topic: listener, ros: ros, setState: setState })
+    }
+
+
 }
 // Is called for each topic and subscribes
 function subscribeToTopic({ topic, ros, setState }) {
@@ -120,10 +125,23 @@ function handleMessageStat({ data, topic, setState }) {
         return { ...prevState, }
     })
 }
+// Handle the subscribe with data for a stat
+function handleOtherListener({ data, topic, setState }) {
+    setState((prevState) => {
+        // Find the stat
+        let found = prevState.otherListeners[topic.id];
+        // Update values
+        found.value = data;
+        found.lastData = data;
+
+        return { ...prevState, }
+    })
+}
 
 let exported = {
     initiateROS,
     handleMessageStat,
+    handleOtherListener,
 }
 
 export default exported
