@@ -18,7 +18,7 @@ type Consumption = {
 
 
 
-let consumptions: { [name: string]: Consumption; } = {
+const consumptions: { [name: string]: Consumption; } = {
     "water": {
         "rate": 0,
         "total": 0,
@@ -59,15 +59,15 @@ function addConsumptionPulse(timestamp: any, options: { consumptionType: string 
     consumptions[options.consumptionType].total += consumptions[options.consumptionType].pulseValue;
 
 
-    let now = Date.now();
+    const now = Date.now();
 
     // Calculate rate from last 1 second
-    let recentPulses = consumptions[options.consumptionType].previous.filter((node, position) => {
+    const recentPulses = consumptions[options.consumptionType].previous.filter((node, position) => {
         // Get all from last second
         return node.getValue() > (now - optionsF.AVERAGE_PERIOD);
     })
 
-    let x = (recentPulses.count() / (optionsF.AVERAGE_PERIOD / 1000.0));
+    const x = (recentPulses.count() / (optionsF.AVERAGE_PERIOD / 1000.0));
     consumptions[options.consumptionType].rate = x;
 
     console.log("Count: " + recentPulses.count() + "/" + consumptions[options.consumptionType].previous.count() + " >>> " + consumptions[options.consumptionType].rate)
@@ -75,8 +75,8 @@ function addConsumptionPulse(timestamp: any, options: { consumptionType: string 
 
 
     // Publish new value
-    let rateTopicName = consumptions[options.consumptionType].rateTopicName;
-    let totalTopicName = consumptions[options.consumptionType].totalTopicName;
+    const rateTopicName = consumptions[options.consumptionType].rateTopicName;
+    const totalTopicName = consumptions[options.consumptionType].totalTopicName;
 
     // console.log(consumptions[options.consumptionType].rate);
     publishRoutes[rateTopicName].topic.publish(new ROSLIB.Message({ data: consumptions[options.consumptionType].rate }));

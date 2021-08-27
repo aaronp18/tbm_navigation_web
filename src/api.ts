@@ -54,8 +54,8 @@ router.get("/test/energy", (req, res) => {
 
     }
     // res.render("main");
-    let period = 25; // 50ms
-    let timeout = 5000; // 10 Seconds
+    const period = 25; // 50ms
+    const timeout = 5000; // 10 Seconds
     let send = true;
 
 
@@ -65,7 +65,7 @@ router.get("/test/energy", (req, res) => {
     setTimeout(() => {
         // Clear interval
         send = false;
-        res.send({ message: `Running energy test with a period of ${period}ms for ${timeout / 1000} seconds... `, timeout: timeout, });
+        res.send({ message: `Running energy test with a period of ${period}ms for ${timeout / 1000} seconds... `, timeout, });
     }, timeout)
 
 

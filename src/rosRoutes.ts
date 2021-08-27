@@ -16,7 +16,7 @@ type PublishRoute = {
     topic: ROSLIB.Topic
 }
 
-let publishRoutes: { [topicName: string]: PublishRoute } = {
+const publishRoutes: { [topicName: string]: PublishRoute } = {
     "pitch-target": {
         "name": "Target Pitch",
         "topicName": "/set_angles/pitch/target",
@@ -129,7 +129,7 @@ type ListenerTopic = {
 
 }
 
-let listenerTopics: { [id: string]: ListenerTopic } = {
+const listenerTopics: { [id: string]: ListenerTopic } = {
     "cutterheadPose": {
         "name": "Cutterhead Pose",
         "topic": "/ch",
@@ -225,7 +225,7 @@ let listenerTopics: { [id: string]: ListenerTopic } = {
 function initPublishers(ros: any) {
     Object.entries(publishRoutes).forEach(
         ([key, value]) => {
-            let topic = new ROSLIB.Topic({
+            const topic = new ROSLIB.Topic({
                 ros,
                 name: value.topicName,
                 messageType: value.type,
@@ -248,7 +248,7 @@ function initPublishers(ros: any) {
 function initListeners(ros: any) {
     Object.entries(listenerTopics).forEach(
         ([key, value]) => {
-            let topic = new ROSLIB.Topic({
+            const topic = new ROSLIB.Topic({
                 ros,
                 name: value.topic,
                 messageType: value.type,
