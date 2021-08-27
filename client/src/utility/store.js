@@ -76,7 +76,7 @@ let statsTemp = [
         "isSubtitle": true,
     },
     {
-        "id": "rosBridge",
+        "id": "ros-status",
         "name": "ROS Bridge Server",
         "rosignore": true,
     },

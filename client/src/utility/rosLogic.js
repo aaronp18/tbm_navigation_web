@@ -10,6 +10,7 @@ async function initiateROS(state, setState) {
     log("Connecting to ROS server...", true, "ROS")
     setState((prevState) => {
         prevState.status = store.statuses["connecting"];
+        prevState.stats.find((stat) => stat.id === "ros-status").value = prevState.status.text;
         return { ...prevState }
     });
 
@@ -25,6 +26,7 @@ async function initiateROS(state, setState) {
 
         setState((prevState) => {
             prevState.status = store.statuses["connected"];
+            prevState.stats.find((stat) => stat.id === "ros-status").value = prevState.status.text;
             return { ...prevState }
         });
 
@@ -58,7 +60,10 @@ async function initiateROS(state, setState) {
         let reconnectID = setInterval(async () => {
             log("Retrying connection to " + rosURL, true, "ROS", 3000)
             setState((prevState) => {
+
                 prevState.status = store.statuses["connecting"];
+                prevState.stats.find((stat) => stat.id === "ros-status").value = prevState.status.text;
+
                 return { ...prevState }
             });
             ros.connect(rosURL);
