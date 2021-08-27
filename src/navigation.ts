@@ -9,7 +9,51 @@ import * as THREE from 'three';
 import ROSLIB from "roslib";
 
 const R_EARTH = 6371000; // m
+type Phase = {
+    id: string,
+    title: string,
+    option?: {
+        targetPitch?: number,
+        on?: boolean
+    },
+    color: string,
 
+}
+
+const phases: { [id: string]: Phase } = {
+    launch: {
+        id: "launch",
+        title: "Launch",
+        option: {
+            targetPitch: -30,
+        },
+        color: "green",
+    },
+    cruise: {
+        id: "cruise",
+        title: "Cruise",
+        option: {
+            targetPitch: 0,
+        },
+        color: "grey",
+    },
+    exit: {
+        id: "exit",
+        title: "Exit",
+        option: {
+            targetPitch: 30,
+        },
+        color: "grey",
+    },
+    stop: {
+        id: "stop",
+        title: "Stop",
+        option: {
+            on: false,
+        },
+        color: "grey",
+    },
+}
 // Converts the pose quart orientation to radiens
 function getRotationFromPose(pose: any) {
     const quart = new THREE.Quaternion(pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w);
@@ -69,6 +113,18 @@ function poseUpdate(pose: ROSLIB.Pose) {
 
 }
 
+function handlePhaseChange(message: any) {
+    let phase = phases[message.data];
+
+    if (phase.option.targetPitch !== undefined) {
+        // Then set target pitch
+        publishRoutes["pitch-target"].topic.publish(new ROSLIB.Message({ data: phase.option.targetPitch }));
+    }
+
+
+}
+
 export {
     poseUpdate,
+    handlePhaseChange,
 }

@@ -19,7 +19,7 @@ type PublishRoute = {
 const msgTypes = {
     FLOAT: "std_msgs/Float32",
     STRING: "std_msgs/String",
-    INT: "std_msgs/Int32",
+    INT64: "std_msgs/Int64",
     BOOL: "std_msgs/Bool",
 }
 
@@ -67,7 +67,7 @@ const publishRoutes: { [topicName: string]: PublishRoute } = {
     "energy-consumption-pulse": {
         "name": "Energy Consumption Pulse",
         "topicName": "/restapi/energy/ping/",
-        "type": msgTypes.INT,
+        "type": msgTypes.INT64,
         "topic": null,
         "latch": false,
     },
@@ -214,7 +214,7 @@ const listenerTopics: { [id: string]: ListenerTopic } = {
     "energyPulse": {
         "name": "Energy Pulse",
         "topic": "/restapi/energy/ping",
-        "type": msgTypes.INT,
+        "type": msgTypes.INT64,
         "lastData": null,
         "update": addConsumptionPulse,
         "options": {
@@ -224,7 +224,7 @@ const listenerTopics: { [id: string]: ListenerTopic } = {
     "waterPulse": {
         "name": "Water Pulse",
         "topic": "/restapi/water/ping",
-        "type": msgTypes.INT,
+        "type": msgTypes.INT64,
         "lastData": null,
         "update": addConsumptionPulse,
         "options": {
@@ -236,9 +236,7 @@ const listenerTopics: { [id: string]: ListenerTopic } = {
         "topic": "/nav/phase",
         "type": msgTypes.STRING,
         "lastData": null,
-        "update": (value) => {
-
-        }
+        "update": navigation.handlePhaseChange,
     },
 
 
