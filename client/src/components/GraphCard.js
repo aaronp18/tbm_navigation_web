@@ -29,7 +29,7 @@ const GraphCard = ({ dataPoints, header, total, average }) => {
     const { width, height } = rect; // Width / height of the card
 
     // Set the width of the graph depending on the breakpoint.
-    let graphWidth = width > 425 ? width * 0.75 : width;
+    let graphWidth = width > 425 ? width * 0.75 : width * 0.95;
     return (
 
         <Card fluid style={{ padding: 10 }} >
