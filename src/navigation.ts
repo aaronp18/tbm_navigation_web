@@ -6,9 +6,10 @@ import { webLogger, rosLogger, telemLogger } from "./logger";
 import { publishRoutes, params } from "./rosRoutes";
 
 import * as THREE from 'three';
-import ROSLIB from "roslib";
+import ROSLIB, { Ros } from "roslib";
 
 const R_EARTH = 6371000; // m
+
 type Phase = {
     id: string,
     title: string,
@@ -83,8 +84,9 @@ function calculatePosition(dx: number, dy: number) {
     }
 }
 
+// Get the origin from parameters
 function getOrigin() {
-    return { lat: 36.925815, long: -76.274069 };
+    return { lat: params.originLat.value, long: params.originLong.value };
 }
 
 function publishPosition(lat: number, long: number) {
@@ -129,4 +131,5 @@ export {
     poseUpdate,
     handlePhaseChange,
     phases,
+
 }

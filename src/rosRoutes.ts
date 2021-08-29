@@ -46,6 +46,14 @@ let params: { [id: string]: Param } = {
         route: "yaw/min",
         value: null,
     },
+    originLat: {
+        route: "origin/lat",
+        value: null,
+    },
+    originLong: {
+        route: "origin/long",
+        value: null,
+    }
 
 
 }
@@ -63,7 +71,7 @@ function loadAxisMinMax(ros: Ros) {
             // Get inital value
             getParam(param);
 
-        })
+        });
 
 }
 
@@ -76,6 +84,16 @@ function getParam(param: Param) {
             param.update(value);
     });
 
+}
+
+// Gets values of all parameters (can be used to update / refresh without restarting)
+function refreshAllParameters() {
+    Object.entries(params).forEach(
+        ([key, param]) => {
+            // Get inital value
+            getParam(param);
+
+        });
 }
 
 
@@ -375,4 +393,5 @@ export {
     initListeners,
     listenerTopics,
     msgTypes,
+    refreshAllParameters,
 }

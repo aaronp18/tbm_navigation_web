@@ -85,7 +85,7 @@ ros.on('close', function () {
     reconnectID = setInterval(() => {
         if (!options.SILENT_RECONNECT)
             rosLogger.info(" == Retrying connection to " + options.ROS_URL)
-        ros.connect(options.ROS_URL)
+        ros.connect(options.ROS_URL);
 
     }, options.AUTO_RECONNECT_INTERVAL);
 });

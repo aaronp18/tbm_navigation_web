@@ -3,13 +3,19 @@ import ROSLIB from "roslib";
 const router = express.Router();
 
 import { webLogger, rosLogger } from "./logger";
-import { publishRoutes, msgTypes } from './rosRoutes';
+import { publishRoutes, msgTypes, refreshAllParameters, params } from './rosRoutes';
+
 
 
 router.get("/", (req, res) => {
     // res.render("main");
     res.send("This is the api route for publishing topics and keeping state");
 
+});
+router.get("/params/refresh", (req, res) => {
+    // Refreshes all parameters
+    rosLogger.info(`Refreshing all (${Object.keys(params).length}) parameters...`)
+    refreshAllParameters();
 });
 
 
@@ -35,10 +41,10 @@ router.post("/publish/:key/:value", (req, res) => {
 
             let msg = new ROSLIB.Message({ data: value });
             publishRoutes[req.params.key].topic.publish(msg);
-            rosLogger.info(`Published ${value} to ${publishRoutes[req.params.key].name}`);
+            rosLogger.info(`Published ${value} to ${publishRoutes[req.params.key].name} `);
             res.send({
                 success: true,
-                message: `Published ${value} to ${publishRoutes[req.params.key].name}`,
+                message: `Published ${value} to ${publishRoutes[req.params.key].name} `,
 
             });
         }
