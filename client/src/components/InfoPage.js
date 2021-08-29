@@ -14,6 +14,7 @@ import GraphCard from './GraphCard';
 
 import TestsCard from './TestsCard';
 import NavigationCard from './NavigationCard';
+import TBMModel from './TBMModel';
 
 
 let InfoPage = () => {
@@ -74,6 +75,7 @@ let InfoPage = () => {
 
                             <StatsCard stats={state.stats} status={state.status}></StatsCard>
                             <NavigationCard state={state} setState={setState}></NavigationCard>
+                            <TBMModel state={state}></TBMModel>
                             <TestsCard></TestsCard>
 
 
