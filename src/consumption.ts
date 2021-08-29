@@ -40,7 +40,7 @@ const consumptions: { [name: string]: Consumption; } = {
 function startConsumptionSend() {
     Object.entries(consumptions).forEach(([key, consumption]) => {
         setInterval(() => {
-            if (params[key + "GraphOn"].value)
+            if (params[key + "GraphOn"].value === true)
                 calculateRateTotal(key);
         }, optionsF.CONSUMPTION_UPDATE_INTERVAL);
     })
@@ -85,7 +85,7 @@ function calculateRateTotal(consumptionType: string) {
     const x = (recentPulses.count() / (optionsF.AVERAGE_PERIOD / 1000.0));
     consumptions[consumptionType].rate = x;
 
-    console.log("Count: " + recentPulses.count() + "/" + consumptions[consumptionType].previous.count() + " >>> " + consumptions[consumptionType].rate)
+    // console.log("Count: " + recentPulses.count() + "/" + consumptions[consumptionType].previous.count() + " >>> " + consumptions[consumptionType].rate)
 
 
 

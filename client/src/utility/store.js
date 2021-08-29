@@ -354,7 +354,17 @@ let paramsTemplate = {
         name: "Origin - Longitude",
         route: "origin/long",
         value: null,
-    }
+    },
+    energyGraphOn: {
+        name: "Energy Graph On",
+        route: "consumption/energy/graph/enabled",
+        value: null,
+    },
+    waterGraphOn: {
+        name: "Water Graph On",
+        route: "consumption/water/graph/enabled",
+        value: null,
+    },
 
 
 }
