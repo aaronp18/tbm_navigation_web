@@ -64,7 +64,15 @@ let params: { [id: string]: Param } = {
     originLong: {
         route: "origin/long",
         value: null,
-    }
+    },
+    energyGraphOn: {
+        route: "consumption/energy/graph/enabled",
+        value: null,
+    },
+    waterGraphOn: {
+        route: "consumption/water/graph/enabled",
+        value: null,
+    },
 
 
 }

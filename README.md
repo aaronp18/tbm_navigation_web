@@ -50,14 +50,16 @@
 |         Current Phase          |       `/nav/phase/`       | `std_msgs/String`  |                                `launch` \| `cruise` \| `exit` \| `stop`                                |
 
 ## Params
-|       Name       |   Param Name   |        Type        |                Description                |
-| :--------------: | :------------: | :----------------: | :---------------------------------------: |
-|    Max Pitch     |  `/pitch/max`  | `std_msgs/Float32` | The max target pitch the web site can set |
-|    Min Pitch     |  `/pitch/min`  | `std_msgs/Float32` | The min target pitch the web site can set |
-|     Max Yaw      |   `/yaw/max`   | `std_msgs/Float32` |  The max target yaw the web site can set  |
-|     Min Yaw      |   `/yaw/min`   | `std_msgs/Float32` |  The min target yaw the web site can set  |
-| Origin Latitude  | `/origin/lat`  | `std_msgs/Float32` |                                           |
-| Origin Longitude | `/origin/long` | `std_msgs/Float32` |                                           |
+|            Name             |             Param Name              |        Type        |                Description                |
+| :-------------------------: | :---------------------------------: | :----------------: | :---------------------------------------: |
+|          Max Pitch          |            `/pitch/max`             | `std_msgs/Float32` | The max target pitch the web site can set |
+|          Min Pitch          |            `/pitch/min`             | `std_msgs/Float32` | The min target pitch the web site can set |
+|           Max Yaw           |             `/yaw/max`              | `std_msgs/Float32` |  The max target yaw the web site can set  |
+|           Min Yaw           |             `/yaw/min`              | `std_msgs/Float32` |  The min target yaw the web site can set  |
+|       Origin Latitude       |            `/origin/lat`            | `std_msgs/Float32` |                                           |
+|      Origin Longitude       |           `/origin/long`            | `std_msgs/Float32` |                                           |
+| Energy Consumption Graph On | `/consumption/energy/graph/enabled` |  `std_msgs/Bool`   | Determines whether points are calculated  |
+| Water Consumption Graph On  | `/consumption/water/graph/enabled`  |  `std_msgs/Bool`   | Determines whether points are calculated  |
 
 
 ## Todo

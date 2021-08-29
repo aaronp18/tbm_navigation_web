@@ -2,7 +2,7 @@ import { DoublyLinkedList, DoublyLinkedListNode } from "@datastructures-js/linke
 import ROSLIB from "roslib";
 
 import { webLogger, rosLogger } from "./logger";
-import { publishRoutes } from "./rosRoutes";
+import { publishRoutes, params } from "./rosRoutes";
 
 import * as optionsF from './options' // Options from file
 
@@ -40,7 +40,8 @@ const consumptions: { [name: string]: Consumption; } = {
 function startConsumptionSend() {
     Object.entries(consumptions).forEach(([key, consumption]) => {
         setInterval(() => {
-            calculateRateTotal(key);
+            if (params[key + "GraphOn"].value)
+                calculateRateTotal(key);
         }, optionsF.CONSUMPTION_UPDATE_INTERVAL);
     })
 }
