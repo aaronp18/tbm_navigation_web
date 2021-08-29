@@ -206,12 +206,24 @@ function refreshAllParameters(params, setState) {
         });
 }
 
+function setParam(paramID, value, state, setState) {
+    // Try to get parameter from state object
+    state.params[paramID]?.param.set(value, () => {
+        // Refresh
+        refreshAllParameters(state.params, setState);
+    });
+}
+function setParamObj(paramObj, value) {
+    paramObj.param.set(value);
+}
 
 let exported = {
     initiateROS,
     handleMessageStat,
     handleOtherListener,
     refreshAllParameters,
+    setParam,
+    setParamObj,
 }
 
 export default exported

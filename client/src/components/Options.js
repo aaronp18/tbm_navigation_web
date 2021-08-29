@@ -12,44 +12,48 @@ import rosLogic from '../utility/rosLogic'
 
 const Options = ({ state, setState }) => {
     const [isRefreshingParams, setRefreshingParams] = React.useState(false);
-    const refreshParams = () => {
+    const handleRefreshParams = () => {
         setRefreshingParams(true);
         rosLogic.refreshAllParameters(state.params, setState);
         fetch("/api/params/refresh").finally(() => setRefreshingParams(false));
     }
 
+    const handleSaveParams = () => {
+        // console.log(tempParams);
+        // Save all params
+        Object.entries(tempParams).forEach(([key, newParam], index) => {
+            rosLogic.setParamObj(newParam, newParam.value);
+        })
+
+        //Refresh params
+        handleRefreshParams();
+
+    }
+
+    const [tempParams, setTempParams] = React.useState(state.params);
+
+    const onValueChange = (e, { name, value }) => {
+        setTempParams((prev) => {
+            prev[name].value = value;
+            return ({ ...prev, })
+        });
+    };
+
     return (
         <Form>
-            <Header as={"h2"} dividing textAlign={'center'}>Misc</Header>
-            <Button loading={isRefreshingParams} onClick={refreshParams}></Button>
-
-
             <Header as={"h2"} dividing textAlign={'center'}>Parameters</Header>
-            <List style={{ padding: 20 }} divided verticalAlign='middle'>
+            {Object.entries(tempParams).map(([key, param], num) => {
+                return (
+                    <Form.Field inline fluid name={key} key={key} label={param.name} control={Form.Input} value={param.value} onChange={onValueChange} />
+                )
+            })}
 
-                {Object.entries(state.params).map(([num, param], key) => {
-                    return (
-                        <List.Item key={param.route}>
-                            <List.Content floated='right'>
-                                {param.value}
-                            </List.Content>
-                            <List.Content><Header as='h4'>{param.name}</Header></List.Content>
-                        </List.Item>
-                    )
-                })}
-
-            </List>
-
-            <Button fluid loading={isRefreshingParams} onClick={refreshParams}>Refresh Parameters</Button>
+            <Button fluid loading={isRefreshingParams} onClick={handleRefreshParams}>Refresh Parameters</Button>
+            <Divider></Divider>
+            <Button fluid onClick={handleSaveParams}>Save Parameters</Button>
 
             <Divider></Divider>
 
-
-            <Form.Group widths='equal'>
-                <Form.Input fluid label='Origin Latitude' value="59u947309" />
-                <Form.Input fluid label='Origin Longitude' value="889u34n" />
-
-            </Form.Group>
 
 
 
