@@ -10,7 +10,7 @@ import rosLogic from '../utility/rosLogic'
 
 
 
-const Options = ({ state, setState }) => {
+const Options = ({ state, setState, setOpen }) => {
     const [isRefreshingParams, setRefreshingParams] = React.useState(false);
     const handleRefreshParams = () => {
         setRefreshingParams(true);
@@ -19,7 +19,6 @@ const Options = ({ state, setState }) => {
     }
 
     const handleSaveParams = () => {
-        // console.log(tempParams);
         // Save all params
         Object.entries(tempParams).forEach(([key, newParam], index) => {
             rosLogic.setParamObj(newParam, newParam.value);
@@ -27,6 +26,8 @@ const Options = ({ state, setState }) => {
 
         //Refresh params
         handleRefreshParams();
+
+        setOpen(false)
 
     }
 
@@ -54,7 +55,13 @@ const Options = ({ state, setState }) => {
 
             <Divider></Divider>
 
-
+            <Button
+                content="Save"
+                labelPosition='right'
+                icon='save'
+                onClick={() => setOpen(false)}
+                positive
+            />
 
 
         </Form>

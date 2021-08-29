@@ -22,20 +22,9 @@ const OptionsPopup = ({ state, setState }) => {
     >
         <Modal.Header>Navigation Configuration</Modal.Header>
         <Modal.Content >
-            <Options state={state} setState={setState}></Options>
+            <Options state={state} setState={setState} setOpen={setOpen}></Options>
         </Modal.Content>
-        <Modal.Actions>
-            <Button color='black' onClick={() => setOpen(false)}>
-                Cancel
-            </Button>
-            <Button
-                content="Save"
-                labelPosition='right'
-                icon='save'
-                onClick={() => setOpen(false)}
-                positive
-            />
-        </Modal.Actions>
+
     </Modal >
     )
 }
