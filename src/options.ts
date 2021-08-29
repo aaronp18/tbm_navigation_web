@@ -24,6 +24,8 @@ const AVERAGE_PERIOD = 1000; // ms
 // Number of consumption points to keep before pruning. This needs to be large enough to allow for all points in
 // average period to be considered
 const CONSUMPTION_CACHE_SIZE = 5000;
+// The amount of time between consumption calculations (total and rate)
+const CONSUMPTION_UPDATE_INTERVAL = 250;
 
 
 export {
@@ -39,4 +41,5 @@ export {
     TELEM_ON,
     AVERAGE_PERIOD,
     CONSUMPTION_CACHE_SIZE,
+    CONSUMPTION_UPDATE_INTERVAL,
 }

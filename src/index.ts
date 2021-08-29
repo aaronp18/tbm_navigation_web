@@ -6,13 +6,15 @@ import * as store from "./rosRoutes";
 
 import * as options from './options'
 
-import { sendTelem, getTelem } from "./sendPackets";
+import { sendTelem, getTelem, initiateTelem } from "./sendPackets";
 
 import { webLogger, rosLogger } from "./logger";
+import { startConsumptionSend } from "./consumption"
 
 import path from 'path';
 import ROSLIB from "roslib";
 
+let hasStarted = false; // Is true when has been initiated once
 
 const app = express();
 
@@ -47,23 +49,17 @@ ros.on('connection', function () {
     store.initListeners(ros);
 
     if (reconnectID != null) {
-        reconnectID = null;
         clearInterval(reconnectID);
+        reconnectID = null;
     }
-    // Clear reconnect if needed
 
+    // Only executed once, on first connection
+    if (!hasStarted) {
+        initiateTelem();
+        startConsumptionSend();
+    }
 
-    setInterval(() => {
-        // If telemetry is off, pass;
-        if (!options.TELEM_ON)
-            return;
-        // Get relavent telem
-        const telem = getTelem();
-        // Send telem
-        sendTelem(telem);
-    }, options.TELEM_INTERVAL);
-
-
+    hasStarted = true;
 });
 
 ros.on('error', function (e) {

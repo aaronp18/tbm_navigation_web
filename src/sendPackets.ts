@@ -105,7 +105,20 @@ function getTelem(): TelemMessage {
     }
 }
 
+function initiateTelem() {
+    setInterval(() => {
+        // If telemetry is off, pass;
+        if (!options.TELEM_ON)
+            return;
+        // Get relavent telem
+        const telem = getTelem();
+        // Send telem
+        sendTelem(telem);
+    }, options.TELEM_INTERVAL);
+}
+
 export {
     sendTelem,
     getTelem,
+    initiateTelem
 }
