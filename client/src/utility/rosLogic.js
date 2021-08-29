@@ -21,7 +21,7 @@ async function initiateROS(state, setState) {
 
     ros.on('connection', async function () {
         log('Connected to websocket server.', true, "ROS");
-        // loadParams();
+        loadParams(state, setState, ros);
         loadListeners(state, setState, ros);
 
         setState((prevState) => {
@@ -143,10 +143,75 @@ function handleOtherListener({ data, topic, setState }) {
     })
 }
 
+function loadParams(state, setState, ros) {
+    // Axis min / max
+    Object.entries(state.params).forEach(
+        ([key, param]) => {
+            var rosParam = new ROSLIB.Param({
+                ros: ros,
+                name: param.route,
+            });
+            // Save to object
+
+            setState((prevState) => {
+                prevState.params[key].param = rosParam;
+
+                // Get inital value
+                param.param?.get((value) => {
+                    setState((prevState) => {
+                        prevState.params[key].value = value;
+
+                        // Update function
+                        if (param.update !== undefined)
+                            param.update(value);
+
+                        log(`Parameter "${param.name}" "${param.route}" = ${param.value}`);
+                        return { ...prevState };
+                    })
+
+
+                });
+
+                return { ...prevState };
+            })
+
+
+
+
+        });
+
+}
+
+
+// Gets values of all parameters (can be used to update / refresh without restarting)
+function refreshAllParameters(params, setState) {
+    Object.entries(params).forEach(
+        ([key, param]) => {
+
+            param.param?.get((value) => {
+                setState((prevState) => {
+                    prevState.params[key].value = value;
+
+                    // Update function
+                    if (param.update !== undefined)
+                        param.update(value);
+
+                    return { ...prevState };
+                })
+
+
+            });
+
+
+        });
+}
+
+
 let exported = {
     initiateROS,
     handleMessageStat,
     handleOtherListener,
+    refreshAllParameters,
 }
 
 export default exported

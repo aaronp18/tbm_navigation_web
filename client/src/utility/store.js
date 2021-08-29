@@ -323,6 +323,42 @@ let publishRoutes = {
 }
 
 
+let paramsTemplate = {
+    pitchMax: {
+        name: "Maximum Pitch",
+        route: "pitch/max",
+        value: null,
+
+    },
+    pitchMin: {
+        name: "Minimum Pitch",
+        route: "pitch/min",
+        value: null,
+    },
+    yawMax: {
+        name: "Maximum Yaw",
+        route: "yaw/max",
+        value: null,
+    },
+    yawMin: {
+        name: "Minimum Yaw",
+        route: "yaw/min",
+        value: null,
+    },
+    originLat: {
+        name: "Origin - Latitude",
+        route: "origin/lat",
+        value: null,
+    },
+    originLong: {
+        name: "Origin - Longitude",
+        route: "origin/long",
+        value: null,
+    }
+
+
+}
+
 
 let exported = {
     statsTemp,
@@ -331,6 +367,7 @@ let exported = {
     statuses,
     otherListeners,
     publishRoutes,
+    paramsTemplate,
 }
 
 export default exported

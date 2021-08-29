@@ -16,6 +16,7 @@ router.get("/params/refresh", (req, res) => {
     // Refreshes all parameters
     rosLogger.info(`Refreshing all (${Object.keys(params).length}) parameters...`)
     refreshAllParameters();
+    res.send({ success: true, message: `Refreshing all (${Object.keys(params).length}) parameters...` })
 });
 
 

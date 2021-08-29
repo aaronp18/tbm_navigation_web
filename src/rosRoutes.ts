@@ -10,8 +10,19 @@ import * as navigation from './navigation';
 
 
 function initiateParams(ros: Ros) {
-    loadAxisMinMax(ros);
+    Object.entries(params).forEach(
+        ([key, param]) => {
+            var rosParam = new ROSLIB.Param({
+                ros: ros,
+                name: param.route,
+            });
+            // Save to object
+            param.param = rosParam;
 
+            // Get inital value
+            getParam(param);
+
+        });
 }
 
 type ParamUpdateFunction = (value: any,) => void;
@@ -57,28 +68,11 @@ let params: { [id: string]: Param } = {
 
 
 }
-function loadAxisMinMax(ros: Ros) {
-    // Axis min / max
-    Object.entries(params).forEach(
-        ([key, param]) => {
-            var rosParam = new ROSLIB.Param({
-                ros: ros,
-                name: param.route,
-            });
-            // Save to object
-            param.param = rosParam;
-
-            // Get inital value
-            getParam(param);
-
-        });
-
-}
 
 // Gets the given parameter and saves it to itself
 function getParam(param: Param) {
-    param.param.get((value) => {
-        params.value = value;
+    param.param?.get((value) => {
+        param.value = value;
         // Update function
         if (param.update !== undefined)
             param.update(value);
@@ -92,7 +86,6 @@ function refreshAllParameters() {
         ([key, param]) => {
             // Get inital value
             getParam(param);
-
         });
 }
 

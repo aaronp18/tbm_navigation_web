@@ -16,6 +16,8 @@ import TestsCard from './TestsCard';
 import NavigationCard from './NavigationCard';
 import TBMModel from './TBMModel';
 
+import NavMenu from './NavMenu';
+
 
 let InfoPage = () => {
     store.statsTemp.forEach((stat) => {
@@ -39,6 +41,8 @@ let InfoPage = () => {
         },
         status: store.statuses["notconnected"],
         otherListeners: store.otherListeners,
+        isParamsRefreshing: false,
+        params: store.paramsTemplate,
     });
 
     // Emulate onComponentMount
@@ -66,35 +70,39 @@ let InfoPage = () => {
 
 
     return (
-        <Container fluid style={{ margin: 20, padding: 20 }}>
-            <Grid columns={2} stackable >
+        <>
+            <NavMenu state={state} setState={setState}></NavMenu>
+            <Container fluid style={{ margin: 20, padding: 20 }}>
+                <Grid columns={2} stackable >
 
-                <Grid.Row >
-                    <Grid.Column>
-                        <CardGroup>
+                    <Grid.Row >
+                        <Grid.Column>
+                            <CardGroup>
 
-                            <StatsCard stats={state.stats} status={state.status}></StatsCard>
-                            <NavigationCard state={state} setState={setState}></NavigationCard>
-                            <TBMModel state={state}></TBMModel>
-                            <TestsCard></TestsCard>
-
-
-
-                        </CardGroup>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <CardGroup>
-                            {state.consumptions.map((consumption) => {
-                                return (<GraphCard dataPoints={consumption.dataPoints} header={consumption.header} total={consumption.total} average={consumption.average} key={consumption.name}></GraphCard>)
-                            })}
-                        </CardGroup>
-                    </Grid.Column>
-
-                </Grid.Row>
+                                <StatsCard stats={state.stats} status={state.status}></StatsCard>
+                                <NavigationCard state={state} setState={setState}></NavigationCard>
+                                <TBMModel state={state}></TBMModel>
+                                <TestsCard></TestsCard>
 
 
-            </Grid>
-        </Container >)
+
+                            </CardGroup>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <CardGroup>
+                                {state.consumptions.map((consumption) => {
+                                    return (<GraphCard dataPoints={consumption.dataPoints} header={consumption.header} total={consumption.total} average={consumption.average} key={consumption.name}></GraphCard>)
+                                })}
+                            </CardGroup>
+                        </Grid.Column>
+
+                    </Grid.Row>
+
+
+                </Grid>
+            </Container >
+
+        </>)
 
 }
 

@@ -18,8 +18,8 @@ const StatsCard = ({ status, stats }) => {
 
         <Card fluid style={{ padding: 10 }}>
             <Header as={"h2"} dividing textAlign={'center'}>
-            <StatusIcon status={status}/>Stats ({status.text} )
-       
+                <StatusIcon status={status} />Stats ({status.text} )
+
 
             </Header>
 

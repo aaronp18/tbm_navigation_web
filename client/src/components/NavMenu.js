@@ -10,8 +10,9 @@ import {
     Menu,
     Segment,
 } from 'semantic-ui-react'
+import OptionsPopup from './OptionsPopup'
 
-const NavMenu = () => (
+const NavMenu = ({ state, setState }) => (
 
     <Menu inverted>
 
@@ -20,8 +21,7 @@ const NavMenu = () => (
             Navigation
         </Menu.Item>
         <Menu.Item as='a'>Home</Menu.Item>
-        {/* <Menu.Item as='a'>Controller</Menu.Item> */}
-        <Menu.Item as='a'>Config</Menu.Item>
+        <OptionsPopup state={state} setState={setState}></OptionsPopup>
 
     </Menu>
 

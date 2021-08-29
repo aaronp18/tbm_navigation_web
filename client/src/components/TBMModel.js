@@ -14,7 +14,7 @@ import TBM from './TBM'
 
 const TBMModel = ({ state: { status, stats } }) => {
     // First check if connected to ROS
-    if (status.id === "connected")
+    if (status.id !== "connected")
         return (
             <Card fluid style={{ padding: 10 }}>
                 <Header as={"h2"} dividing textAlign={'center'}>TBM Model</Header>
