@@ -8,11 +8,15 @@ import {
 } from 'semantic-ui-react'
 
 import store from '../utility/store';
+import authentication from '../utility/authentication';
 
-function handlePhaseChange(e, { option, id }, setState) {
+function handlePhaseChange(e, { option, id }, state, setState,) {
     e.preventDefault();
     e.stopPropagation();
 
+    // Check authentication
+    if (!authentication.isAuthenticated(state.settings.auth))
+        return false
 
     // Publish to ROS
     fetch(`/api/publish/${store.publishRoutes.phase}/${id}`,
@@ -26,15 +30,6 @@ function handlePhaseChange(e, { option, id }, setState) {
 
         });
 
-    // setState((prevState) => {
-    //     prevState.navigation.phases.forEach((phase) => phase.selected = false);
-    //     let found = prevState.navigation.phases.find((phase) => phase.name === name);
-    //     found.selected = true;
-
-
-
-    //     return { ...prevState };
-    // });
 }
 
 let NavigationCard = ({ state, setState }) => {
@@ -45,7 +40,7 @@ let NavigationCard = ({ state, setState }) => {
             <Header as={"h2"} dividing textAlign={'center'}>Navigation </Header>
             <Button.Group style={{ padding: 10 }}>
                 {state.navigation.phases.map((phase) => {
-                    return (<Button color={state.otherListeners.phase.value === phase?.id ? "green" : "grey"} onClick={(e) => handlePhaseChange(e, phase, setState)} key={phase.id}>{phase.title}</Button>)
+                    return (<Button color={state.otherListeners.phase.value === phase?.id ? "green" : "grey"} onClick={(e) => handlePhaseChange(e, phase, state, setState)} key={phase.id}>{phase.title}</Button>)
                 })}
             </Button.Group>
             <Grid style={{ padding: 10 }} stackable>

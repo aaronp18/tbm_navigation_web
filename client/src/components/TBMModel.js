@@ -3,6 +3,7 @@ import {
     Grid,
     Header,
     Button,
+    Divider,
     Card
 } from 'semantic-ui-react'
 
@@ -18,7 +19,8 @@ const TBMModel = ({ state: { status, stats } }) => {
         return (
             <Card fluid style={{ padding: 10 }}>
                 <Header as={"h2"} dividing textAlign={'center'}>TBM Model</Header>
-                Not Connected!
+                <Header as={"h4"} textAlign={"center"}>Not Connected!</Header>
+                <Divider></Divider>
 
             </Card>
         );

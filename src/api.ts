@@ -7,13 +7,28 @@ import { publishRoutes, msgTypes, refreshAllParameters, params } from './rosRout
 
 import { isConnected } from './index';
 
+const isConnectedMiddleWare = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (isConnected) {
+        next();
+    }
+    else {
+        res.send({
+            success: false,
+            message: "Not connected to ROS Bridge Server. Is it on?",
+
+        });
+        rosLogger.error("Not connected to ROS Bridge Server. Is it on?")
+        return;
+    }
+}
+
 
 router.get("/", (req, res) => {
     // res.render("main");
     res.send("This is the api route for publishing topics and keeping state");
 
 });
-router.get("/params/refresh", (req, res) => {
+router.get("/params/refresh", isConnectedMiddleWare, (req, res) => {
     // Refreshes all parameters
     rosLogger.info(`Refreshing all (${Object.keys(params).length}) parameters...`)
     refreshAllParameters();
@@ -22,7 +37,7 @@ router.get("/params/refresh", (req, res) => {
 
 
 
-router.post("/publish/:key/:value", (req, res) => {
+router.post("/publish/:key/:value", isConnectedMiddleWare, (req, res) => {
     try {
         if (req.params.key in publishRoutes) {
             // Extract the value
@@ -37,16 +52,6 @@ router.post("/publish/:key/:value", (req, res) => {
                 default: {
                     value = req.params.value;
                 }
-            }
-
-            if (!isConnected) {
-                // Then isn't connected so won't be able to publish
-                res.send({
-                    success: false,
-                    message: "Not connected to ROS Bridge Server. Is it on?",
-
-                });
-                return;
             }
 
             let msg = new ROSLIB.Message({ data: value });
@@ -77,7 +82,7 @@ router.post("/publish/:key/:value", (req, res) => {
 
 })
 
-router.get("/test/energy", (req, res) => {
+router.get("/test/energy", isConnectedMiddleWare, (req, res) => {
 
     const func = () => {
         if (!send)

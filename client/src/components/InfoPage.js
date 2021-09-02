@@ -42,6 +42,7 @@ let InfoPage = () => {
         otherListeners: store.otherListeners,
         isParamsRefreshing: false,
         params: store.paramsTemplate,
+        settings: store.getSettings(),
     });
 
     // Emulate onComponentMount

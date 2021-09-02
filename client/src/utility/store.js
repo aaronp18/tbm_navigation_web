@@ -1,5 +1,8 @@
 import rosLogic from './rosLogic'
 
+import persistentStore from 'store';
+
+
 // Inital template for stats
 let statsTemp = [
     {
@@ -369,6 +372,17 @@ let paramsTemplate = {
 
 }
 
+// Gets the settings from the persistent store. If it doesnt exist, then revert to default
+function getSettings() {
+    let settings = {
+        auth: "",
+        wsip: "ws://localhost:9090", // IP of the ROS WS server
+    }
+    let saved = persistentStore.get("settings")
+    return ({
+        ...settings, ...saved,
+    });
+}
 
 let exported = {
     statsTemp,
@@ -378,6 +392,7 @@ let exported = {
     otherListeners,
     publishRoutes,
     paramsTemplate,
+    getSettings,
 }
 
 export default exported

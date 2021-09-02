@@ -2,6 +2,7 @@ import { log } from './logger'
 import ROSLIB from 'roslib';
 import { rosURL } from './options';
 import store from './store'
+import authentication from './authentication';
 
 let reconnectIntervalID = null;
 
@@ -68,7 +69,7 @@ async function initiateROS(state, setState) {
             });
             ros.connect(rosURL);
 
-        }, 10000);
+        }, 15000);
 
         reconnectIntervalID = reconnectID;
     });
@@ -207,6 +208,9 @@ function refreshAllParameters(params, setState) {
 }
 
 function setParam(paramID, value, state, setState) {
+    // Check if authenticated
+    if (!authentication.isAuthenticated(state.settings.auth))
+        return;
     // Try to get parameter from state object
     state.params[paramID]?.param.set(value, () => {
         // Refresh
@@ -223,7 +227,7 @@ let exported = {
     handleOtherListener,
     refreshAllParameters,
     setParam,
-    setParamObj,
+
 }
 
 export default exported

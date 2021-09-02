@@ -61,14 +61,13 @@ const Options = ({ state, setState, setOpen }) => {
     const handleSaveSettings = () => {
         // Save to storage
         persistentStore.set("settings", settings);
-        console.log(persistentStore.get("settings"))
     }
 
     return (
         <Form>
             <Header as={"h2"} dividing textAlign={'center'}>Authentication</Header>
             <Form.Field inline fluid name="auth" label="Authentication: "
-                control={Form.Input} value={settings.auth} onChange={onSettingChange} />
+                control={Form.Input} value={settings.auth} type="password" onChange={onSettingChange} />
 
 
             <Header as={"h2"} dividing textAlign={'center'}>Parameters - {state.status.text}</Header>
