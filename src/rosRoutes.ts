@@ -174,6 +174,19 @@ const publishRoutes: { [topicName: string]: PublishRoute } = {
         "type": msgTypes.FLOAT,
         "topic": null,
     },
+    "distance-rate": {
+        "name": "Velocity (mm/s)",
+        "topicName": "/tbm/telem/distance/rate",
+        "type": msgTypes.FLOAT,
+        "topic": null,
+        "latch": false,
+    },
+    "distance-total": {
+        "name": "Total Distance",
+        "topicName": "/tbm/telem/distance/total",
+        "type": msgTypes.FLOAT,
+        "topic": null,
+    },
     "latitude": {
         "name": "Latitude",
         "topicName": "/tbm/pos/lat",

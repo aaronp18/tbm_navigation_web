@@ -5,10 +5,22 @@ import * as options from "./options";
 import { webLogger, rosLogger, telemLogger } from "./logger";
 import { publishRoutes, params } from "./rosRoutes";
 
+import { DoublyLinkedList, DoublyLinkedListNode } from "@datastructures-js/linked-list";
+
+
 import * as THREE from 'three';
 import ROSLIB, { Ros } from "roslib";
 
 const R_EARTH = 6371000; // m
+
+type PositionStamped = {
+    position: THREE.Vector3,
+    time: number,
+}
+
+let prevPoses: DoublyLinkedList<PositionStamped> = new DoublyLinkedList(); // Previous positions with timestamp.
+
+let totalDistance = 0;
 
 type Phase = {
     id: string,
@@ -113,6 +125,27 @@ function poseUpdate(pose: ROSLIB.Pose) {
 
     // Publish position/displacement (x,y,z)
     publishDisplacement(pose.position);
+
+    let newStampedPosition: PositionStamped = {
+        position: new THREE.Vector3(pose.position.x, pose.position.y, pose.position.z),
+        time: Date.now(),
+    }
+
+    let node = prevPoses.insertFirst(newStampedPosition);
+
+    let previouseNode = node.getNext();
+    if (previouseNode !== null) {
+        // Calculate the difference
+        let delta = newStampedPosition.position.distanceTo(previouseNode?.getValue().position);
+        totalDistance += delta;
+
+        // Add to distance travelled
+        publishRoutes["distance-total"].topic.publish(new ROSLIB.Message({ data: totalDistance }))
+
+    }
+
+
+
 
 }
 
