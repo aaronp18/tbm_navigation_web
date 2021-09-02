@@ -376,7 +376,7 @@ let paramsTemplate = {
 function getSettings() {
     let settings = {
         auth: "",
-        wsip: "ws://localhost:9090", // IP of the ROS WS server
+        rosip: "ws://localhost:9090", // IP of the ROS WS server
     }
     let saved = persistentStore.get("settings")
     return ({

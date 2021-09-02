@@ -69,6 +69,9 @@ const Options = ({ state, setState, setOpen }) => {
             <Form.Field inline fluid name="auth" label="Authentication: "
                 control={Form.Input} value={settings.auth} type="password" onChange={onSettingChange} />
 
+            <Form.Field inline fluid name="auth" label="ROS Bridge URL: "
+                control={Form.Input} value={settings.rosip} onChange={onSettingChange} />
+
 
             <Header as={"h2"} dividing textAlign={'center'}>Parameters - {state.status.text}</Header>
             {Object.entries(tempParams).map(([key, param], num) => {

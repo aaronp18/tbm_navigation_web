@@ -8,7 +8,8 @@ let reconnectIntervalID = null;
 
 async function initiateROS(state, setState) {
     // * Intial ROS start
-    log("Connecting to ROS server...", true, "ROS")
+    log(`Connecting to ROS server (${state.settings.rosip}`, true, "ROS")
+
     setState((prevState) => {
         prevState.status = store.statuses["connecting"];
         prevState.stats.find((stat) => stat.id === "ros-status").value = prevState.status.text;
@@ -16,7 +17,7 @@ async function initiateROS(state, setState) {
     });
 
     var ros = new ROSLIB.Ros({
-        url: rosURL // Change to localhost on prod
+        url: state.settings.rosip,
     });
 
 
@@ -67,7 +68,7 @@ async function initiateROS(state, setState) {
 
                 return { ...prevState }
             });
-            ros.connect(rosURL);
+            ros.connect(state.settings.rosip);
 
         }, 15000);
 
