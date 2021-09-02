@@ -104,8 +104,10 @@ app.use(express.static("public"));
 
 // * Routes
 const apiRoute = require("./api");
+const testRoute = require("./tests");
 
 app.use("/api", apiRoute);
+app.use("/test", testRoute);
 
 
 // define a route handler for the default home page

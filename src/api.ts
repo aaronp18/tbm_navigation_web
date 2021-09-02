@@ -5,22 +5,8 @@ const router = express.Router();
 import { webLogger, rosLogger } from "./logger";
 import { publishRoutes, msgTypes, refreshAllParameters, params } from './rosRoutes';
 
-import { isConnected } from './index';
+import { isConnectedMiddleWare } from './middleware';
 
-const isConnectedMiddleWare = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    if (isConnected) {
-        next();
-    }
-    else {
-        res.send({
-            success: false,
-            message: "Not connected to ROS Bridge Server. Is it on?",
-
-        });
-        rosLogger.error("Not connected to ROS Bridge Server. Is it on?")
-        return;
-    }
-}
 
 
 router.get("/", (req, res) => {

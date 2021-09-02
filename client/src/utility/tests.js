@@ -3,7 +3,7 @@ async function testEnergyConsumption(setState) {
     await setState((prevState) => {
         return { ...prevState, energyConsumptionTestRunning: true, }
     });
-    fetch("/api/test/energy",).then(async (response) => {
+    fetch("/test/energy",).then(async (response) => {
         // Done
         console.log("Done!");
         await setState((prevState) => {
