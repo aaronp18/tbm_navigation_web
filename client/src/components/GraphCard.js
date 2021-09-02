@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import {
     Card,
     Grid,
@@ -8,7 +8,6 @@ import {
 
 } from 'semantic-ui-react'
 
-import store from '../utility/store'
 import ConsumptionGraph from './ConsumptionGraph';
 
 export const useClientRect = () => {
@@ -26,7 +25,7 @@ export const useClientRect = () => {
 
 const GraphCard = ({ dataPoints, header, total, average }) => {
     const [rect, cardRef] = useClientRect();
-    const { width, height } = rect; // Width / height of the card
+    const { width } = rect; // Width / height of the card
 
     // Set the width of the graph depending on the breakpoint.
     let graphWidth = width > 425 ? width * 0.75 : width * 0.95;

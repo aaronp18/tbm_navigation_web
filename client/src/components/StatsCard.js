@@ -4,7 +4,6 @@ import {
     Header,
     List,
     Card,
-    Icon
 } from 'semantic-ui-react'
 import StatItem from './StatItem';
 import StatusIcon from './StatusIcon';

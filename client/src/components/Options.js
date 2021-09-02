@@ -1,9 +1,8 @@
 import React from 'react';
 import {
-    Button, Form, Checkbox, List, Header, Divider
+    Button, Form, Header, Divider
 } from 'semantic-ui-react'
 
-import store from '../utility/store'
 import rosLogic from '../utility/rosLogic'
 
 

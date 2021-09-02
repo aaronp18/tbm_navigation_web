@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Icon,
-    IconGroup,
 } from 'semantic-ui-react'
-import tests from '../utility/tests';
 
 
 const StatusIcon = ({ status }) => {

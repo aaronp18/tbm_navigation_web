@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-    Grid,
     Header,
     Button,
     Card
@@ -9,10 +8,10 @@ import tests from '../utility/tests';
 
 
 const TestsCard = () => {
-    let initalState = {
+    let initialState = {
         energyConsumptionTestRunning: false,
     }
-    let [state, setState] = useState(initalState);
+    let [state, setState] = useState(initialState);
 
     return (
 

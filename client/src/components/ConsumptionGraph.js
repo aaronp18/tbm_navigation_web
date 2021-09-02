@@ -1,11 +1,4 @@
 import React from 'react';
-import {
-    CardGroup,
-    Container,
-    Grid,
-} from 'semantic-ui-react'
-
-import store from '../utility/store'
 
 import '../../node_modules/react-vis/dist/style.css';
 import { XYPlot, LineSeries, HorizontalGridLines, VerticalGridLines, XAxis, YAxis } from 'react-vis';

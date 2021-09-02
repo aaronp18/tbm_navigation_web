@@ -1,9 +1,8 @@
 import React from 'react';
 import {
-    Modal, Image, Header, Button, Menu, List
+    Modal, Menu
 } from 'semantic-ui-react'
 
-import store from '../utility/store'
 import Options from './Options';
 
 
