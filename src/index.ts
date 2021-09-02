@@ -16,6 +16,8 @@ import ROSLIB from "roslib";
 
 let hasStarted = false; // Is true when has been initiated once
 
+let isConnected = false;
+
 const app = express();
 
 // * Initiate ROS
@@ -44,9 +46,13 @@ const ros = new ROSLIB.Ros({
 
 ros.on('connection', function () {
     rosLogger.info('Connected to websocket server.');
+
+
     store.initiateParams(ros);
     store.initPublishers(ros);
     store.initListeners(ros);
+
+    isConnected = true;
 
     if (reconnectID != null) {
         clearInterval(reconnectID);
@@ -70,6 +76,8 @@ ros.on('error', function (e) {
 });
 
 ros.on('close', function () {
+    isConnected = false;
+
     if (!options.SILENT_RECONNECT)
         rosLogger.info('Connection to websocket server closed. Waiting before retrying...');
 
@@ -111,3 +119,7 @@ app.get("/", (req, res) => {
 app.listen(options.WEB_PORT, () => {
     webLogger.info(`Server started at http://${options.ROS_IP}:${options.WEB_PORT}`);
 });
+
+export {
+    isConnected
+}

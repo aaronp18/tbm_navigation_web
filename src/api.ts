@@ -5,6 +5,7 @@ const router = express.Router();
 import { webLogger, rosLogger } from "./logger";
 import { publishRoutes, msgTypes, refreshAllParameters, params } from './rosRoutes';
 
+import { isConnected } from './index';
 
 
 router.get("/", (req, res) => {
@@ -38,7 +39,15 @@ router.post("/publish/:key/:value", (req, res) => {
                 }
             }
 
+            if (!isConnected) {
+                // Then isn't connected so won't be able to publish
+                res.send({
+                    success: false,
+                    message: "Not connected to ROS Bridge Server. Is it on?",
 
+                });
+                return;
+            }
 
             let msg = new ROSLIB.Message({ data: value });
             publishRoutes[req.params.key].topic.publish(msg);
