@@ -21,7 +21,7 @@ const Options = ({ state, setState, setOpen }) => {
     }
 
     const handleSaveParams = () => {
-        if (state.status.id !== "connected") {
+        if (state.status !== store.statuses.connected) {
             console.log("Not Connected to ROS Server...");
             setOpen(false)
             return;

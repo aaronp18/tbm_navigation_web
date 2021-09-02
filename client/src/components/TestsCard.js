@@ -19,6 +19,7 @@ const TestsCard = () => {
             <Header as={"h2"} dividing textAlign={'center'}>Tests</Header>
 
             <Button onClick={() => tests.testEnergyConsumption(setState)}>Do Energy Consumption Test {state.energyConsumptionTestRunning ? "- Running..." : ""}</Button>
+            <Button onClick={() => tests.test3DModel(setState)}>Do 3D Model Test {state.test3DModelRunning ? "- Running..." : ""}</Button>
 
         </Card>
 

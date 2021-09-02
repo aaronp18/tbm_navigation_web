@@ -4,17 +4,34 @@ async function testEnergyConsumption(setState) {
         return { ...prevState, energyConsumptionTestRunning: true, }
     });
     fetch("/test/energy",).then(async (response) => {
-        // Done
-        console.log("Done!");
+        let res = await response.json();
+        console.log(res.message);
+
         await setState((prevState) => {
             return { ...prevState, energyConsumptionTestRunning: false, }
         });
     });
 }
 
+async function test3DModel(setState) {
+    await setState((prevState) => {
+        return { ...prevState, test3DModelRunning: true, }
+    });
+    fetch("/test/3d",).then(async (response) => {
+        let res = await response.json();
+
+        console.log(res.message);
+
+        await setState((prevState) => {
+            return { ...prevState, test3DModelRunning: false, }
+        });
+    });
+}
+
 
 let exported = {
-    testEnergyConsumption
+    testEnergyConsumption,
+    test3DModel,
 }
 
 export default exported;
