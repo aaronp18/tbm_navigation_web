@@ -227,6 +227,7 @@ let exported = {
     handleOtherListener,
     refreshAllParameters,
     setParam,
+    setParamObj,
 
 }
 
