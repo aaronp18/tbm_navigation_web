@@ -5,6 +5,9 @@ import {
 
 import rosLogic from '../utility/rosLogic'
 
+import persistentStore from 'store';
+import store from '../utility/store';
+
 
 
 
@@ -18,6 +21,12 @@ const Options = ({ state, setState, setOpen }) => {
     }
 
     const handleSaveParams = () => {
+        if (state.status.id !== "connected") {
+            console.log("Not Connected to ROS Server...");
+            setOpen(false)
+            return;
+
+        }
         // Save all params
         Object.entries(tempParams).forEach(([key, newParam], index) => {
             rosLogic.setParamObj(newParam, newParam.value);
@@ -39,9 +48,30 @@ const Options = ({ state, setState, setOpen }) => {
         });
     };
 
+    const [settings, setSettings] = React.useState(state.settings);
+
+    const onSettingChange = (e, { name, value }) => {
+        // Save setting to variable
+        setSettings((prevSettings) => {
+            prevSettings[name] = value;
+            return { ...prevSettings };
+        })
+    };
+
+    const handleSaveSettings = () => {
+        // Save to storage
+        persistentStore.set("settings", settings);
+        console.log(persistentStore.get("settings"))
+    }
+
     return (
         <Form>
-            <Header as={"h2"} dividing textAlign={'center'}>Parameters</Header>
+            <Header as={"h2"} dividing textAlign={'center'}>Authentication</Header>
+            <Form.Field inline fluid name="auth" label="Authentication: "
+                control={Form.Input} value={settings.auth} onChange={onSettingChange} />
+
+
+            <Header as={"h2"} dividing textAlign={'center'}>Parameters - {state.status.text}</Header>
             {Object.entries(tempParams).map(([key, param], num) => {
                 return (
                     <Form.Field inline fluid name={key} key={key} label={param.name} control={Form.Input} value={param.value} onChange={onValueChange} />
@@ -58,8 +88,38 @@ const Options = ({ state, setState, setOpen }) => {
                 content="Save"
                 labelPosition='right'
                 icon='save'
-                onClick={() => setOpen(false)}
+                onClick={(e) => {
+                    e.preventDefault();
+                    // Save parameters
+                    handleSaveParams();
+                    // Save settings
+                    handleSaveSettings();
+                }}
+
                 positive
+            />
+
+            <Button
+                content="Clear Settings"
+                labelPosition='right'
+                icon='trash alternate'
+                floated={"right"}
+                onClick={(e) => {
+                    e.preventDefault();
+                    // Clear persistent settings
+                    persistentStore.remove("settings");
+                    // Reset state
+                    setState((prevState) => {
+                        prevState.settings = store.getSettings();
+                        return ({ ...prevState })
+                    })
+
+                    setSettings(store.getSettings());
+
+
+                }}
+
+                negative
             />
 
 
