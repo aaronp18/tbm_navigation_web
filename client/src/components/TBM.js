@@ -10,7 +10,7 @@ export default function Model(props) {
   const { nodes, materials } = useGLTF('/tbm.gltf')
   return (
     <group ref={group} {...props} dispose={null}>
-      <group rotation={[-Math.PI / 2, 0, 0]}>
+      <group rotation={[0, 0, 0]}>
         <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
           <group position={[0, -1, 0]} rotation={[Math.PI / 2, 0, 0]}>
             <group position={[0, 0, -1]} rotation={[-Math.PI / 2, 0, 0]}>
