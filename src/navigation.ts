@@ -18,7 +18,13 @@ type PositionStamped = {
     time: number,
 }
 
+type Delta = {
+    delta: number,
+    time: number,
+}
+
 let prevPoses: DoublyLinkedList<PositionStamped> = new DoublyLinkedList(); // Previous positions with timestamp.
+let deltas: DoublyLinkedList<Delta> = new DoublyLinkedList(); // Previous positions with timestamp.
 
 let totalDistance = 0;
 
@@ -137,12 +143,38 @@ function poseUpdate(pose: ROSLIB.Pose) {
     if (previouseNode !== null) {
         // Calculate the difference
         let delta = newStampedPosition.position.distanceTo(previouseNode?.getValue().position);
+
+        // Add delta to linked list
+        deltas.insertFirst({
+            delta: delta,
+            time: Date.now(),
+        });
+
         totalDistance += delta;
 
         // Add to distance travelled
         publishRoutes["distance-total"].topic.publish(new ROSLIB.Message({ data: totalDistance }))
 
     }
+
+    const now = Date.now();
+
+    // Calculate rate from last 1 second
+    const recentDeltas = deltas.filter((node, position) => {
+        // Get all from last second
+        return node.getValue().time > (now - options.AVERAGE_PERIOD);
+    })
+
+    let subtotal = 0;
+
+    recentDeltas.forEach((node, pos) => {
+        subtotal += node.getValue().delta;
+    })
+
+    const rate = (subtotal / (options.AVERAGE_PERIOD / 1000.0)) * 1000; // x1000 to get mm/s
+
+    publishRoutes["distance-rate"].topic.publish(new ROSLIB.Message({ data: rate }))
+
 
 
 
