@@ -1,13 +1,19 @@
 # Building
-1) Start up the ROS bridge server
+1) Start up the ROS bridge server 
 2) `npm install` to install all of the required packages
 3) `cd client` -> `npm install` to install react client packages
    
 # Starting
-1) cd to the root directory
+1) `cd` to the root directory 
 2) `nodemon` to start up the node server
 3) `npm run client-start` to startup the react client
-4) Visit `localhost:8080` for the website
+4) Visit [http://localhost:8080](`http://localhost:8080`) for the website.
+
+## FaQ
+If any problems arise, firstly press `CTRL + SHIFT + J` if using Chrome to open the console and check if any errors are arising.
+
+1) If you get an `Authentication error. Auth Code is incorrect.` or if none of the buttons / parameters aren't changing things then check that the `authcode` is correct. This can be changed in the `config` page on the client. Without this, everything is readonly allowing for the interface to be given to spectators without the risk of them changing anything.
+2) If the client can't connect to the ROSBridge server, then you can change the url it connects to in the config panel. (Default `ws://localhost:9090`);
 
 # Topics, Services and Params
 ## Listeners

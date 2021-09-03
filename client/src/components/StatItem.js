@@ -4,7 +4,7 @@ import {
     List,
 } from 'semantic-ui-react'
 
-const StatItem = ({ header, value, isSubtitle }) => {
+const StatItem = ({ header, value, isSubtitle, parseFunc }) => {
     if (isSubtitle) {
         return (
 
@@ -12,6 +12,10 @@ const StatItem = ({ header, value, isSubtitle }) => {
                 <List.Content><Header as='h4' dividing style={{ textAlign: "center", fontStyle: "italic" }}>{header}</Header></List.Content>
             </List.Item>
         )
+    }
+
+    if (parseFunc) {
+        value = parseFunc(value);
     }
     return (
         <List.Item>

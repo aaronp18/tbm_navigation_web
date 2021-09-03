@@ -2,6 +2,7 @@ import rosLogic from './rosLogic'
 
 import persistentStore from 'store';
 
+import parsing from './parsing.js'
 
 // Inital template for stats
 let statsTemp = [
@@ -15,18 +16,21 @@ let statsTemp = [
         "name": "Pitch",
         "topic": "/tbm/rot/pitch",
         "messageType": 'std_msgs/Float32',
+        "parseFunc": parsing.parseAngle,
     },
     {
         "id": "yaw",
         "name": "Heading",
         "topic": "/tbm/rot/yaw",
         "messageType": 'std_msgs/Float32',
+        "parseFunc": parsing.parseAngle,
     },
     {
         "id": "roll",
         "name": "Roll",
         "topic": "/tbm/rot/roll",
         "messageType": 'std_msgs/Float32',
+        "parseFunc": parsing.parseAngle,
     },
 
 
@@ -40,30 +44,39 @@ let statsTemp = [
         "name": "X",
         "topic": "/tbm/pos/x",
         "messageType": 'std_msgs/Float32',
+        "parseFunc": parsing.roundTo7dp,
+
     },
     {
         "id": "y",
         "name": "Y",
         "topic": "/tbm/pos/y",
         "messageType": 'std_msgs/Float32',
+        "parseFunc": parsing.roundTo7dp,
+
     },
     {
         "id": "z",
         "name": "Z",
         "topic": "/tbm/pos/z",
         "messageType": 'std_msgs/Float32',
+        "parseFunc": parsing.roundTo7dp,
     },
     {
         "id": "latitude",
         "name": "Latitude of Cutterhead",
         "topic": "/tbm/pos/lat",
         "messageType": 'std_msgs/Float32',
+        "parseFunc": parsing.roundTo7dp,
+
     },
     {
         "id": "longitude",
         "name": "Longitude of Cutterhead",
         "topic": "/tbm/pos/long",
         "messageType": 'std_msgs/Float32',
+        "parseFunc": parsing.roundTo7dp,
+
     },
     {
         "id": "cutterheadPose",
@@ -132,6 +145,7 @@ let statsTemp = [
         "messageType": 'std_msgs/Float32',
         "consumptionName": "distance",
         "update": handleRateConsumptionUpdate,
+        "parseFunc": parsing.roundTo5dp,
     },
     {
         "id": "distanceTravelledTotal",
@@ -140,6 +154,8 @@ let statsTemp = [
         "messageType": 'std_msgs/Float32',
         "consumptionName": "distance",
         "update": handleTotalConsumptionUpdate,
+        "parseFunc": parsing.roundTo5dp,
+
     },
 
     {
@@ -149,6 +165,8 @@ let statsTemp = [
         "messageType": 'std_msgs/Float32',
         "consumptionName": "energy",
         "update": handleRateConsumptionUpdate,
+        "parseFunc": parsing.roundTo5dp,
+
     },
     {
         "id": "energyConsumptionTotal",
@@ -157,6 +175,8 @@ let statsTemp = [
         "messageType": 'std_msgs/Float32',
         "consumptionName": "energy",
         "update": handleTotalConsumptionUpdate,
+        "parseFunc": parsing.roundTo5dp,
+
     },
     {
         "id": "waterConsumptionRate",
@@ -165,6 +185,8 @@ let statsTemp = [
         "messageType": 'std_msgs/Float32',
         "consumptionName": "water",
         "update": handleRateConsumptionUpdate,
+        "parseFunc": parsing.roundTo5dp,
+
     },
     {
         "id": "waterConsumptionTotal",
@@ -173,6 +195,8 @@ let statsTemp = [
         "messageType": 'std_msgs/Float32',
         "consumptionName": "water",
         "update": handleTotalConsumptionUpdate,
+        "parseFunc": parsing.roundTo5dp,
+
     },
 
 

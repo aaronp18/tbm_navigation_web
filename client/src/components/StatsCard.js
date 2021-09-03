@@ -27,7 +27,7 @@ const StatsCard = ({ status, stats }) => {
                     <Grid.Column>
                         <List style={{ padding: 20 }} divided verticalAlign='middle'>
                             {stats1.map((stat) => (
-                                <StatItem header={stat.name} key={stat.id} value={stat.value} isSubtitle={stat.isSubtitle}></StatItem>
+                                <StatItem header={stat.name} key={stat.id} value={stat.value} isSubtitle={stat.isSubtitle} parseFunc={stat.parseFunc}></StatItem>
                             ))}
                         </List>
 
@@ -35,7 +35,7 @@ const StatsCard = ({ status, stats }) => {
                     <Grid.Column>
                         <List style={{ padding: 20 }} divided verticalAlign='middle'>
                             {stats2.map((stat) => (
-                                <StatItem header={stat.name} key={stat.id} value={stat.value} isSubtitle={stat.isSubtitle}></StatItem>
+                                <StatItem header={stat.name} key={stat.id} value={stat.value} isSubtitle={stat.isSubtitle} parseFunc={stat.parseFunc}></StatItem>
                             ))}
 
                         </List>

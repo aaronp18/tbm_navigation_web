@@ -10,6 +10,8 @@ import {
 import store from '../utility/store';
 import authentication from '../utility/authentication';
 
+import parsing from '../utility/parsing'
+
 function handlePhaseChange(e, { option, id }, state, setState,) {
     e.preventDefault();
     e.stopPropagation();
@@ -45,9 +47,9 @@ let NavigationCard = ({ state, setState }) => {
             </Button.Group>
             <Grid style={{ padding: 10 }} stackable>
                 <Grid.Row centered>
-                    <Statistic label="Target Pitch" value={state.otherListeners.pitchTarget.value}></Statistic>
-                    <Statistic label="Pitch Delta" value={state.otherListeners.pitchDelta.value}></Statistic>
-                    <Statistic label="Current Pitch" value={state.stats.find((val) => val.id === "pitch").value}></Statistic>
+                    <Statistic label="Target Pitch" value={parsing.parseAngle(state.otherListeners.pitchTarget.value)} size="tiny"></Statistic>
+                    <Statistic label="Pitch Delta" value={parsing.parseAngle(state.otherListeners.pitchDelta.value)} size="tiny"></Statistic>
+                    <Statistic label="Current Pitch" value={parsing.parseAngle(state.stats.find((val) => val.id === "pitch").value)} size="tiny"></Statistic>
                 </Grid.Row>
             </Grid>
         </Card>

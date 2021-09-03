@@ -182,7 +182,8 @@ function poseUpdate(pose: ROSLIB.Pose) {
 }
 
 function handlePhaseChange(message: any) {
-    let phase = phases[message.data];
+    let phaseID = message.data;
+    let phase = phases[phaseID];
 
     if (phase.option.targetPitch !== undefined) {
         // Then set target pitch by calculating delta required
