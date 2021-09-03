@@ -10,6 +10,7 @@ let statsTemp = [
         "id": "orientation-subtitle",
         "name": "Orientation",
         "isSubtitle": true,
+        "rosignore": true,
     },
     {
         "id": "pitch",
@@ -38,6 +39,7 @@ let statsTemp = [
         "id": "position-subtitle",
         "name": "Position",
         "isSubtitle": true,
+        "rosignore": true,
     },
     {
         "id": "x",
@@ -90,6 +92,8 @@ let statsTemp = [
         "id": "status-subtitle",
         "name": "Statuses",
         "isSubtitle": true,
+        "rosignore": true,
+
     },
     {
         "id": "ros-status",
@@ -106,6 +110,7 @@ let statsTemp = [
         "id": "tbm-subtitle",
         "name": "TBM",
         "isSubtitle": true,
+        "rosignore": true,
     },
     {
         "id": "on",
@@ -137,6 +142,7 @@ let statsTemp = [
         "id": "rates-subtitle",
         "name": "Rates",
         "isSubtitle": true,
+        "rosignore": true,
     },
     {
         "id": "distanceTravelledRate",
