@@ -46,6 +46,7 @@ let NavigationCard = ({ state, setState }) => {
             <Grid style={{ padding: 10 }} stackable>
                 <Grid.Row centered>
                     <Statistic label="Target Pitch" value={state.otherListeners.pitchTarget.value}></Statistic>
+                    <Statistic label="Pitch Delta" value={state.otherListeners.pitchDelta.value}></Statistic>
                     <Statistic label="Current Pitch" value={state.stats.find((val) => val.id === "pitch").value}></Statistic>
                 </Grid.Row>
             </Grid>

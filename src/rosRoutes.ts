@@ -116,6 +116,13 @@ const msgTypes = {
 const publishRoutes: { [topicName: string]: PublishRoute } = {
     "pitch-target": {
         "name": "Target Pitch",
+        "topicName": "/nav/pitch/aim",
+        "type": msgTypes.FLOAT,
+        "latch": true,
+        "topic": null,
+    },
+    "pitch-delta": {
+        "name": "Pitch change required to reach target",
         "topicName": "/nav/pitch/target",
         "type": msgTypes.FLOAT,
         "latch": true,
@@ -130,6 +137,13 @@ const publishRoutes: { [topicName: string]: PublishRoute } = {
     },
     "yaw-target": {
         "name": "Target Yaw",
+        "topicName": "/nav/yaw/aim",
+        "type": msgTypes.FLOAT,
+        "latch": true,
+        "topic": null,
+    },
+    "yaw-delta": {
+        "name": "Yaw Delta",
         "topicName": "/nav/yaw/target",
         "type": msgTypes.FLOAT,
         "latch": true,

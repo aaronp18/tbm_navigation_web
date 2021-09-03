@@ -252,6 +252,13 @@ let otherListeners = {
     pitchTarget: {
         "id": "pitchTarget",
         "name": "Target Pitch",
+        "topic": "/nav/pitch/aim",
+        "messageType": 'std_msgs/Float32',
+        "value": "N/A"
+    },
+    pitchDelta: {
+        "id": "pitchDelta",
+        "name": "Pitch Delta",
         "topic": "/nav/pitch/target",
         "messageType": 'std_msgs/Float32',
         "value": "N/A"
@@ -267,6 +274,13 @@ let otherListeners = {
     yawTarget: {
         "id": "yawTarget",
         "name": "Target Yaw",
+        "topic": "/nav/yaw/aim",
+        "messageType": 'std_msgs/Float32',
+        "value": null
+    },
+    yawDelta: {
+        "id": "yawDelta",
+        "name": "Yaw Delta",
         "topic": "/nav/yaw/target",
         "messageType": 'std_msgs/Float32',
         "value": null
