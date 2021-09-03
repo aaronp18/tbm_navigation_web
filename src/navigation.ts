@@ -3,7 +3,7 @@
 import * as options from "./options";
 
 import { webLogger, rosLogger, telemLogger } from "./logger";
-import { publishRoutes, params } from "./rosRoutes";
+import { publishRoutes, params, listenerTopics } from "./rosRoutes";
 
 import { DoublyLinkedList, DoublyLinkedListNode } from "@datastructures-js/linked-list";
 
@@ -185,8 +185,12 @@ function handlePhaseChange(message: any) {
     let phase = phases[message.data];
 
     if (phase.option.targetPitch !== undefined) {
-        // Then set target pitch
-        publishRoutes["pitch-target"].topic.publish(new ROSLIB.Message({ data: phase.option.targetPitch }));
+        // Then set target pitch by calculating change required
+        let current = listenerTopics.pitchCurrent.lastData || 0;
+
+        let change = phase.option.targetPitch - current;
+
+        publishRoutes["pitch-target"].topic.publish(new ROSLIB.Message({ data: change }));
     }
 
 

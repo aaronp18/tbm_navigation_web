@@ -272,6 +272,12 @@ type ListenerTopic = {
 }
 
 const listenerTopics: { [id: string]: ListenerTopic } = {
+    "pitchCurrent": {
+        "name": "Current Pitch",
+        "topic": "/tbm.rot/pitch",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
     "cutterheadPose": {
         "name": "Cutterhead Pose",
         "topic": "/ch",
