@@ -35,6 +35,10 @@ router.post("/publish/:key/:value", isConnectedMiddleWare, (req, res) => {
                     value = parseFloat(req.params.value);
                     break;
                 }
+                case (msgTypes.BOOL): {
+                    value = req.params.value === "true";
+                    break;
+                }
                 default: {
                     value = req.params.value;
                 }

@@ -298,7 +298,7 @@ let otherListeners = {
         "name": "Pitch Enabled",
         "topic": "/nav/pitch/enabled",
         "messageType": 'std_msgs/Bool',
-        "value": null
+        "value": "N/A"
     },
 
     yawTarget: {
@@ -306,21 +306,21 @@ let otherListeners = {
         "name": "Target Yaw",
         "topic": "/nav/yaw/aim",
         "messageType": 'std_msgs/Float32',
-        "value": null
+        "value": "N/A"
     },
     yawDelta: {
         "id": "yawDelta",
         "name": "Yaw Delta",
         "topic": "/nav/yaw/target",
         "messageType": 'std_msgs/Float32',
-        "value": null
+        "value": "N/A"
     },
     yawEnabled: {
         "id": "yawEnabled",
         "name": "Yaw Enabled",
         "topic": "/nav/yaw/enabled",
         "messageType": 'std_msgs/Bool',
-        "value": null
+        "value": "N/A"
     },
     phase: {
         "id": "phase",
@@ -368,6 +368,7 @@ let publishRoutes = {
     yawEnabled: "yaw-enabled",
     phase: "phase",
 }
+
 
 
 let paramsTemplate = {
