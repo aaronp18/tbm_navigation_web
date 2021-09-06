@@ -3,10 +3,10 @@ import {
     Button
 } from 'semantic-ui-react'
 
-const ToggleButton = ({ onClick, onText = "ON", offText = "OFF", toggled }) => {
+const ToggleButton = ({ onClick, onText = "ON", offText = "OFF", toggled, fluid = false }) => {
 
     return (
-        <Button onClick={onClick} active={toggled} toggle style={{ margin: 10 }}>{toggled ? onText : offText}</Button>
+        <Button fluid={fluid} onClick={onClick} active={toggled} toggle > {toggled ? onText : offText}</Button >
     )
 }
 

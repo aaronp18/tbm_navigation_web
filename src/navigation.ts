@@ -175,10 +175,6 @@ function poseUpdate(pose: ROSLIB.Pose) {
 
     publishRoutes["distance-rate"].topic.publish(new ROSLIB.Message({ data: rate }))
 
-
-
-
-
 }
 
 function handlePhaseChange(message: any) {
@@ -186,24 +182,30 @@ function handlePhaseChange(message: any) {
     let phase = phases[phaseID];
 
     if (phase.option.targetPitch !== undefined) {
-        // Then set target pitch by calculating delta required
-        let current = listenerTopics.pitchCurrent.lastData || 0;
-
-        let delta = phase.option.targetPitch - current;
 
         publishRoutes["pitch-target"].topic.publish(new ROSLIB.Message({ data: phase.option.targetPitch }));
 
-        publishRoutes["pitch-delta"].topic.publish(new ROSLIB.Message({ data: delta }));
-
-
+        calculateDelta(phase.option.targetPitch, "pitch");
     }
 
 
 }
 
+// Calculates the delta between the target and current and publishes to the delta topic.
+function calculateDelta(target: number, axis: string) {
+    // Then set target pitch by calculating delta required
+    let current = listenerTopics[axis + "Current"].lastData || 0;
+
+    let delta = target - current;
+
+    publishRoutes[axis + "-delta"].topic.publish(new ROSLIB.Message({ data: delta }));
+}
+
+
 export {
     poseUpdate,
     handlePhaseChange,
     phases,
+    calculateDelta,
 
 }

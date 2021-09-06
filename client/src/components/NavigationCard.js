@@ -56,10 +56,27 @@ function handleEnableChange(e, state, routeName, value) {
             }
 
         });
+}
 
+function handleRecalculateDelta(state, axisName) {
+    // Check authentication
+    if (!authentication.isAuthenticated(state.settings.auth))
+        return false
 
+    // Publish to ROS
+    fetch(`/api/recalculate/${axisName}`,
+        {
+            method: "GET",
+        }).then(async (response) => {
+            let json = await response.json()
+            if (!json.success) {
+                console.error(`Recalculate failed: ${json.message}`)
+            }
+
+        });
 
 }
+
 
 let NavigationCard = ({ state, setState }) => {
 
@@ -82,12 +99,25 @@ let NavigationCard = ({ state, setState }) => {
                     <Statistic label="Target Yaw" value={parsing.parseAngle(state.otherListeners.yawTarget.value)} size="tiny"></Statistic>
                     <Statistic label="Yaw Delta" value={parsing.parseAngle(state.otherListeners.yawDelta.value)} size="tiny"></Statistic>
                     <Statistic label="Current Yaw" value={parsing.parseAngle(state.stats.find((val) => val.id === "yaw").value)} size="tiny"></Statistic>
+
+                </Grid.Row>
+                <Grid.Row centered >
+                    <Grid.Column width={8} >
+                        <ToggleButton fluid toggled={state.otherListeners.pitchEnabled.value}
+                            onText="Pitch Controls Active" offText="Pitch Controls Inactive" onClick={(e) => handleEnableChange(e, state, "pitchEnabled", !state.otherListeners.pitchEnabled.value)} />
+                    </Grid.Column>
+                    <Grid.Column width={8} >
+                        <ToggleButton fluid toggled={state.otherListeners.yawEnabled.value}
+                            onText="Yaw Controls Active" offText="Yaw Controls Inactive" onClick={(e) => handleEnableChange(e, state, "yawEnabled", !state.otherListeners.yawEnabled.value)} />
+                    </Grid.Column>
                 </Grid.Row>
                 <Grid.Row centered>
-                    <ToggleButton toggled={state.otherListeners.pitchEnabled.value}
-                        onText="Pitch Controls Active" offText="Pitch Controls Inactive" onClick={(e) => handleEnableChange(e, state, "pitchEnabled", !state.otherListeners.pitchEnabled.value)} />
-                    <ToggleButton toggled={state.otherListeners.yawEnabled.value}
-                        onText="Yaw Controls Active" offText="Yaw Controls Inactive" onClick={(e) => handleEnableChange(e, state, "yawEnabled", !state.otherListeners.yawEnabled.value)} />
+                    <Grid.Column width={8} >
+                        <Button fluid icon='refresh' content='Recalculate Pitch Delta' onClick={(e) => handleRecalculateDelta(state, "pitch")} />
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                        <Button fluid icon='refresh' content='Recalculate Yaw Delta' onClick={(e) => handleRecalculateDelta(state, "yaw")} />
+                    </Grid.Column>
                 </Grid.Row>
             </Grid>
 

@@ -288,7 +288,25 @@ type ListenerTopic = {
 const listenerTopics: { [id: string]: ListenerTopic } = {
     "pitchCurrent": {
         "name": "Current Pitch",
-        "topic": "/tbm.rot/pitch",
+        "topic": "/tbm/rot/pitch",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
+    "pitchTarget": {
+        "name": "Target Pitch",
+        "topic": "/nav/pitch/aim",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
+    "yawCurrent": {
+        "name": "Current Yaw",
+        "topic": "/tbm/rot/yaw",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
+    "yawTarget": {
+        "name": "Target Yaw",
+        "topic": "/nav/yaw/aim",
         "type": msgTypes.FLOAT,
         "lastData": null,
     },

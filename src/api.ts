@@ -3,9 +3,11 @@ import ROSLIB from "roslib";
 const router = express.Router();
 
 import { webLogger, rosLogger } from "./logger";
-import { publishRoutes, msgTypes, refreshAllParameters, params } from './rosRoutes';
+import { publishRoutes, msgTypes, refreshAllParameters, params, listenerTopics } from './rosRoutes';
 
 import { isConnectedMiddleWare } from './middleware';
+
+import { calculateDelta } from './navigation'
 
 
 
@@ -72,33 +74,22 @@ router.post("/publish/:key/:value", isConnectedMiddleWare, (req, res) => {
 
 })
 
-router.get("/test/energy", isConnectedMiddleWare, (req, res) => {
+// Routes to recalcuate pitch and yaw
+router.get("/recalculate/pitch", isConnectedMiddleWare, (req, res) => {
+    calculateDelta(listenerTopics.pitchTarget.lastData || 0, "pitch")
+    res.send({
+        success: true,
+        message: `Recalculated Pitch Delta`,
 
-    const func = () => {
-        if (!send)
-            return;
-        setTimeout(() => func(), period + Math.random() * (period));
+    });
+});
+router.get("/recalculate/yaw", isConnectedMiddleWare, (req, res) => {
+    calculateDelta(listenerTopics.yawTarget.lastData || 0, "yaw")
+    res.send({
+        success: true,
+        message: `Recalculated Yaw Delta`,
 
-        publishRoutes["energy-consumption-pulse"].topic?.publish(new ROSLIB.Message({ data: Date.now() }));
-
-
-    }
-    // res.render("main");
-    const period = 25; // 50ms
-    const timeout = 5000; // 10 Seconds
-    let send = true;
-
-
-
-    func();
-
-    setTimeout(() => {
-        // Clear interval
-        send = false;
-        res.send({ message: `Running energy test with a period of ${period} ms for ${timeout / 1000} seconds... `, timeout, });
-    }, timeout)
-
-
+    });
 });
 
 
