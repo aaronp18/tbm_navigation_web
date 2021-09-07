@@ -68,6 +68,7 @@ If any problems arise, firstly press `CTRL + SHIFT + J` if using Chrome to open 
 |      Origin Longitude       |           `/origin/long`            | `std_msgs/Float32` |                                           |
 | Energy Consumption Graph On | `/consumption/energy/graph/enabled` |  `std_msgs/Bool`   | Determines whether points are calculated  |
 | Water Consumption Graph On  | `/consumption/water/graph/enabled`  |  `std_msgs/Bool`   | Determines whether points are calculated  |
+| Distance Travelled Graph On |      `/distance/graph/enabled`      |  `std_msgs/Bool`   | Determines whether points are calculated  |
 
 # Navigation Notes
 Due to time restrictions, the addition of "delta" angles (the change required to reach the target angle) has meant that on the front end everything makes sense, however now the `delta` is published to the `/nav/pitch/target` instead of `/nav/pitch/delta`. Therefore `/nav/pitch/aim` is used for the actual target angle.
