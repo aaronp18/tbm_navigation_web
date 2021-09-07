@@ -13,6 +13,7 @@ import { startConsumptionSend } from "./consumption"
 
 import path from 'path';
 import ROSLIB from "roslib";
+import { startDistanceSend } from "./navigation";
 
 let hasStarted = false; // Is true when has been initiated once
 
@@ -63,6 +64,7 @@ ros.on('connection', function () {
     if (!hasStarted) {
         initiateTelem();
         startConsumptionSend();
+        startDistanceSend();
     }
 
     hasStarted = true;

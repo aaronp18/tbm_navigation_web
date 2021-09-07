@@ -137,6 +137,7 @@ function poseUpdate(pose: ROSLIB.Pose) {
         time: Date.now(),
     }
 
+    // Add pose to list
     let node = prevPoses.insertFirst(newStampedPosition);
 
     let previouseNode = node.getNext();
@@ -150,13 +151,25 @@ function poseUpdate(pose: ROSLIB.Pose) {
             time: Date.now(),
         });
 
+        // Update total distance with the delta
         totalDistance += delta;
 
-        // Add to distance travelled
-        publishRoutes["distance-total"].topic.publish(new ROSLIB.Message({ data: totalDistance }))
 
     }
 
+
+
+}
+
+function startDistanceSend() {
+    setInterval(() => {
+        if (params["distanceGraphOn"].value === true)
+            distanceCalculate();
+    }, options.CONSUMPTION_UPDATE_INTERVAL);
+}
+
+// Calculates from the last second of poses
+function distanceCalculate() {
     const now = Date.now();
 
     // Calculate rate from last 1 second
@@ -169,11 +182,16 @@ function poseUpdate(pose: ROSLIB.Pose) {
 
     recentDeltas.forEach((node, pos) => {
         subtotal += node.getValue().delta;
+
     })
 
     const rate = (subtotal / (options.AVERAGE_PERIOD / 1000.0)) * 1000; // x1000 to get mm/s
 
-    publishRoutes["distance-rate"].topic.publish(new ROSLIB.Message({ data: rate }))
+    publishRoutes["distance-rate"].topic.publish(new ROSLIB.Message({ data: rate }));
+
+    // Update distance total
+    publishRoutes["distance-total"].topic.publish(new ROSLIB.Message({ data: totalDistance }));
+
 
 }
 
@@ -207,5 +225,5 @@ export {
     handlePhaseChange,
     phases,
     calculateDelta,
-
+    startDistanceSend,
 }

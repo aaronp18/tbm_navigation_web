@@ -413,6 +413,11 @@ let paramsTemplate = {
         route: "consumption/water/graph/enabled",
         value: null,
     },
+    distanceGraphOn: {
+        name: "Distance Graph On",
+        route: "distance/graph/enabled",
+        value: null,
+    },
 
 
 }

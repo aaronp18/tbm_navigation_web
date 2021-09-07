@@ -40,7 +40,6 @@ let params: { [id: string]: Param } = {
         update: (value) => {
             navigation.phases["launch"].option.targetPitch = value;
         }
-
     },
     pitchMin: {
         route: "pitch/min",
@@ -73,8 +72,10 @@ let params: { [id: string]: Param } = {
         route: "consumption/water/graph/enabled",
         value: null,
     },
-
-
+    distanceGraphOn: {
+        route: "distance/graph/enabled",
+        value: null,
+    },
 }
 
 // Gets the given parameter and saves it to itself
