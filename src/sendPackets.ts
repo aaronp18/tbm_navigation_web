@@ -3,7 +3,7 @@ import protobuf from "protobufjs";
 import * as options from "./options";
 
 import { webLogger, rosLogger, telemLogger } from "./logger";
-import { listenerTopics } from "./rosRoutes";
+import { listenerTopics, params } from "./rosRoutes";
 
 import udp from "dgram"
 const client = udp.createSocket('udp4');
@@ -108,7 +108,7 @@ function getTelem(): TelemMessage {
 function initiateTelem() {
     setInterval(() => {
         // If telemetry is off, pass;
-        if (!options.TELEM_ON)
+        if (!params.sendTelem)
             return;
         // Get relavent telem
         const telem = getTelem();

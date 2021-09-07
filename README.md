@@ -69,6 +69,7 @@ If any problems arise, firstly press `CTRL + SHIFT + J` if using Chrome to open 
 | Energy Consumption Graph On | `/consumption/energy/graph/enabled` |  `std_msgs/Bool`   | Determines whether points are calculated  |
 | Water Consumption Graph On  | `/consumption/water/graph/enabled`  |  `std_msgs/Bool`   | Determines whether points are calculated  |
 | Distance Travelled Graph On |      `/distance/graph/enabled`      |  `std_msgs/Bool`   | Determines whether points are calculated  |
+|       Send Telemetry        |            `/telem/send`            |  `std_msgs/Bool`   |   Determines whether telemetry is sent    |
 
 # Navigation Notes
 Due to time restrictions, the addition of "delta" angles (the change required to reach the target angle) has meant that on the front end everything makes sense, however now the `delta` is published to the `/nav/pitch/target` instead of `/nav/pitch/delta`. Therefore `/nav/pitch/aim` is used for the actual target angle.

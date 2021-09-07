@@ -418,6 +418,11 @@ let paramsTemplate = {
         route: "distance/graph/enabled",
         value: null,
     },
+    sendTelem: {
+        name: "Send Telemetry",
+        route: "telem/send",
+        value: null,
+    },
 
 
 }

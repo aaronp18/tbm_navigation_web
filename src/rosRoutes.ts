@@ -76,6 +76,10 @@ let params: { [id: string]: Param } = {
         route: "distance/graph/enabled",
         value: null,
     },
+    sendTelem: {
+        route: "telem/send",
+        value: null,
+    },
 }
 
 // Gets the given parameter and saves it to itself
