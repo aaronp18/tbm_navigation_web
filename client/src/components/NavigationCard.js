@@ -82,15 +82,33 @@ function handleRecalculateDelta(state, axisName) {
 
 
 let NavigationCard = ({ state, setState }) => {
-    let [yawTarget, setYawTarget] = React.useState(state.otherListeners.yawTarget.value);
+    let [targets, setTargets] = React.useState({
+        "pitch": state.otherListeners.pitchTarget.value,
+        "yaw": state.otherListeners.yawTarget.value
+    })
 
     const onValueChange = (e, { name, value }) => {
-        // Save yaw target
-        setYawTarget(value);
+        setTargets((prevTargets) => {
+            prevTargets[name] = value;
+            return { ...prevTargets };
+        })
     };
+    const onPitchTargetSend = () => {
+        // Publish target
+        fetch(`/api/publish/${store.publishRoutes.pitchTarget}/${targets.pitch}`,
+            {
+                method: "POST",
+            }).then(async (response) => {
+                let json = await response.json()
+                if (!json.success) {
+                    console.error(`Publish failed: ${json.message}`)
+                }
+
+            });
+    }
     const onYawTargetSend = () => {
         // Publish target
-        fetch(`/api/publish/${store.publishRoutes.yawTarget}/${yawTarget}`,
+        fetch(`/api/publish/${store.publishRoutes.yawTarget}/${targets.yaw}`,
             {
                 method: "POST",
             }).then(async (response) => {
@@ -112,18 +130,26 @@ let NavigationCard = ({ state, setState }) => {
                 })}
             </Button.Group>
 
-            <Form>
-                <Form.Group inline >
-                    <Form.Field inline name="yawTarget" label="Target Yaw"
-                        control={Form.Input} value={yawTarget} onChange={onValueChange} />
-                    <Form.Field>
-                        <Button onClick={onYawTargetSend}>Send Target Yaw</Button>
-
-                    </Form.Field>
-                </Form.Group>
-            </Form>
 
             <Grid style={{ padding: 10 }} stackable>
+                <Grid.Row centered>
+                    <Form>
+                        <Form.Group inline >
+                            <Form.Field name="pitch" label="Target Pitch"
+                                control={Form.Input} value={targets.pitch} onChange={onValueChange} />
+                            <Form.Field>
+                                <Button onClick={onPitchTargetSend}>Send Target Pitch</Button>
+                            </Form.Field>
+
+                            <Form.Field name="yaw" label="Target Yaw"
+                                control={Form.Input} value={targets.yaw} onChange={onValueChange} />
+                            <Form.Field>
+                                <Button onClick={onYawTargetSend}>Send Target Yaw</Button>
+                            </Form.Field>
+                        </Form.Group>
+
+                    </Form>
+                </Grid.Row>
                 <Grid.Row centered>
                     <Statistic label="Target Pitch" value={parsing.parseAngle(state.otherListeners.pitchTarget.value)} size="tiny"></Statistic>
                     <Statistic label="Pitch Delta" value={parsing.parseAngle(state.otherListeners.pitchDelta.value)} size="tiny"></Statistic>

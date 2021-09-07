@@ -232,7 +232,7 @@ let consumptions = [
         "header": "Energy Consumption Rate (kW)",
         "dataPoints": [{ timestamp: Date.now(), value: Math.random() * 10 }],
         "average": 0,
-        "total": 4898,
+        "total": 0,
     },
     {
         "name": "water",
