@@ -108,7 +108,7 @@ function getTelem(): TelemMessage {
 function initiateTelem() {
     setInterval(() => {
         // If telemetry is off, pass;
-        if (!params.sendTelem)
+        if (!params.sendTelem.value)
             return;
         // Get relavent telem
         const telem = getTelem();

@@ -43,6 +43,7 @@ let InfoPage = () => {
         isParamsRefreshing: false,
         params: store.paramsTemplate,
         settings: store.getSettings(),
+
     });
 
     // Emulate onComponentMount

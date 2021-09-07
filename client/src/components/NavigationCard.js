@@ -5,6 +5,7 @@ import {
     Card,
     Button,
     Statistic,
+    Form,
 } from 'semantic-ui-react'
 
 import ToggleButton from './ToggleButton';
@@ -78,7 +79,28 @@ function handleRecalculateDelta(state, axisName) {
 }
 
 
+
+
 let NavigationCard = ({ state, setState }) => {
+    let [yawTarget, setYawTarget] = React.useState(state.otherListeners.yawTarget.value);
+
+    const onValueChange = (e, { name, value }) => {
+        // Save yaw target
+        setYawTarget(value);
+    };
+    const onYawTargetSend = () => {
+        // Publish target
+        fetch(`/api/publish/${store.publishRoutes.yawTarget}/${yawTarget}`,
+            {
+                method: "POST",
+            }).then(async (response) => {
+                let json = await response.json()
+                if (!json.success) {
+                    console.error(`Publish failed: ${json.message}`)
+                }
+
+            });
+    }
 
     return (
 
@@ -89,6 +111,18 @@ let NavigationCard = ({ state, setState }) => {
                     return (<Button color={state.otherListeners.phase.value === phase?.id ? "green" : "grey"} onClick={(e) => handlePhaseChange(e, phase, state, setState)} key={phase.id}>{phase.title}</Button>)
                 })}
             </Button.Group>
+
+            <Form>
+                <Form.Group inline >
+                    <Form.Field inline name="yawTarget" label="Target Yaw"
+                        control={Form.Input} value={yawTarget} onChange={onValueChange} />
+                    <Form.Field>
+                        <Button onClick={onYawTargetSend}>Send Target Yaw</Button>
+
+                    </Form.Field>
+                </Form.Group>
+            </Form>
+
             <Grid style={{ padding: 10 }} stackable>
                 <Grid.Row centered>
                     <Statistic label="Target Pitch" value={parsing.parseAngle(state.otherListeners.pitchTarget.value)} size="tiny"></Statistic>
