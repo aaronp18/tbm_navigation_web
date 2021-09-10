@@ -409,6 +409,36 @@ const listenerTopics: { [id: string]: ListenerTopic } = {
         "lastData": null,
         "update": navigation.handlePhaseChange,
     },
+    "longitude": {
+        "name": "Longitude",
+        "topic": "/tbm/pos/long",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
+    "latitude": {
+        "name": "Latitude",
+        "topic": "/tbm/pos/lat",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
+    "x": {
+        "name": "X",
+        "topic": "/tbm/pos/x",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
+    "y": {
+        "name": "Y",
+        "topic": "/tbm/pos/y",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
+    "z": {
+        "name": "Z",
+        "topic": "/tbm/pos/z",
+        "type": msgTypes.FLOAT,
+        "lastData": null,
+    },
 
 
 }

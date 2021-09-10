@@ -63,7 +63,7 @@ function sendTelem(telem: TelemMessage) {
                     client.close();
                 } else {
                     // telemLogger.info("Sent Telem Packet...")
-                    console.log(message.toJSON());
+                    // console.log(message.toJSON());
                 }
             });
 
@@ -82,7 +82,7 @@ function getTelem(): TelemMessage {
             "cutterheadSpeed": listenerTopics.cutterheadSpeed.lastData,  // RPM
             "cutterheadTorque": listenerTopics.cutterheadTorque.lastData, // ft x lb
             "totalThrust": listenerTopics.totalThrust.lastData,      // N
-            "pitch": null,            // Radians
+            "pitch": listenerTopics.pitchCurrent.lastData,            // Radians
             "distanceTravelled": { // rate: mm / s, total: m
                 "rate": listenerTopics.distanceTravelledRate.lastData,
                 "total": listenerTopics.distanceTravelledTotal.lastData,
@@ -96,10 +96,10 @@ function getTelem(): TelemMessage {
                 "total": listenerTopics.waterConsumptionTotal.lastData,
             },
             "on": listenerTopics.on.lastData, // true if the machine is powered up, false otherwise
-            "latitude": null,
-            "longitude": null,
-            "depth": null, // depth below the surface in meters
-            "heading": null,
+            "latitude": listenerTopics.latitude.lastData,
+            "longitude": listenerTopics.longitude.lastData,
+            "depth": listenerTopics.z.lastData, // depth below the surface in meters
+            "heading": listenerTopics.yawCurrent.lastData,
 
         }
     }
