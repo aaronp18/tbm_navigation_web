@@ -199,6 +199,10 @@ function handlePhaseChange(message: any) {
     let phaseID = message.data;
     let phase = phases[phaseID];
 
+    if (phase.id === "stop")
+        // If stopping, then change the target pitch to the current to prevent any more "delta"    
+        phase.option.targetPitch = listenerTopics.pitchCurrent.lastData || 0;
+
     if (phase.option.targetPitch !== undefined) {
 
         publishRoutes["pitch-target"].topic.publish(new ROSLIB.Message({ data: phase.option.targetPitch }));
