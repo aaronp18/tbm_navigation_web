@@ -8,7 +8,7 @@ import { listenerTopics, params } from "./rosRoutes";
 import udp from "dgram"
 const client = udp.createSocket('udp4');
 
-
+import Long from 'long';
 
 // Telemetry Type
 type TelemJS = {
@@ -30,7 +30,7 @@ type Progress = {
     total: number,
 }
 type TelemMessage = {
-    teamCode: number,
+    teamCode: Long,
     unixTimestamp: number, // Floating point unix timestamp
     telem: TelemJS,
 }
