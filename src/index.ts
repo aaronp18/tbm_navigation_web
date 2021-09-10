@@ -30,7 +30,6 @@ AUTO_RECONNECTINTERVAL: ${options.AUTO_RECONNECT_INTERVAL}
 
 - TELEM -
 TEAMID: ${options.TEAM_ID}
-TELEM_ON: ${options.TELEM_ON}
 TELEM_INTERVAL: ${options.TELEM_INTERVAL}
  ==============
 `;
