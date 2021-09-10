@@ -16,7 +16,7 @@ const TELEM_IP = 'localhost';
 const TELEM_PORT = 2222;
 
 const TELEM_INTERVAL = 5000; // The delay between each telemetry send
-const TELEM_ON = false; // Determines whether telemetry is sent
+const TELEM_ON = true; // Determines whether telemetry is sent
 const TEAM_ID = 1;
 
 // * Consumption

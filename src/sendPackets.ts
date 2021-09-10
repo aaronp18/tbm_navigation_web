@@ -63,7 +63,7 @@ function sendTelem(telem: TelemMessage) {
                     client.close();
                 } else {
                     // telemLogger.info("Sent Telem Packet...")
-                    // console.log(message.toJSON());
+                    console.log(message.toJSON());
                 }
             });
 
@@ -75,38 +75,68 @@ function sendTelem(telem: TelemMessage) {
 
 // Gets the telemetry data and returns in a formatted object
 function getTelem(): TelemMessage {
-    let telem: TelemMessage;
+    let t = {
+        "teamCode": options.TEAM_ID,
+        "unixTimestamp": Date.now(), // Gets the current UNIX timestamp
+        "telem": {
+            "cutterheadSpeed": listenerTopics.cutterheadSpeed.lastData,  // RPM
+            "cutterheadTorque": listenerTopics.cutterheadTorque.lastData, // ft x lb
+            "totalThrust": listenerTopics.totalThrust.lastData,      // N
+            "pitch": listenerTopics.pitchCurrent.lastData,            // Radians
+            "distanceTravelled": { // rate: mm / s, total: m
+                "rate": listenerTopics.distanceTravelledRate.lastData,
+                "total": listenerTopics.distanceTravelledTotal.lastData,
+            },
+            "energyConsumption": { // rate: kW, total: kWh
+                "rate": listenerTopics.energyConsumptionRate.lastData,
+                "total": listenerTopics.energyConsumptionTotal.lastData,
+            },
+            "waterConsumption": { // rate: L/s, total: L
+                "rate": listenerTopics.waterConsumptionRate.lastData,
+                "total": listenerTopics.waterConsumptionTotal.lastData,
+            },
+            "on": listenerTopics.on.lastData, // true if the machine is powered up, false otherwise
+            "latitude": listenerTopics.latitude.lastData,
+            "longitude": listenerTopics.longitude.lastData,
+            "depth": listenerTopics.z.lastData, // depth below the surface in meters
+            "heading": listenerTopics.yawCurrent.lastData,
 
-    // Header things
-    telem.teamCode = options.TEAM_ID;
+        }
+    };
 
-    telem.teamCode = options.TEAM_ID;
-    telem.unixTimestamp = Date.now(); // Gets the current UNIX timestamp
+    // * Header things
+    // t.teamCode = options.TEAM_ID;
+    // t.unixTimestamp = Date.now(); // Gets the current UNIX timestamp
 
-    telem.telem.cutterheadSpeed = listenerTopics.cutterheadSpeed.lastData;  // RPM
-    telem.telem.cutterheadTorque = listenerTopics.cutterheadTorque.lastData; // ft x lb
-    telem.telem.totalThrust = listenerTopics.totalThrust.lastData;      // N
+    // * TBM
+    // t.telem.cutterheadSpeed = listenerTopics.cutterheadSpeed.lastData;  // RPM
+    // t.telem.cutterheadTorque = listenerTopics.cutterheadTorque.lastData; // ft x lb
+    // t.telem.totalThrust = listenerTopics.totalThrust.lastData;      // N
 
-    telem.telem.distanceTravelled.rate = listenerTopics.distanceTravelledRate.lastData;
-    telem.telem.distanceTravelled.total = listenerTopics.distanceTravelledTotal.lastData;
+    // * Distance
+    // t.telem.distanceTravelled.rate = listenerTopics.distanceTravelledRate.lastData;
+    // t.telem.distanceTravelled.total = listenerTopics.distanceTravelledTotal.lastData;
 
-    telem.telem.energyConsumption.rate = listenerTopics.energyConsumptionRate.lastData;
-    telem.telem.energyConsumption.total = listenerTopics.energyConsumptionTotal.lastData;
+    // * Energy
+    // t.telem.energyConsumption.rate = listenerTopics.energyConsumptionRate.lastData;
+    // t.telem.energyConsumption.total = listenerTopics.energyConsumptionTotal.lastData;
 
-    telem.telem.waterConsumption.rate = listenerTopics.waterConsumptionRate.lastData;
-    telem.telem.waterConsumption.total = listenerTopics.waterConsumptionTotal.lastData;
+    // * Water Consumption
+    // t.telem.waterConsumption.rate = listenerTopics.waterConsumptionRate.lastData;
+    // t.telem.waterConsumption.total = listenerTopics.waterConsumptionTotal.lastData;
 
-    telem.telem.on = listenerTopics.on.lastData; // true if the machine is powered up; false otherwise
+    // t.telem.on = listenerTopics.on.lastData; // true if the machine is powered up; false otherwise
 
-    telem.telem.latitude = listenerTopics.latitude.lastData;
-    telem.telem.longitude = listenerTopics.longitude.lastData;
-    telem.telem.depth = listenerTopics.z.lastData; // depth below the surface in meters
-    telem.telem.heading = listenerTopics.yawCurrent.lastData;
-    telem.telem.pitch = listenerTopics.pitchCurrent.lastData;            // Radians
+    // * Position
+    // t.telem.latitude = listenerTopics.latitude.lastData;
+    // t.telem.longitude = listenerTopics.longitude.lastData;
+    // t.telem.depth = listenerTopics.z.lastData; // depth below the surface in meters
+    // t.telem.heading = listenerTopics.yawCurrent.lastData;
+    // t.telem.pitch = listenerTopics.pitchCurrent.lastData;          
 
 
 
-    return telem;
+    return t;
 }
 
 function initiateTelem() {
