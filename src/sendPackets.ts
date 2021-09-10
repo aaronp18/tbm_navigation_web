@@ -8,6 +8,7 @@ import { listenerTopics, params } from "./rosRoutes";
 import udp from "dgram"
 const client = udp.createSocket('udp4');
 
+import Long from 'long'
 
 
 // Telemetry Type
@@ -30,7 +31,7 @@ type Progress = {
     total: number,
 }
 type TelemMessage = {
-    teamCode: number,
+    teamCode: Long,
     unixTimestamp: number, // Floating point unix timestamp
     telem: TelemJS,
 }
@@ -76,7 +77,7 @@ function sendTelem(telem: TelemMessage) {
 // Gets the telemetry data and returns in a formatted object
 function getTelem(): TelemMessage {
     let t = {
-        "teamCode": options.TEAM_ID,
+        "teamCode": Long.fromString("8674466878754165193"),
         "unixTimestamp": Date.now(), // Gets the current UNIX timestamp
         "telem": {
             "cutterheadSpeed": listenerTopics.cutterheadSpeed.lastData,  // RPM
@@ -103,7 +104,7 @@ function getTelem(): TelemMessage {
 
         }
     };
-
+    telemLogger.info(t.teamCode.toString())
     // * Header things
     // t.teamCode = options.TEAM_ID;
     // t.unixTimestamp = Date.now(); // Gets the current UNIX timestamp

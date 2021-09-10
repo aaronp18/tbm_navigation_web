@@ -17,7 +17,8 @@ const TELEM_PORT = 2222;
 
 const TELEM_INTERVAL = 5000; // The delay between each telemetry send
 // const TELEM_ON = true; // Determines whether telemetry is sent
-const TEAM_ID = 1;
+const TEAM_ID = 8674466878754165193n;
+
 
 // * Consumption
 const AVERAGE_PERIOD = 1000; // ms
