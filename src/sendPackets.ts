@@ -141,15 +141,18 @@ function getTelem(): TelemMessage {
 }
 
 function initiateTelem() {
-    setInterval(() => {
+    function handleTelemPulse(){
         // If telemetry is off, pass;
-        if (!params.sendTelem.value)
-            return;
-        // Get relavent telem
-        const telem = getTelem();
-        // Send telem
-        sendTelem(telem);
-    }, options.TELEM_INTERVAL);
+        if (params.sendTelem.value){
+            // Get relavent telem
+            const telem = getTelem();
+            // Send telem
+            sendTelem(telem);
+        }
+        setTimeout(handleTelemPulse, options.TELEM_INTERVAL);
+
+    }
+    setTimeout(handleTelemPulse, options.TELEM_INTERVAL);
 }
 
 export {
