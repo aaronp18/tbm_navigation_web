@@ -14,10 +14,10 @@ const SILENT_RECONNECT = true; // If true, then reconnects aren't printed to con
 
 // * Telem
 
-const TELEM_IP = 'localhost';
-const TELEM_PORT = 2222;
+const TELEM_IP = '54.241.20.14';
+const TELEM_PORT = 1217;
 
-const TELEM_INTERVAL = 5000; // The delay between each telemetry send
+const TELEM_INTERVAL = 200; // The delay between each telemetry send
 // const TELEM_ON = true; // Determines whether telemetry is sent
 const TEAM_ID = Long.fromString("8674466878754165193");
 

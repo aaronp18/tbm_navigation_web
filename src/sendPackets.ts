@@ -10,6 +10,7 @@ const client = udp.createSocket('udp4');
 
 import Long from 'long';
 
+let i = 0;
 // Telemetry Type
 type TelemJS = {
     cutterheadSpeed: number,  // RPM
@@ -109,7 +110,7 @@ function getTelem(): TelemMessage {
     // t.unixTimestamp = Date.now(); // Gets the current UNIX timestamp
 
     // * TBM
-    // t.telem.cutterheadSpeed = listenerTopics.cutterheadSpeed.lastData;  // RPM
+    // t.telem.cutterheadSpeed = ++i;  // RPM
     // t.telem.cutterheadTorque = listenerTopics.cutterheadTorque.lastData; // ft x lb
     // t.telem.totalThrust = listenerTopics.totalThrust.lastData;      // N
 
