@@ -8,6 +8,8 @@ import { publishRoutes, msgTypes, refreshAllParameters, params } from './rosRout
 import { isConnectedMiddleWare } from './middleware';
 
 import * as THREE from 'three'
+import { Euler, Vector3 } from "three";
+import { calculateRealPosition } from "./navigation";
 
 
 router.get("/energy", isConnectedMiddleWare, (req, res) => {
@@ -73,6 +75,24 @@ router.get("/3d", isConnectedMiddleWare, (req, res) => {
 
 });
 
+router.get("/realposition/", (req, res) => {
+    let position = new Vector3(0,5,0);
+    let rotation = new Euler(0,0,Math.PI / 6); // 30 degs
+
+    let real = calculateRealPosition(position, rotation, Math.PI / 6);
+
+    let msg = `Initial Position: ${position.toArray()}
+    Rotation: ${rotation.toArray()}
+    Real: ${real.toArray()}
+    `;
+
+    webLogger.info(msg);
+
+    res.send({message: msg, success: true})
+
+
+
+})
 
 
 module.exports = router;

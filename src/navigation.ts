@@ -10,6 +10,7 @@ import { DoublyLinkedList, DoublyLinkedListNode } from "@datastructures-js/linke
 
 import * as THREE from 'three';
 import ROSLIB, { Ros } from "roslib";
+import { Euler, Vector3 } from "three";
 
 const R_EARTH = 6371000; // m
 
@@ -122,11 +123,14 @@ function publishDisplacement(displacement: ROSLIB.Vector3) {
 
 // Calcualtes and publishes data obtained from the given cutterhead pose.
 function poseUpdate(pose: ROSLIB.Pose) {
+    let rotation = getRotationFromPose(pose);
     // Calculate rotation
-    publishRotation(getRotationFromPose(pose));
+    publishRotation(rotation);
+
+    let realPosition = calculateRealPosition(new THREE.Vector3(pose.position.x, pose.position.y, pose.position.z), rotation,  options.OFFSET_YAW)
 
     // Calculate latLong from origin
-    const { lat, long } = calculatePosition(pose.position.x, pose.position.y);
+    const { lat, long } = calculatePosition(realPosition.x, realPosition.y);
     publishPosition(lat, long);
 
     // Publish position/displacement (x,y,z)
@@ -223,6 +227,14 @@ function calculateDelta(target: number, axis: string) {
     publishRoutes[axis + "-delta"].topic.publish(new ROSLIB.Message({ data: delta }));
 }
 
+// Returns new x y z of actual position with straight as north
+function calculateRealPosition(position: Vector3, rotation: THREE.Euler, offsetYaw: number) {
+    let newpos = new Vector3().copy(position);
+
+    // Strip other angles as aren't needef for long itude and latitude
+    let newRot = new Euler(0,0, -(rotation.z + offsetYaw));
+    return newpos.applyEuler(newRot);
+}
 
 export {
     poseUpdate,
@@ -230,4 +242,5 @@ export {
     phases,
     calculateDelta,
     startDistanceSend,
+    calculateRealPosition,
 }

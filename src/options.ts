@@ -17,6 +17,7 @@ const SILENT_RECONNECT = true; // If true, then reconnects aren't printed to con
 const TELEM_IP = '54.241.20.14';
 const TELEM_PORT = 1217;
 
+
 const TELEM_INTERVAL = 200; // The delay between each telemetry send
 // const TELEM_ON = true; // Determines whether telemetry is sent
 const TEAM_ID = Long.fromString("8674466878754165193");
@@ -29,6 +30,8 @@ const CONSUMPTION_CACHE_SIZE = 5000;
 // The amount of time between consumption calculations (total and rate)
 const CONSUMPTION_UPDATE_INTERVAL = 250;
 
+// Offset that the TBM is from "north"
+const OFFSET_YAW = Math.PI/6; // In rads, 30 degs
 
 export {
     WEB_PORT,
@@ -44,4 +47,5 @@ export {
     AVERAGE_PERIOD,
     CONSUMPTION_CACHE_SIZE,
     CONSUMPTION_UPDATE_INTERVAL,
+    OFFSET_YAW,
 }
