@@ -1,3 +1,13 @@
+# TBM Navigation Server and Client - Dashboard
+This program is used to display TBM telemetry on an easy to read dashboard. It sends and recieves data from the server that connects to the ROS network where relavent data is published.
+
+### Images
+**Main Page**
+![Main Page](./tbm_nav_dash.png)
+
+**Settings Page**
+![Settings Page](./tbm_nav_config.png)
+
 # Building
 1) Start up the ROS bridge server 
 2) `npm install` to install all of the required packages
